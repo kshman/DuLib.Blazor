@@ -34,6 +34,7 @@ public abstract class ComponentObject : ComponentBase
 		await base.SetParametersAsync(parameters);
 
 		// 여기다 이걸 넣은것은, 어떤 컴포넌트든 반드시 여기를 거쳐야하기 때문임
+		// 게다가 이건 어지간해선 재정의 안함
 		if (!_init_css)
 		{
 			_init_css = true;
