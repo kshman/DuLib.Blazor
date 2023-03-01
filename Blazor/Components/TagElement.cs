@@ -1,7 +1,6 @@
-﻿using Du.Blazor.Supp;
-using Microsoft.AspNetCore.Components.Rendering;
+﻿using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Du.Blazor;
+namespace Du.Blazor.Components;
 
 /// <summary>태그 요소</summary>
 /// <remarks>지정한 태그를 이용해서 내용을 그림</remarks>

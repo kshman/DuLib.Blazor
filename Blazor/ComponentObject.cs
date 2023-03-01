@@ -1,6 +1,4 @@
-﻿using Du.Blazor.Supp;
-
-namespace Du.Blazor;
+﻿namespace Du.Blazor;
 
 /// <summary>
 /// Du.Blazor 컴포넌트 맨 밑단
@@ -8,11 +6,11 @@ namespace Du.Blazor;
 public abstract class ComponentObject : ComponentBase
 {
 	/// <summary>사용 여부 (disabled)</summary>
-	[Parameter] 
+	[Parameter]
 	public bool Enabled { get; set; } = true;
 
 	/// <summary>클래스 지정</summary>
-	[Parameter] 
+	[Parameter]
 	public string? Class { get; set; }
 
 	/// <summary>컴포넌트 아이디</summary>
@@ -21,7 +19,7 @@ public abstract class ComponentObject : ComponentBase
 
 	/// <summary>사용자가 설정한 속성 지정</summary>
 	[Parameter(CaptureUnmatchedValues = true)]
-	public Dictionary<string, object> UserAttrs { get; set; } = new();
+	public Dictionary<string, object>? UserAttrs { get; set; }
 
 	/// <summary>만들어진 최종 CSS 클래스</summary>
 	public string? CssClass => _css_compose.Class;
@@ -33,35 +31,18 @@ public abstract class ComponentObject : ComponentBase
 	/// <inheritdoc />
 	public override async Task SetParametersAsync(ParameterView parameters)
 	{
-		UserAttrs.Clear();
+		await base.SetParametersAsync(parameters);
 
-		foreach (var p in parameters)
-		{
-			switch (p.Name)
-			{
-				case nameof(Enabled):
-					Enabled = (bool)p.Value;
-					break;
-				case "class" or nameof(Class):
-					Class = (string?)p.Value;
-					break;
-				case "id" or nameof(Id):
-					Id = (string)p.Value;
-					break;
-				default:
-					UserAttrs.Add(p.Name, p.Value);
-					break;
-			}
-		}
-
-		await base.SetParametersAsync(ParameterView.Empty);
-
+		// 여기다 이걸 넣은것은, 어떤 컴포넌트든 반드시 여기를 거쳐야하기 때문임
+		// 게다가 이건 어지간해선 재정의 안함
 		if (!_init_css)
 		{
 			_init_css = true;
 
 			OnComponentClass(_css_compose);
 			_css_compose.Add(Class).Register(() => Enabled.IfFalse("disabled"));
+
+			OnComponentOnce();
 		}
 	}
 
@@ -71,6 +52,12 @@ public abstract class ComponentObject : ComponentBase
 	/// 모두 거친 다음에 호출됨
 	/// </summary>
 	protected virtual void OnComponentClass(CssCompose cssc)
+	{ }
+
+	/// <summary>
+	/// 무조건 한번만 호출. 모든 초기화 콜이 끝나고 불림
+	/// </summary>
+	protected virtual void OnComponentOnce()
 	{ }
 
 	/// <summary>태스크 상태를 봐서 기다렸다가 StateHasChanged 호출</summary>

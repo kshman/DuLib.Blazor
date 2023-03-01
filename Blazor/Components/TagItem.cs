@@ -1,8 +1,7 @@
-﻿using Du.Blazor.Supp;
-using Microsoft.AspNetCore.Components.Rendering;
+﻿using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.Extensions.Logging;
 
-namespace Du.Blazor;
+namespace Du.Blazor.Components;
 
 /// <summary>태그 DIV 아이템</summary>
 public class TagDiv : TagItem

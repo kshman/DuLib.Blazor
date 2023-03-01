@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Rendering;
+﻿using Du.Blazor.Components;
+using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Du.Blazor;
 
@@ -99,5 +100,45 @@ public static class ComponentRenderer
 		builder.AddContent(6, component.Text);
 		builder.AddContent(7, component.ChildContent);
 		builder.CloseElement(); // tag
+	}
+
+	/// <summary>
+	/// TagItem용 태그로 감싸고 렌더링
+	/// </summary>
+	/// <param name="component"></param>
+	/// <param name="builder"></param>
+	/// <param name="tag"></param>
+	public static void SurroundTagText(TagItem component, RenderTreeBuilder builder, string tag) 
+	{
+		/*
+		 * 	<li>
+		 * 		<div class="@CssClass" @attributes="@UserAttrs">
+		 * 			@Text
+		 * 			@ChildContent
+		 * 		</div>
+		 * 	</li>
+		 */
+
+		builder.OpenElement(0, tag);
+
+		if (component.ListClass.IsHave())
+			builder.AddAttribute(1, component.ListClass);
+
+		builder.OpenElement(2, component.Tag);
+		builder.AddAttribute(3, "class", component.CssClass);
+
+		if (component.OnClick.HasDelegate)
+		{
+			builder.AddAttribute(4, "role", "button");
+			builder.AddAttribute(5, "onclick", component.InternalOnClick);
+			builder.AddEventStopPropagationAttribute(6, "onclick", true);
+		}
+
+		builder.AddMultipleAttributes(7, component.UserAttrs);
+		builder.AddContent(8, component.Text);
+		builder.AddContent(9, component.ChildContent);
+		builder.CloseElement(); // tag
+
+		builder.CloseElement(); // li
 	}
 }

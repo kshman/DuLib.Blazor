@@ -1,8 +1,7 @@
-﻿using Du.Blazor.Supp;
-using Microsoft.AspNetCore.Components.Rendering;
+﻿using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.Extensions.Logging;
 
-namespace Du.Blazor;
+namespace Du.Blazor.Components;
 
 /// <summary>
 /// 기본 태그 헤더
