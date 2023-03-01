@@ -26,7 +26,7 @@ public class BrowserService : IBrowserService, IAsyncDisposable
 	private async Task PrepareModuleAsync()
 	{
 		_md ??= await _js.InvokeAsync<IJSObjectReference>("import",
-			"./_content/DuLib.Blazor/browserservice.js");
+			"./_content/DuLib.Blazor/module_bs");
 	}
 
 	//
@@ -120,8 +120,7 @@ public static class BrowserServiceExtension
 		return services;
 	}
 
-	public static IServiceCollection AdDuBrowserServiceTransient(this IServiceCollection services,
-		bool true_for_scope_or_false_for_transient = true)
+	public static IServiceCollection AdDuBrowserServiceTransient(this IServiceCollection services)
 	{
 		if (services == null)
 			throw new ArgumentNullException(nameof(services));

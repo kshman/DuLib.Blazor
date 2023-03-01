@@ -23,7 +23,7 @@ internal static class LogIf
 
 		logger.LogError(Settings.UseLocaleMesg
 			? "{item}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{container}> 컨테이너 아래 있어야 해요."
-			: "{item}: No container found. This component must be contained within <{container}> component.", typeof(TItem), typeof(TContainer));
+			: "{item}: No container found. This component must be contained within <{container}> component.", typeof(TItem).Name, typeof(TContainer).Name);
 
 		ThrowBySetting();
 	}
@@ -38,7 +38,7 @@ internal static class LogIf
 		var join = string.Join(Settings.UseLocaleMesg ? "또는 " : " or ", names);
 		logger.LogError(Settings.UseLocaleMesg
 			? "{item}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{containers}> 컨테이너 아래 있어야 해요."
-			: "{item}: No container found. This component must be contained within <{containers}> components.", typeof(TItem), join);
+			: "{item}: No container found. This component must be contained within <{containers}> components.", typeof(TItem).Name, join);
 
 		ThrowBySetting();
 	}

@@ -1,4 +1,4 @@
-﻿using Du.Blazor.Supp;
+﻿using Du.Blazor.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Du.Blazor;
@@ -104,6 +104,6 @@ public interface ITagContentHandler
 /// </summary>
 public interface ITagListAgent
 {
-	string Tag { get; }
-	string Class { get; }
+	string? Tag { get; }
+	string? Class { get; }
 }

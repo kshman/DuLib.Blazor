@@ -1,11 +1,9 @@
-﻿using Du.Blazor.Supp;
-
-namespace Du.Blazor;
+﻿namespace Du.Blazor;
 
 /// <summary>아이템 컴포넌트 스토리지</summary>
 /// <remarks>컨테이너와 다른 점은, 스토리지는 그냥 아이템만 보관하고 관리</remarks>
 /// <typeparam name="TItem"><see cref="ComponentObject"/>를 상속한 아이템 컴포넌트</typeparam>
-public class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem>, IAsyncDisposable
+public abstract class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem>, IAsyncDisposable
 	where TItem : ComponentObject
 {
 	//
@@ -99,7 +97,7 @@ public class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem
 /// <see cref="CurrentId"/>로 현재 아이템을 쓰고 가져올 수 있고,<br/>
 /// <see cref="SelectedItem"/>로 선택한 아이템을 처리할 수 있음
 /// </remarks>
-public class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentContainer<TItem>
+public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentContainer<TItem>
 	where TItem : ComponentObject
 {
 	//
