@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components.Rendering;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Du.Blazor;
 
@@ -71,7 +70,13 @@ public static class ComponentRenderer
 		builder.CloseElement(); // tag
 	}
 
-	//
+	/// <summary>
+	/// TagTextBase용 렌더러<br/>
+	/// <see cref="TagTextBase.Text"/>와 <see cref="ComponentFragment.ChildContent"/>를
+	/// 동시에 그린다
+	/// </summary>
+	/// <param name="component"></param>
+	/// <param name="builder"></param>
 	public static void TagText(TagTextBase component, RenderTreeBuilder builder)
 	{
 		/*

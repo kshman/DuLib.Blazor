@@ -15,9 +15,7 @@ public class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem
 	protected override Task OnAfterRenderAsync(bool firstRender) =>
 		!firstRender ? Task.CompletedTask : InvokeAfterRenderFirstAsync();
 
-	/// <summary>아이템 추가</summary>
-	/// <param name="item"></param>
-	/// <returns>비동기 처리한 태스크</returns>
+	//
 	public virtual async Task AddItemAsync(TItem item)
 	{
 		Items.Add(item);
@@ -26,9 +24,7 @@ public class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem
 		await StateHasChangedOnAsyncCompletion(task);
 	}
 
-	/// <summary>아이템 삭제</summary>
-	/// <param name="item"></param>
-	/// <returns>비동기 처리한 태스크</returns>
+	//
 	public virtual async Task RemoveItemAsync(TItem item)
 	{
 		Items.Remove(item);
@@ -45,9 +41,7 @@ public class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem
 		}
 	}
 
-	/// <summary>아이템 얻기</summary>
-	/// <param name="id">찾을 아이디</param>
-	/// <returns>찾은 아이템</returns>
+	//
 	public TItem? GetItem(string id) =>
 		Items.FirstOrDefault(x => x.Id == id);
 
@@ -108,7 +102,7 @@ public class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem
 public class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentContainer<TItem>
 	where TItem : ComponentObject
 {
-	/// <summary>현재 아이템 ID</summary>
+	//
 	[Parameter]
 	public string? CurrentId { get; set; }
 
@@ -116,8 +110,8 @@ public class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentCont
 	[Parameter]
 	public EventCallback<string?> CurrentIdChanged { get; set; }
 
-	/// <summary>골라둔 아이템</summary>
-	protected TItem? SelectedItem { get; set; }
+	//
+	public TItem? SelectedItem { get; set; }
 
 	/// <summary>CurrentId가 없으면 맨 첫 항목을 골라둠</summary>
 	protected virtual bool SelectFirst => true;
@@ -178,10 +172,7 @@ public class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentCont
 		}
 	}
 
-	/// <summary>아이템 선택</summary>
-	/// <param name="item"></param>
-	/// <param name="stateChange"></param>
-	/// <returns>비동기 처리한 태스크</returns>
+	//
 	public async Task SelectItemAsync(TItem? item, bool stateChange = false)
 	{
 		if (item == SelectedItem)
@@ -212,10 +203,7 @@ public class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentCont
 			StateHasChanged();
 	}
 
-	/// <summary>아이디로 아이템 선택</summary>
-	/// <param name="id"></param>
-	/// <param name="stateChange"></param>
-	/// <returns>비동기 처리한 태스크</returns>
+	//
 	public Task SelectItemAsync(string id, bool stateChange = false)
 	{
 		var item = Items.FirstOrDefault(i => i.Id == id);

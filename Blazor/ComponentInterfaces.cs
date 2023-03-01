@@ -9,8 +9,17 @@ namespace Du.Blazor;
 /// <typeparam name="TItem"></typeparam>
 public interface IComponentStrage<TItem>
 {
+	/// <summary>아이템 추가</summary>
+	/// <param name="item"></param>
+	/// <returns>비동기 처리한 태스크</returns>
 	Task AddItemAsync(TItem item);
+	/// <summary>아이템 삭제</summary>
+	/// <param name="item"></param>
+	/// <returns>비동기 처리한 태스크</returns>
 	Task RemoveItemAsync(TItem item);
+	/// <summary>아이템 얻기</summary>
+	/// <param name="id">찾을 아이디</param>
+	/// <returns>찾은 아이템</returns>
 	TItem? GetItem(string id);
 }
 
@@ -21,8 +30,19 @@ public interface IComponentStrage<TItem>
 /// <typeparam name="TItem"></typeparam>
 public interface IComponentContainer<TItem> : IComponentStrage<TItem>
 {
+	/// <summary>현재 아이템 ID</summary>
 	string? CurrentId { get; set; }
+	/// <summary>골라둔 아이템</summary>
+	TItem? SelectedItem { get; set; }
+	/// <summary>아이템 선택</summary>
+	/// <param name="item"></param>
+	/// <param name="stateChange"></param>
+	/// <returns>비동기 처리한 태스크</returns>
 	Task SelectItemAsync(TItem? item, bool stateChange = false);
+	/// <summary>아이디로 아이템 선택</summary>
+	/// <param name="id"></param>
+	/// <param name="stateChange"></param>
+	/// <returns>비동기 처리한 태스크</returns>
 	Task SelectItemAsync(string id, bool stateChange = false);
 }
 

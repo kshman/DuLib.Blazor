@@ -4,6 +4,7 @@ namespace Du.Blazor.Supp;
 
 internal static class LogIf
 {
+	//
 	private static void ThrowBySetting()
 	{
 		if (Settings.ThrowOnLog)
@@ -14,11 +15,7 @@ internal static class LogIf
 		}
 	}
 
-	/// <summary>컨테이너가 널이면 로그</summary>
-	/// <typeparam name="TContainer">컨테이너(자기자신) 타입</typeparam>
-	/// <typeparam name="TItem">컨테이너를 갖고 있는 타입</typeparam>
-	/// <param name="logger">로그 공급자</param>
-	/// <param name="container">컨테이너</param>
+	// 컨테이너가 널이면 로그
 	internal static void ContainerIsNull<TItem, TContainer>(ILogger<TItem> logger, TContainer? container)
 	{
 		if (container is not null)

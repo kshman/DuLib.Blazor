@@ -11,12 +11,11 @@ public class CssCompose
 	private readonly List<string> _sts = new();
 	private readonly List<Func<string?>> _fns = new();
 
-	public CssCompose Set(string className)
-	{
-		_sts.Add(className);
-		return this;
-	}
-
+	/// <summary>
+	/// 값 넣기
+	/// </summary>
+	/// <param name="className"></param>
+	/// <returns></returns>
 	public CssCompose Add(string? className)
 	{
 		if (className.IsHave())
@@ -24,6 +23,12 @@ public class CssCompose
 		return this;
 	}
 
+	/// <summary>
+	/// 조건이 참이면 값 넣기
+	/// </summary>
+	/// <param name="condition"></param>
+	/// <param name="trueName"></param>
+	/// <returns></returns>
 	public CssCompose Add(bool condition, string? trueName)
 	{
 		if (condition && trueName.IsHave())
@@ -31,18 +36,35 @@ public class CssCompose
 		return this;
 	}
 
+	/// <summary>
+	/// 조건에 따라 값 넣기
+	/// </summary>
+	/// <param name="condition"></param>
+	/// <param name="trueName"></param>
+	/// <param name="falseName"></param>
+	/// <returns></returns>
 	public CssCompose Add(bool condition, string trueName, string falseName)
 	{
 		_sts.Add(condition ? trueName : falseName);
 		return this;
 	}
 
+	/// <summary>
+	/// 값을 만들어줄 함수를 등록
+	/// </summary>
+	/// <param name="classFunc"></param>
+	/// <returns></returns>
 	public CssCompose Register(Func<string?> classFunc)
 	{
 		_fns.Add(classFunc);
 		return this;
 	}
 
+	/// <summary>
+	/// 값이 있나 확인. 단 <see cref="Register"/>로 넣은거는 못찼는다
+	/// </summary>
+	/// <param name="className"></param>
+	/// <returns></returns>
 	public bool Test(string className) 
 		=> _sts.Contains(className);
 
@@ -63,12 +85,23 @@ public class CssCompose
 
 	public override string ToString() => $"({_sts.Count}/{_fns.Count}) {Class}";
 
+	/// <summary>
+	/// 분리자로 합진다
+	/// </summary>
+	/// <param name="separator"></param>
+	/// <param name="args"></param>
+	/// <returns></returns>
 	public static string? Join(char separator, params string?[] args)
 	{
 		var j = string.Join(separator, args.Where(x => x.IsHave()));
 		return j.Length == 0 ? null : j;
 	}
 
+	/// <summary>
+	/// CSS 클래스로 합친다
+	/// </summary>
+	/// <param name="args"></param>
+	/// <returns></returns>
 	public static string? Join(params string?[] args) =>
 		Join(class_separator, args);
 }

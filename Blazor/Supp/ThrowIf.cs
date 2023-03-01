@@ -4,12 +4,7 @@ namespace Du.Blazor.Supp;
 
 internal static class ThrowIf
 {
-	/// <summary>컨테이너가 널이면 예외</summary>
-	/// <typeparam name="TContainer">컨테이너(자기자신) 타입</typeparam>
-	/// <typeparam name="TItem">컨테이너를 갖고 있는 타입</typeparam>
-	/// <param name="container">컨테이너</param>
-	/// <param name="item">컨테이너를 갖고 있는 컴포넌트</param>
-	/// <exception cref="InvalidOperationException">컨테이너가 널이면 예외</exception>
+	// 컨테이너가 널이면 예외
 	internal static void ContainerIsNull<TContainer, TItem>(TItem item, [NotNull] TContainer? container)
 	{
 		if (container is not null)
@@ -44,11 +39,7 @@ internal static class ThrowIf
 			: $"{typeof(TItem)}, {nameof(item)}: Must be null here");
 	}
 
-	/// <summary>컴포넌트 캐스트가 안되면 예외</summary>
-	/// <typeparam name="TConv">대상 캐스트 형식</typeparam>
-	/// <param name="component">캐스트할 컴포넌트</param>
-	/// <returns>캐스트한 컴포넌트</returns>
-	/// <exception cref="InvalidOperationException">캐스트가 실패하면 예외</exception>
+	// 컴포넌트 캐스트가 안되면 예외
 	internal static TConv CastFail<TConv>([NotNull] this object? component)
 	{
 		if (component is TConv converted)
@@ -60,8 +51,8 @@ internal static class ThrowIf
 			: $"{nameComponent}: Invalid component casting. Must be <{typeof(TConv)}>.");
 	}
 
-
-	internal static void ConditionFail<TItem>([DoesNotReturnIf(false)] bool condition)
+	//
+	internal static void ConditionFail([DoesNotReturnIf(false)] bool condition)
 	{
 		if (condition)
 			return;
@@ -71,6 +62,7 @@ internal static class ThrowIf
 			: "Condition failed!");
 	}
 
+	//
 	internal static void NotImplementedWithCondition<TType>([DoesNotReturnIf(false)] bool condition)
 	{
 		if (condition)
@@ -81,6 +73,7 @@ internal static class ThrowIf
 			: $"{typeof(TType)}: Not implementate in such a condition yet.");
 	}
 
+	//
 	internal static void ArgumentNull<TItem>([NotNull] TItem? obj, string objName)
 	{
 		if (obj is not null)
@@ -91,6 +84,7 @@ internal static class ThrowIf
 			: $"{objName}:{typeof(TItem)} must not be null.");
 	}
 
+	//
 	[DoesNotReturn]
 	internal static void ArgumentOutOfRange(string name, object value)
 	{
