@@ -1,4 +1,4 @@
-﻿namespace Du.Blazor.Supp;
+﻿namespace Du.Blazor;
 
 /// <summary>
 /// CSS 클래스 만들어 주기

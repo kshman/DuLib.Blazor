@@ -44,11 +44,11 @@ public static class ComponentRenderer
 	/// &lt;/tag&gt;
 	/// </code></example>
 	/// </summary>
-	/// <typeparam name="TType"></typeparam>
+	/// <typeparam name="TComponent"></typeparam>
 	/// <param name="component"></param>
 	/// <param name="builder"></param>
 	/// <param name="tag"></param>
-	public static void CascadingTagFragment<TType>(ComponentFragment component, RenderTreeBuilder builder, string tag = "div")
+	public static void CascadingTagFragment<TComponent>(ComponentFragment component, RenderTreeBuilder builder, string tag = "div")
 	{
 		/*
 		 * <tag class="@CssClass" @attributes="@UserAttrs">
@@ -61,7 +61,7 @@ public static class ComponentRenderer
 		builder.AddAttribute(1, "class", component.CssClass);
 		builder.AddMultipleAttributes(2, component.UserAttrs);
 
-		builder.OpenComponent<CascadingValue<TType>>(3);
+		builder.OpenComponent<CascadingValue<TComponent>>(3);
 		builder.AddAttribute(4, "Value", component);
 		builder.AddAttribute(5, "IsFixed", true);
 		builder.AddAttribute(6, "ChildContent", (RenderFragment)((b) =>
@@ -107,8 +107,8 @@ public static class ComponentRenderer
 	/// </summary>
 	/// <param name="component"></param>
 	/// <param name="builder"></param>
-	/// <param name="tag"></param>
-	public static void SurroundTagText(TagItem component, RenderTreeBuilder builder, string tag) 
+	/// <param name="surroundTag"></param>
+	public static void SurroundTagText(TagItem component, RenderTreeBuilder builder, string surroundTag) 
 	{
 		/*
 		 * 	<li>
@@ -119,7 +119,7 @@ public static class ComponentRenderer
 		 * 	</li>
 		 */
 
-		builder.OpenElement(0, tag);
+		builder.OpenElement(0, surroundTag);
 
 		if (component.ListClass.IsHave())
 			builder.AddAttribute(1, component.ListClass);

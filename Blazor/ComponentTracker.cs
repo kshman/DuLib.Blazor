@@ -71,20 +71,15 @@ public class ComponentTracker : ComponentBase, IDisposable
 	}
 
 	//
-	public void Dispose() =>
-		Dispose(true);
-
-	//
-	protected virtual void Dispose(bool disposing)
+	public void Dispose()
 	{
-		if (!disposing) 
-			return;
-
 		Logger.LogDebug(Settings.UseLocaleMesg
 			? "개체가 종료하므로 감시를 해제합니다: {desc}"
 			: "{desc}: Disposed. stopped PropertyChanged",
 			_prevDesc ?? (Settings.UseLocaleMesg ? "현재 Value" : "Current value"));
 		if (Value is not null)
 			Value.PropertyChanged -= Value_PropertyChanged;
+
+		GC.SuppressFinalize(this);
 	}
 }
