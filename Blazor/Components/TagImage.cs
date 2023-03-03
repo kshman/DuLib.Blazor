@@ -2,7 +2,7 @@
 
 namespace Du.Blazor.Components;
 
-internal class TagImage : ComponentObject
+public class TagImage : ComponentObject
 {
 	/// <summary>이미지 URL</summary>
 	[Parameter] public string? Image { get; set; }
