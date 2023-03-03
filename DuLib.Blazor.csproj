@@ -9,7 +9,7 @@
     <RootNamespace>Du</RootNamespace>
 
     <RepositoryUrl>https://github.com/kshman/DuLib.Blazor</RepositoryUrl>
-    <Version>0.1.10</Version>
+    <Version>0.1.11</Version>
     <Title>DuLib.Blazor</Title>
     <PackageId>DuLib.Blazor</PackageId>
     <Product>DuLib.Blazor</Product>
