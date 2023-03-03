@@ -43,11 +43,8 @@ public class CssCompose
 	/// <param name="trueName"></param>
 	/// <param name="falseName"></param>
 	/// <returns></returns>
-	public CssCompose Add(bool condition, string trueName, string falseName)
-	{
-		_sts.Add(condition ? trueName : falseName);
-		return this;
-	}
+	public CssCompose Add(bool condition, string? trueName, string? falseName) =>
+		Add(condition ? trueName : falseName);
 
 	/// <summary>
 	/// 값을 만들어줄 함수를 등록
@@ -61,12 +58,22 @@ public class CssCompose
 	}
 
 	/// <summary>
-	/// 값이 있나 확인. 단 <see cref="Register"/>로 넣은거는 못찼는다
+	/// 값이 있나 확인. 클래스 이름 전부가 맞아야함 <br/>
+	/// 단 <see cref="Register"/>로 넣은거는 못찼는다
 	/// </summary>
 	/// <param name="className"></param>
 	/// <returns></returns>
 	public bool Test(string className) 
 		=> _sts.Contains(className);
+
+	/// <summary>
+	/// 값이 있나 확인. 부분이라도 있으면 ㅇㅋ<br/>
+	/// 단 <see cref="Register"/>로 넣은거는 못찼는다
+	/// </summary>
+	/// <param name="className"></param>
+	/// <returns></returns>
+	public bool TestAny(string className) =>
+		_sts.Any(s => s.Contains(className));
 
 	private string? InternalJoin(char separator)
 	{
