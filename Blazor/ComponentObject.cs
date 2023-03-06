@@ -7,7 +7,7 @@ public abstract class ComponentObject : ComponentBase
 {
 	/// <summary>사용 여부 (disabled)</summary>
 	[Parameter]
-	public bool Enabled { get; set; } = true;
+	public bool Disabled { get; set; } = false;
 
 	/// <summary>클래스 지정</summary>
 	[Parameter]
@@ -40,7 +40,7 @@ public abstract class ComponentObject : ComponentBase
 			_init_css = true;
 
 			OnComponentClass(_css_compose);
-			_css_compose.Add(Class).Register(() => Enabled.IfFalse("disabled"));
+			_css_compose.Add(Class).Register(() => Disabled.IfTrue("disabled"));
 
 			OnComponentOnce();
 		}

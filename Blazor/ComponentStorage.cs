@@ -141,7 +141,7 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 			if (item.Id == CurrentId)
 				await SelectItemAsync(item);
 		}
-		else if (SelectedItem is null && SelectFirst && item.Enabled)
+		else if (SelectedItem is null && SelectFirst && item.Disabled is false)
 		{
 			await SelectItemAsync(item);
 		}
