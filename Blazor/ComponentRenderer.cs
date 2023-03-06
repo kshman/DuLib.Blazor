@@ -121,8 +121,8 @@ public static class ComponentRenderer
 
 		builder.OpenElement(0, surroundTag);
 
-		if (component.ListClass.IsHave())
-			builder.AddAttribute(1, component.ListClass);
+		if (component.WrapClass.IsHave())
+			builder.AddAttribute(1, component.WrapClass);
 
 		builder.OpenElement(2, component.Tag);
 		builder.AddAttribute(3, "class", component.CssClass);
