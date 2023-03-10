@@ -2,16 +2,26 @@
 
 /// <summary>아이템 컴포넌트 스토리지</summary>
 /// <remarks>컨테이너와 다른 점은, 스토리지는 그냥 아이템만 보관하고 관리</remarks>
-/// <typeparam name="TItem"><see cref="ComponentObject"/>를 상속한 아이템 컴포넌트</typeparam>
-public abstract class ComponentStorage<TItem> : ComponentFragment, IComponentStrage<TItem>, IAsyncDisposable
-	where TItem : ComponentObject
+/// <typeparam name="TItem"><see cref="BaseComponent"/>를 상속한 아이템 컴포넌트</typeparam>
+public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrage<TItem>, IAsyncDisposable
+	where TItem : BaseComponent
 {
 	//
 	protected List<TItem> Items { get; } = new();
 
+	//
+	protected bool StorageReady { get; set; }
+
 	// 
-	protected override Task OnAfterRenderAsync(bool firstRender) =>
-		!firstRender ? Task.CompletedTask : InvokeAfterRenderFirstAsync();
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (!firstRender)
+			return;
+
+		await InvokeAfterRenderFirstAsync();
+
+		StorageReady = true;
+	}
 
 	//
 	public virtual async Task AddItemAsync(TItem item)
@@ -52,7 +62,11 @@ public abstract class ComponentStorage<TItem> : ComponentFragment, IComponentStr
 
 	/// <summary><see cref="DisposeAsync"/>의 처리 메소드</summary>
 	/// <returns>비동기 처리한 태스크</returns>
-	protected virtual ValueTask DisposeAsyncCore() => ValueTask.CompletedTask;
+	protected virtual ValueTask DisposeAsyncCore()
+	{
+		StorageReady = false;
+		return ValueTask.CompletedTask;
+	}
 
 	//
 	protected async Task InvokeAfterRenderFirstAsync()
@@ -70,6 +84,28 @@ public abstract class ComponentStorage<TItem> : ComponentFragment, IComponentStr
 					throw;
 			}
 		}
+	}
+
+	/// <summary>태스크 상태를 봐서 기다렸다가 StateHasChanged 호출</summary>
+	/// <param name="task"></param>
+	/// <returns></returns>
+	protected async Task StateHasChangedOnAsyncCompletion(Task task)
+	{
+		if (task.ShouldAwaitTask())
+		{
+			try
+			{
+				await task;
+			}
+			catch
+			{
+				if (task.IsCanceled)
+					return;
+				throw;
+			}
+		}
+
+		StateHasChanged();
 	}
 
 	/// <summary>
@@ -98,7 +134,7 @@ public abstract class ComponentStorage<TItem> : ComponentFragment, IComponentStr
 /// <see cref="SelectedItem"/>로 선택한 아이템을 처리할 수 있음
 /// </remarks>
 public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentContainer<TItem>
-	where TItem : ComponentObject
+	where TItem : BaseComponent
 {
 	//
 	[Parameter]
@@ -122,13 +158,15 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 
 		if (SelectedItem is null)
 		{
-			if (CurrentId.IsHave())
+			if (CurrentId.TestHave())
 				await SelectItemAsync(CurrentId);
 			else if (SelectFirst && Items.Count > 0)
 				await SelectItemAsync(Items[0]);
 		}
 
 		await InvokeAfterRenderFirstAsync();
+
+		StorageReady = true;
 	}
 
 	//
@@ -141,7 +179,7 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 			if (item.Id == CurrentId)
 				await SelectItemAsync(item);
 		}
-		else if (SelectedItem is null && SelectFirst && item.Disabled is false)
+		else if (SelectedItem is null && SelectFirst)
 		{
 			await SelectItemAsync(item);
 		}
@@ -157,6 +195,9 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 			SelectedItem = null;
 
 		Items.Remove(item);
+
+		if (!StorageReady)
+			return;
 
 		try
 		{
@@ -175,6 +216,12 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 	{
 		if (item == SelectedItem)
 			return;
+
+		if (!StorageReady)
+		{
+			SelectedItem = item;
+			return;
+		}
 
 		var previous = SelectedItem;
 		SelectedItem = item;

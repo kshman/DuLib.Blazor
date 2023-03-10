@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7551}") = "DuLib.Blazor", "DuLib.Blazor.csproj", "{8296D716-45D4-4512-8D6B-57C161F25821}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuLib.Blazor", "DuLib.Blazor.csproj", "{8296D716-45D4-4512-8D6B-57C161F25821}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

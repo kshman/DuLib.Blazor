@@ -1,5 +1,4 @@
 ﻿using Du.Blazor.Components;
-using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Du.Blazor;
 
@@ -52,12 +51,6 @@ public interface IComponentContainer<TItem> : IComponentStrage<TItem>
 public interface ITagItemHandler
 {
 	/// <summary>
-	/// 태그 아이템의 CSS클래스를 설정
-	/// </summary>
-	/// <param name="item"></param>
-	/// <param name="cssc"></param>
-	void OnClass(TagItem item, CssCompose cssc);
-	/// <summary>
 	/// 태그 아이템의 렌더 트리를 만듦
 	/// </summary>
 	/// <param name="item"></param>
@@ -66,28 +59,11 @@ public interface ITagItemHandler
 }
 
 
-/// <summary>태그 콘텐트 부위</summary>
-public enum TagContentRole
-{
-	Header,
-	Footer,
-	Content,
-}
-
-
 /// <summary>
 /// 태그 콘텐트 에이전시
 /// </summary>
 public interface ITagContentHandler
 {
-	/// <summary>
-	/// 태그 콘텐트의 CSS클래스를 설정
-	/// </summary>
-	/// <param name="role"></param>
-	/// <param name="content">콘텐트</param>
-	/// <param name="cssc">CssCompose</param>
-	void OnClass(TagContentRole role, TagContent content, CssCompose cssc);
-
 	/// <summary>
 	/// 태그 콘텐트의 렌더 트리를 만듦
 	/// </summary>
@@ -104,6 +80,12 @@ public interface ITagContentHandler
 /// </summary>
 public interface ITagListAgent
 {
+	/// <summary>
+	/// 감싸야할 태그 이름. 널이면 안감싸도록
+	/// </summary>
 	string? Tag { get; }
+	/// <summary>
+	/// 원래 태그(감싸는 태그가 아닌)의 CSS 클래스
+	/// </summary>
 	string? Class { get; }
 }

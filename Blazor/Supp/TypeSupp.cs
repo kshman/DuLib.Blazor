@@ -5,14 +5,14 @@ namespace Du.Blazor.Supp;
 internal static class TypeSupp
 {
 	#region 기본 타입
-	internal static bool IsEmpty([NotNullWhen(false)] this string? s) =>
+	internal static bool Empty([NotNullWhen(false)] this string? s) =>
 		string.IsNullOrEmpty(s);
 
-	internal static bool IsWhiteSpace([NotNullWhen(false)] this string? s) =>
+	internal static bool WhiteSpace([NotNullWhen(false)] this string? s) =>
 		string.IsNullOrWhiteSpace(s);
 
-	internal static bool IsHave([NotNullWhen(true)] this string? s) =>
-		!string.IsNullOrWhiteSpace(s);
+	internal static bool TestHave([NotNullWhen(true)] this string? s, bool testSpace = false) =>
+		testSpace ? !string.IsNullOrWhiteSpace(s) : !string.IsNullOrEmpty(s);
 
 	internal static string? IfTrue(this bool condition, string? value) =>
 		condition ? value : null;

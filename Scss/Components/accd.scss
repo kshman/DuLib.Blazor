@@ -1,0 +1,78 @@
+﻿// 아코디언
+.accd {
+  // 배경색
+  --accd-bg-nulo: #1e1e1e;
+  --accd-bg-hover: #2b3035;
+  --accd-bg-active: #031633;
+  --accd-bg-pnl: #1e1e1e;
+  // 글자색
+  --accd-cc: #adb5bd;
+  --accd-cc-arrow: #fff;
+  --accd-cc-active: #6ea8fe;
+  --accd-cc-bdr: #495057;
+  // 아이콘
+  --accd-ic: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  // 아이템
+  & .item {
+    // 눌러
+    & .nulo {
+      background-color: var(--accd-bg-nulo);
+      color: var(--accd-cc);
+      cursor: pointer;
+      padding: 1.1rem;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      transition: 0.4s;
+      // 호버
+      &:hover {
+        background-color: var(--accd-bg-hover);
+      }
+      // 애프터 (오른쪽 화살표)
+      &:after {
+        content: '';
+        float: right;
+        width: 1rem;
+        height: 1rem;
+        margin-left: auto;
+        background-image: var(--accd-ic);
+        background-repeat: no-repeat;
+        background-size: 1rem;
+        transition: transform 0.2s ease-in-out;
+      }
+    }
+    // 패널
+    & .pnl {
+      padding: 0 1.1rem;
+      display: none;
+      background-color: var(--accd-bg-pnl);
+      color: var(--accd-cc);
+      overflow: hidden;
+    }
+  }
+  // 액티브
+  & .item.active {
+    // 눌러
+    & .nulo {
+      background-color: var(--accd-bg-active);
+      color: var(--accd-cc-active);
+      // 오른쪽 삼각형 뒤집기
+      &:after {
+        transform: rotate(-180deg);
+      }
+    }
+    // 패널
+    & .pnl {
+      display: block;
+    }
+  }
+  // 보더
+  &.bdr .item {
+    border: 1px solid var(--accd-cc-bdr);
+    // 1번째것만 위 보더 넣음
+    &:not(:first-of-type) {
+      border-top: 0;
+    }
+  }
+}

@@ -1,15 +1,22 @@
-﻿using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.Extensions.Logging;
+﻿namespace Du.Blazor.Components;
 
-namespace Du.Blazor.Components;
+/// <summary>태그 콘텐트 부위</summary>
+public enum TagContentRole
+{
+	Header,
+	Footer,
+	Content,
+}
+
 
 /// <summary>
 /// 기본 태그 헤더
 /// </summary>
 public class TagHeader : TagContent
 {
-	/// <inheritdoc />
-	protected override TagContentRole Role => TagContentRole.Header;
+	public TagHeader()
+		: base(TagContentRole.Header)
+	{ }
 }
 
 
@@ -18,73 +25,42 @@ public class TagHeader : TagContent
 /// </summary>
 public class TagFooter : TagContent
 {
-	/// <inheritdoc />
-	protected override TagContentRole Role => TagContentRole.Footer;
+	public TagFooter()
+		: base(TagContentRole.Footer)
+	{ }
 }
 
 
 /// <summary>
 /// 기본 태그 콘텐트
 /// </summary>
-public class TagContent : ComponentFragment
+public class TagContent : ComponentObject
 {
 	[CascadingParameter] public ITagContentHandler? ContentHandler { get; set; }
-
-	protected virtual TagContentRole Role => TagContentRole.Content;
 
 	//
 	[Inject] protected ILogger<TagContent> Logger { get; set; } = default!;
 
 	//
+	private readonly TagContentRole _role;
+
+	//
+	public TagContent() =>
+		_role = TagContentRole.Content;
+
+	//
+	protected TagContent(TagContentRole role) =>
+		_role = role;
+
+	//
 	protected override void OnInitialized()
 	{
-		LogIf.ContainerIsNull(Logger, ContentHandler);
+		LogIf.ContainerIsNull(Logger, this, ContentHandler);
 
 		base.OnInitialized();
 	}
 
-	//
-	protected override void OnComponentClass(CssCompose cssc) =>
-		ContentHandler?.OnClass(Role, this, cssc);
-
 	// 
 	protected override void BuildRenderTree(RenderTreeBuilder builder) =>
-		ContentHandler?.OnRender(Role, this, builder);
-}
-
-
-/// <summary>스토리지 또는 컨테이너용 아이템</summary>
-public class TagSubset : TagTextBase, IAsyncDisposable
-{
-	/// <summary>이 컴포넌트를 포함하는 컨테이너</summary>
-	[CascadingParameter] public ComponentStorage<TagSubset>? Container { get; set; }
-
-	/// <summary>디스플레이 CSS클래스. 제목에 쓰임</summary>
-	[Parameter] public string? DisplayClass { get; set; }
-	/// <summary>디스플레이 태그. 제목에 쓰임</summary>
-	[Parameter] public RenderFragment? Display { get; set; }
-	/// <summary>콘텐트 태그. 내용에 쓰임</summary>
-	[Parameter] public RenderFragment? Content { get; set; }
-
-	//
-	public object? ExtendObject { get; set; }
-
-	//
-	protected override Task OnInitializedAsync()
-	{
-		ThrowIf.ContainerIsNull(this, Container);
-
-		return Container is null ? Task.CompletedTask : Container.AddItemAsync(this);
-	}
-
-	//
-	public async ValueTask DisposeAsync()
-	{
-		await DisposeAsyncCore().ConfigureAwait(false);
-		GC.SuppressFinalize(this);
-	}
-
-	//
-	protected virtual Task DisposeAsyncCore() =>
-		Container is not null ? Container.RemoveItemAsync(this) : Task.CompletedTask;
+		ContentHandler?.OnRender(_role, this, builder);
 }

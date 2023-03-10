@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Components.Rendering;
+﻿namespace Du.Blazor.Components;
 
-namespace Du.Blazor.Components;
-
-public class TagImage : ComponentObject
+/// <summary>
+/// 이미지 태그
+/// </summary>
+public class TagImage : BaseComponent
 {
 	/// <summary>이미지 URL</summary>
 	[Parameter] public string? Image { get; set; }
@@ -12,13 +13,14 @@ public class TagImage : ComponentObject
 	[Parameter] public int? Width { get; set; }
 	/// <summary>세로 높이</summary>
 	[Parameter] public int? Height { get; set; }
+	/// <summary>클릭</summary>
 	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		builder.OpenElement(0, "img");
-		builder.AddAttribute(1, "class", CssClass);
+		builder.AddAttribute(1, "class", ActualClass);
 		builder.AddAttribute(2, "src", Image);
 		builder.AddAttribute(3, "alt", Text);
 		builder.AddAttribute(4, "width", Width);

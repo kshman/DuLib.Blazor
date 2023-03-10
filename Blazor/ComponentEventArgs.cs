@@ -3,25 +3,13 @@
 /// <summary>펼침 이벤트</summary>
 public class ExpandedEventArgs : EventArgs
 {
-	public string Id { get; }
-	public bool Expanded { get; }
-
-	public ExpandedEventArgs(string id, bool expanded)
-	{
-		Id = id;
-		Expanded = expanded;
-	}
+	public string? Id { get; init; }
+	public bool Expanded { get; init; }
 }
 
 /// <summary>슬라이드 이벤트</summary>
 public class SlideEventArgs : EventArgs
 {
-	public int From { get; }
-	public int To { get; }
-
-	public SlideEventArgs(int from, int to)
-	{
-		From = from;
-		To = to;
-	}
+	public int From { get; init; }
+	public int To { get; init; }
 }
