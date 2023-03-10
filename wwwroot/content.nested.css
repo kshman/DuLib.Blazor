@@ -1,51 +1,11 @@
-﻿:root {
-  --du-serif: "Malgun Gothic","Segoe UI","Apple SD Gothic Neo","Helvetica Neue","Noto Sans",Helvetica,Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol","Apple Color Emoji","Noto Color Emoji";
-  --du-bg: #1e1e1e;
-  --du-bg-ctnr: #1e1e1e;
-  --du-bg-active: #031633;
-  --du-clr: #adb5bd;
-  --du-clr-tool: #fff;
-  --du-clr-active: #6ea8fe;
-  --du-bdr-ctnr: #495057; }
+﻿html, body {
+  font-family: "Malgun Gothic", "Segoe UI", "Apple SD Gothic Neo", "Helvetica Neue", "Noto Sans", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji";
+  font-size: 1rem;
+  background-color: #1e1e1e;
+  color: #adb5bd; }
 
-.du-example {
-  padding: 1rem 1.5rem;
-  margin: 0.5rem 1rem;
-  border: thick double #a9f27d; }
-  .du-example.purple {
-    border: 2px solid rebeccapurple; }
-  .du-example.blue {
-    border: 2px solid blue; }
-
-.border-none {
-  border-style: none !important; }
-
-.pos-static {
-  position: static; }
-
-.pos-relative {
-  position: relative; }
-
-.pos-absolute {
-  position: absolute; }
-
-.pos-fixed {
-  position: fixed; }
-
-.pos-sticky {
-  position: sticky; }
-
-.cursor-pointer {
+[role=button] {
   cursor: pointer; }
-
-.display-inline {
-  display: inline; }
-
-.display-block {
-  display: block; }
-
-.display-none {
-  display: none; }
 
 .accd {
   --accd-bg-nulo: #1e1e1e;
@@ -60,7 +20,6 @@
   .accd .item .nulo {
     background-color: var(--accd-bg-nulo);
     color: var(--accd-cc);
-    cursor: pointer;
     padding: 1.1rem;
     width: 100%;
     border: none;
@@ -114,8 +73,7 @@
       float: left;
       border: none;
       outline: none;
-      cursor: pointer;
-      padding: 1rem 1rem;
+      padding: 0.5rem 1rem;
       transition: 0.3s;
       font-size: 1rem; }
       .tab .lst .nulo:hover {
@@ -135,3 +93,14 @@
   .tab.bdr .pnl {
     border: 1px solid var(--tab-cc-bdr);
     border-top: 0; }
+
+.dz-ex {
+  padding: 1rem 1.5rem;
+  margin: 0.5rem 1rem;
+  border: thick double #a9f27d; }
+  .dz-ex.purple {
+    border: 2px solid rebeccapurple; }
+  .dz-ex.blue {
+    border: 2px solid blue; }
+
+/*# sourceMappingURL=content.css.map */

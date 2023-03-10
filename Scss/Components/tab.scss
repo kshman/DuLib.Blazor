@@ -1,15 +1,17 @@
+@import "../include.scss";
+
 // 탭
 .tab {
   // 배경색
-  --tab-bg: #1e1e1e;
-  --tab-bg-nulo: #1e1e1e;
-  --tab-bg-hover: #2b3035;
-  --tab-bg-active: #031633;
-  --tab-bg-pnl: #1e1e1e;
+  --tab-bg: #{$bg};
+  --tab-bg-nulo: #{$bg-ctrl};
+  --tab-bg-hover: #{$bg-ctrl-hover};
+  --tab-bg-active: #{$bg-ctrl-active};
+  --tab-bg-pnl: #{$bg-ctrl-panel};
   // 글자색
-  --tab-cc: #adb5bd;
-  --tab-cc-active: #6ea8fe;
-  --tab-cc-bdr: #495057;
+  --tab-cc: #{$cc};
+  --tab-cc-active: #{$cc-ctrl-active};
+  --tab-cc-bdr: #{$cc-ctrl-bdr};
   // 탭버튼
   & .lst {
     overflow: hidden;
@@ -20,8 +22,7 @@
       float: left;
       border: none;
       outline: none;
-      cursor: pointer;
-      padding: 1rem 1rem;
+      padding: 0.5rem 1rem;
       transition: 0.3s;
       font-size: 1rem;
       // 눌러 호버

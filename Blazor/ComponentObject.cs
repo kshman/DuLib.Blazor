@@ -83,7 +83,7 @@ public abstract class BaseComponent : ComponentBase
 
 	//
 	protected void FillAutoId() =>
-		Id ??= $"DZ_{Interlocked.Increment(ref _id_atomic_index)}";
+		Id ??= $"DZ_{Interlocked.Increment(ref _id_atomic_index):X}";
 
 	//
 	public override string ToString() => Id is null

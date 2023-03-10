@@ -84,21 +84,17 @@ public class Accds : ComponentContainer<Accd>
 		if (Separate)
 			return;
 
-		var needStateChange = false;
-
+		var opened = false;
 		foreach (var item in Items)
 		{
-			if (needStateChange)
+			if (opened)
 				item.InternalOpened = false;
 			else if (item.InternalOpened)
 			{
-				needStateChange = true;
-				await SelectItemAsync(item);
+				opened = true;
+				await SelectItemAsync(item, true);
 			}
 		}
-
-		if (needStateChange)
-			StateHasChanged();
 	}
 
 	/// <inheritdoc />

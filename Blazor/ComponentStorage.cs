@@ -18,35 +18,25 @@ public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrag
 		if (!firstRender)
 			return;
 
-		await InvokeAfterRenderFirstAsync();
+		await OnAfterFirstRenderAsync();
 
 		StorageReady = true;
 	}
 
 	//
-	public virtual async Task AddItemAsync(TItem item)
+	public virtual Task AddItemAsync(TItem item)
 	{
 		Items.Add(item);
 
-		var task = OnItemAddedAsync(item);
-		await StateHasChangedOnAsyncCompletion(task);
+		return OnItemAddedAsync(item);
 	}
 
 	//
-	public virtual async Task RemoveItemAsync(TItem item)
+	public virtual Task RemoveItemAsync(TItem item)
 	{
 		Items.Remove(item);
 
-		try
-		{
-			var task = OnItemRemovedAsync(item);
-			await StateHasChangedOnAsyncCompletion(task);
-		}
-		catch (ObjectDisposedException)
-		{
-			// 헐
-			// 이건 디스포즈하다가 개체가 사라진거겟지
-		}
+		return StorageReady is false ? Task.CompletedTask : OnItemRemovedAsync(item);
 	}
 
 	//
@@ -66,24 +56,6 @@ public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrag
 	{
 		StorageReady = false;
 		return ValueTask.CompletedTask;
-	}
-
-	//
-	protected async Task InvokeAfterRenderFirstAsync()
-	{
-		var task = OnAfterFirstRenderAsync();
-		if (task.ShouldAwaitTask())
-		{
-			try
-			{
-				await task;
-			}
-			catch
-			{
-				if (!task.IsCanceled)
-					throw;
-			}
-		}
 	}
 
 	/// <summary>태스크 상태를 봐서 기다렸다가 StateHasChanged 호출</summary>
@@ -156,72 +128,36 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 		if (!firstRender)
 			return;
 
-		if (SelectedItem is null)
+		if (CurrentId.TestHave())
 		{
-			if (CurrentId.TestHave())
-				await SelectItemAsync(CurrentId);
-			else if (SelectFirst && Items.Count > 0)
-				await SelectItemAsync(Items[0]);
+			var item = GetItem(CurrentId);
+			await SelectItemAsync(item, true);
+		}
+		else if (SelectFirst && Items.Count > 0)
+		{
+			var item = Items[0];
+			await SelectItemAsync(item, true);
 		}
 
-		await InvokeAfterRenderFirstAsync();
+		await OnAfterFirstRenderAsync();
 
 		StorageReady = true;
 	}
 
 	//
-	public override async Task AddItemAsync(TItem item)
-	{
-		Items.Add(item);
-
-		if (CurrentId is not null)
-		{
-			if (item.Id == CurrentId)
-				await SelectItemAsync(item);
-		}
-		else if (SelectedItem is null && SelectFirst)
-		{
-			await SelectItemAsync(item);
-		}
-
-		var task = OnItemAddedAsync(item);
-		await StateHasChangedOnAsyncCompletion(task);
-	}
-
-	//
-	public override async Task RemoveItemAsync(TItem item)
+	public override Task RemoveItemAsync(TItem item)
 	{
 		if (SelectedItem == item)
 			SelectedItem = null;
 
-		Items.Remove(item);
-
-		if (!StorageReady)
-			return;
-
-		try
-		{
-			var task = OnItemRemovedAsync(item);
-			await StateHasChangedOnAsyncCompletion(task);
-		}
-		catch (ObjectDisposedException)
-		{
-			// 헐
-			// 이건 디스포즈하다가 개체가 사라진거겟지
-		}
+		return base.RemoveItemAsync(item);
 	}
 
 	//
-	public async Task SelectItemAsync(TItem? item, bool stateChange = false)
+	public async Task SelectItemAsync(TItem? item, bool stateHasChanged = false)
 	{
 		if (item == SelectedItem)
 			return;
-
-		if (!StorageReady)
-		{
-			SelectedItem = item;
-			return;
-		}
 
 		var previous = SelectedItem;
 		SelectedItem = item;
@@ -244,15 +180,15 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 		if (item is not null && task.Result)
 			await InvokeCurrentIdChangedAsync(item.Id);
 
-		if (stateChange)
+		if (stateHasChanged)
 			StateHasChanged();
 	}
 
 	//
-	public Task SelectItemAsync(string id, bool stateChange = false)
+	public Task SelectItemAsync(string id, bool stateHasChanged = false)
 	{
 		var item = Items.FirstOrDefault(i => i.Id == id);
-		return SelectItemAsync(item, stateChange);
+		return SelectItemAsync(item, stateHasChanged);
 	}
 
 	/// <summary>아이템을 선택했을 때</summary>

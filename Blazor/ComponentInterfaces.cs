@@ -35,14 +35,14 @@ public interface IComponentContainer<TItem> : IComponentStrage<TItem>
 	TItem? SelectedItem { get; set; }
 	/// <summary>아이템 선택</summary>
 	/// <param name="item"></param>
-	/// <param name="stateChange"></param>
+	/// <param name="stateHasChanged"></param>
 	/// <returns>비동기 처리한 태스크</returns>
-	Task SelectItemAsync(TItem? item, bool stateChange = false);
+	Task SelectItemAsync(TItem? item, bool stateHasChanged = false);
 	/// <summary>아이디로 아이템 선택</summary>
 	/// <param name="id"></param>
-	/// <param name="stateChange"></param>
+	/// <param name="stateHasChanged"></param>
 	/// <returns>비동기 처리한 태스크</returns>
-	Task SelectItemAsync(string id, bool stateChange = false);
+	Task SelectItemAsync(string id, bool stateHasChanged = false);
 }
 
 

@@ -49,14 +49,6 @@ public class Tabs : ComponentContainer<Tab>
 	protected override bool SelectFirst => !DontActiveOnCreation;
 
 	/// <inheritdoc />
-	protected override Task OnAfterFirstRenderAsync()
-	{
-		if (SelectedItem is not null)
-			StateHasChanged();
-		return Task.CompletedTask;
-	}
-
-	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		// 먼저 등록
@@ -74,21 +66,24 @@ public class Tabs : ComponentContainer<Tab>
 		// 탭 리스트
 		builder.OpenElement(20, "div");
 		builder.AddAttribute(21, "class", Cssc.Class("lst", ActualClass));
-		builder.AddMultipleAttributes(22, UserAttrs);
+		builder.AddAttribute(22, "role", "tablist");
+		builder.AddMultipleAttributes(23, UserAttrs);
 
 		// 탭 눌러
 		foreach (var item in Items)
 		{
 			var cur = item == SelectedItem;
 
-			builder.OpenElement(30, "a");
-			builder.AddAttribute(31, "role", "button");
+			builder.OpenElement(30, "button");
+			builder.AddAttribute(31, "type", "button");
 			builder.AddAttribute(32, "class", Cssc.Class("nulo", cur.IfTrue("active"), item.ActualClass));
-			builder.AddAttribute(33, "id", item.Id);
-			builder.AddAttribute(34, "onclick", async () => await HandleTabClick(item));
-			builder.AddEventStopPropagationAttribute(35, "onclick", true);
-			builder.AddMultipleAttributes(36, item.UserAttrs);
-			builder.AddContent(37, item.Text);
+			builder.AddAttribute(33, "role", "tab");
+			builder.AddAttribute(34, "aria-selected", cur);
+			builder.AddAttribute(35, "aria-controls", item.Id);
+			builder.AddAttribute(36, "onclick", async () => await HandleTabClick(item));
+			builder.AddEventStopPropagationAttribute(37, "onclick", true);
+			builder.AddMultipleAttributes(38, item.UserAttrs);
+			builder.AddContent(39, item.Text);
 			builder.CloseElement(); // a, 탭 눌러
 		}
 
@@ -103,7 +98,9 @@ public class Tabs : ComponentContainer<Tab>
 
 				builder.OpenElement(40, "div");
 				builder.AddAttribute(41, "class", Cssc.Class("pnl", cur.IfTrue("active")));
-				builder.AddContent(42, item.ChildContent);
+				builder.AddAttribute(42, "role", "tabpanel");
+				builder.AddAttribute(43, "id", item.Id);
+				builder.AddContent(44, item.ChildContent);
 				builder.CloseElement();
 			}
 		}

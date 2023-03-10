@@ -1,5 +1,5 @@
 {
-  "sourceMap": false,
+  "sourceMap": true,
   "loadPaths": [],
   "style": "Compressed",
   "precision": 10,
