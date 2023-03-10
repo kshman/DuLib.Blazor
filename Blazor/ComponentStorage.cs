@@ -133,7 +133,12 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 			var item = GetItem(CurrentId);
 			await SelectItemAsync(item, true);
 		}
-		else if (SelectFirst && Items.Count > 0)
+		else if (SelectFirst is false)
+		{
+			// 이거 안하면 화면에 안나온다... 이럴스가
+			StateHasChanged();
+		}
+		else if (Items.Count > 0)
 		{
 			var item = Items[0];
 			await SelectItemAsync(item, true);

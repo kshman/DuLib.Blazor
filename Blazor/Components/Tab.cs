@@ -40,6 +40,7 @@ public class Tabs : ComponentContainer<Tab>
 {
 	[Parameter] public TabType? Type { get; set; }
 	[Parameter] public bool Border { get; set; }
+	[Parameter] public bool Fade { get; set; }
 	[Parameter] public bool TabOnly { get; set; }
 	[Parameter] public bool DontActiveOnCreation { get; set; }
 
@@ -61,7 +62,8 @@ public class Tabs : ComponentContainer<Tab>
 
 		// 탭 컨테이너
 		builder.OpenElement(10, "div");
-		builder.AddAttribute(11, "class", Cssc.Class("tab", Border.IfTrue("bdr")));
+		builder.AddAttribute(11, "class", Cssc.Class("tab", Border.IfTrue("bdr"), Fade.IfTrue("fdi")));
+		builder.AddAttribute(12, "id", Id);
 
 		// 탭 리스트
 		builder.OpenElement(20, "div");
