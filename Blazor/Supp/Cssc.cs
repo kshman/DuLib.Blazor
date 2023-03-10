@@ -25,14 +25,30 @@ internal static class Cssc
 	/// </summary>
 	/// <param name="args"></param>
 	/// <returns></returns>
-	public static string? Class(params string?[] args) =>
-		Join(class_separator, args);
+	public static string? Class(params string?[] args) => Join(class_separator, args);
+
+	/// <summary>
+	/// CSS 클래스로 합친다
+	/// </summary>
+	/// <param name="left"></param>
+	/// <param name="right"></param>
+	/// <returns></returns>
+	public static string? Class(string? left, string? right) =>
+		left.WhiteSpace() ? right : right.WhiteSpace() ? left : $"{left}{class_separator}{right}";
 
 	/// <summary>
 	/// CSS 스타일로 합친다
 	/// </summary>
 	/// <param name="args"></param>
 	/// <returns></returns>
-	public static string? Style(params string?[] args) =>
-		Join(style_separator, args);
+	public static string? Style(params string?[] args) => Join(style_separator, args);
+
+	/// <summary>
+	/// CSS 스타일로 합친다
+	/// </summary>
+	/// <param name="left"></param>
+	/// <param name="right"></param>
+	/// <returns></returns>
+	public static string? Style(string? left, string? right) =>
+		left.WhiteSpace() ? right : right.WhiteSpace() ? left : $"{left}{style_separator}{right}";
 }

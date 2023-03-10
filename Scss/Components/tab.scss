@@ -1,0 +1,56 @@
+// 탭
+.tab {
+  // 배경색
+  --tab-bg: #1e1e1e;
+  --tab-bg-nulo: #1e1e1e;
+  --tab-bg-hover: #2b3035;
+  --tab-bg-active: #031633;
+  --tab-bg-pnl: #1e1e1e;
+  // 글자색
+  --tab-cc: #adb5bd;
+  --tab-cc-active: #6ea8fe;
+  --tab-cc-bdr: #495057;
+  // 탭버튼
+  & .lst {
+    overflow: hidden;
+    background-color: var(--tab-bg);
+    // 눌러
+    & .nulo {
+      background-color: var(--tab-bg-nulo);
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 1rem 1rem;
+      transition: 0.3s;
+      font-size: 1rem;
+      // 눌러 호버
+      &:hover {
+        background-color: var(--tab-bg-hover);
+      }
+      // 액티브
+      &.active {
+        background-color: var(--tab-bg-active);
+        color: var(--tab-cc-active);
+      }
+    }
+  }
+  // 패널
+  & .pnl {
+    display: none;
+    padding: .1rem 1.1rem;
+    background-color: var(--tab-bg-pnl);
+    color: var(--tab-cc);
+    //액티브
+    &.active {
+      display: block;
+    }
+  }
+  // 보더
+  &.bdr {
+    border: 1px solid var(--tab-cc-bdr);
+    // 탭 보더
+    & .lst {
+    }
+  }
+}

@@ -30,7 +30,7 @@ public class Accd : ComponentObject, IAsyncDisposable
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
-		builder.AddAttribute(12, "class", Cssc.Class("nulo", Class));
+		builder.AddAttribute(12, "class", Cssc.Class("nulo", ActualClass));
 		builder.AddAttribute(13, "id", Id);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		builder.AddEventStopPropagationAttribute(15, "onclick", true);
@@ -68,14 +68,12 @@ public class Accd : ComponentObject, IAsyncDisposable
 	}
 }
 
-
 public class Accds : ComponentContainer<Accd>
 {
 	[Parameter] public bool Separate { get; set; }
 	[Parameter] public bool Border { get; set; }
 
-	[Parameter] public EventCallback<string> OnOpen { get; set; }
-	[Parameter] public EventCallback<string> OnClose { get; set; }
+	[Parameter] public EventCallback<ActiveEventArgs> OnActive { get; set; }
 
 	/// <inheritdoc />
 	protected override bool SelectFirst => false;
@@ -108,12 +106,13 @@ public class Accds : ComponentContainer<Accd>
 	{
 		builder.OpenElement(0, "div");
 		builder.AddAttribute(1, "class", Cssc.Class("accd", Border.IfTrue("bdr")));
+		builder.AddMultipleAttributes(2, UserAttrs);
 
-		builder.OpenComponent<CascadingValue<Accds>>(2);
-		builder.AddAttribute(3, "Value", this);
-		builder.AddAttribute(4, "IsFixed", true);
-		builder.AddAttribute(5, "ChildContent", (RenderFragment)((b) =>
-			b.AddContent(6, ChildContent)));
+		builder.OpenComponent<CascadingValue<Accds>>(3);
+		builder.AddAttribute(4, "Value", this);
+		builder.AddAttribute(5, "IsFixed", true);
+		builder.AddAttribute(6, "ChildContent", (RenderFragment)((b) =>
+			b.AddContent(7, ChildContent)));
 		builder.CloseComponent(); // CascadingValue<Accds>
 
 		builder.CloseElement(); // div
@@ -142,5 +141,11 @@ public class Accds : ComponentContainer<Accd>
 
 	//
 	private Task InvokeOpenClose(string id, bool open) =>
-		open ? OnOpen.InvokeAsync(id) : OnClose.InvokeAsync(id);
+		OnActive.HasDelegate is false
+			? Task.CompletedTask
+			: OnActive.InvokeAsync(new ActiveEventArgs
+			{
+				Id = id,
+				Active = open,
+			});
 }

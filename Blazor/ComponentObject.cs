@@ -70,7 +70,7 @@ public abstract class BaseComponent : ComponentBase
 	public Dictionary<string, object>? UserAttrs { get; set; }
 
 	//
-	protected string? ActualClass => ComponentClass is null
+	internal string? ActualClass => ComponentClass is null
 		? Class
 		: Class is null
 			? ComponentClass
