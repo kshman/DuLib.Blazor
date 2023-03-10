@@ -73,7 +73,7 @@ public class Accds : ComponentContainer<Accd>
 	[Parameter] public bool Separate { get; set; }
 	[Parameter] public bool Border { get; set; }
 
-	[Parameter] public EventCallback<ActiveEventArgs> OnActive { get; set; }
+	[Parameter] public EventCallback<ExpandEventArgs> OnExpand { get; set; }
 
 	/// <inheritdoc />
 	protected override bool SelectFirst => false;
@@ -141,11 +141,11 @@ public class Accds : ComponentContainer<Accd>
 
 	//
 	private Task InvokeOpenClose(string id, bool open) =>
-		OnActive.HasDelegate is false
+		OnExpand.HasDelegate is false
 			? Task.CompletedTask
-			: OnActive.InvokeAsync(new ActiveEventArgs
+			: OnExpand.InvokeAsync(new ExpandEventArgs
 			{
 				Id = id,
-				Active = open,
+				Expand = open,
 			});
 }

@@ -122,7 +122,7 @@ public class Tabs : ComponentContainer<Tab>
 
 	//
 	private Task HandleTabClick(Tab tab) =>
-		SelectItemAsync(tab);
+		SelectItemAsync(tab, true);
 
 	//
 	private Task InvokeOnActive(string id) =>

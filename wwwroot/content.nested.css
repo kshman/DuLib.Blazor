@@ -130,5 +130,8 @@
     color: var(--tab-cc); }
     .tab .pnl.active {
       display: block; }
-  .tab.bdr {
+  .tab.bdr .lst {
     border: 1px solid var(--tab-cc-bdr); }
+  .tab.bdr .pnl {
+    border: 1px solid var(--tab-cc-bdr);
+    border-top: 0; }

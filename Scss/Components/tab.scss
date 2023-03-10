@@ -48,9 +48,14 @@
   }
   // 보더
   &.bdr {
-    border: 1px solid var(--tab-cc-bdr);
-    // 탭 보더
+    // 탭버튼 보더
     & .lst {
+      border: 1px solid var(--tab-cc-bdr);
+    }
+    // 탭 패널 보드
+    & .pnl {
+      border: 1px solid var(--tab-cc-bdr);
+      border-top: 0;
     }
   }
 }
