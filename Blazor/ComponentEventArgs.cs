@@ -1,27 +1,22 @@
 ﻿namespace Du.Blazor;
 
 /// <summary>펼침 이벤트</summary>
-public class ExpandedEventArgs : EventArgs
+public class ExpandEventArgs : EventArgs
 {
-	public string Id { get; }
-	public bool Expanded { get; }
-
-	public ExpandedEventArgs(string id, bool expanded)
-	{
-		Id = id;
-		Expanded = expanded;
-	}
+	public string? Id { get; init; }
+	public bool Expand { get; init; }
 }
 
 /// <summary>슬라이드 이벤트</summary>
 public class SlideEventArgs : EventArgs
 {
-	public int From { get; }
-	public int To { get; }
+	public int From { get; init; }
+	public int To { get; init; }
+}
 
-	public SlideEventArgs(int from, int to)
-	{
-		From = from;
-		To = to;
-	}
+/// <summary>사용 상태 변경 이벤트</summary>
+public class ActiveEventArgs : EventArgs
+{
+	public string? Id { get; init; }
+	public bool Active { get; init; }
 }

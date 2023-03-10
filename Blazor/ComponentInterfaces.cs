@@ -1,5 +1,4 @@
 ﻿using Du.Blazor.Components;
-using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Du.Blazor;
 
@@ -36,14 +35,14 @@ public interface IComponentContainer<TItem> : IComponentStrage<TItem>
 	TItem? SelectedItem { get; set; }
 	/// <summary>아이템 선택</summary>
 	/// <param name="item"></param>
-	/// <param name="stateChange"></param>
+	/// <param name="stateHasChanged"></param>
 	/// <returns>비동기 처리한 태스크</returns>
-	Task SelectItemAsync(TItem? item, bool stateChange = false);
+	Task SelectItemAsync(TItem? item, bool stateHasChanged = false);
 	/// <summary>아이디로 아이템 선택</summary>
 	/// <param name="id"></param>
-	/// <param name="stateChange"></param>
+	/// <param name="stateHasChanged"></param>
 	/// <returns>비동기 처리한 태스크</returns>
-	Task SelectItemAsync(string id, bool stateChange = false);
+	Task SelectItemAsync(string id, bool stateHasChanged = false);
 }
 
 
@@ -51,12 +50,6 @@ public interface IComponentContainer<TItem> : IComponentStrage<TItem>
 /// <remarks>컨테이너가 아닌것은 개체를 소유하지 않고 처리만 도와주기 때문</remarks>
 public interface ITagItemHandler
 {
-	/// <summary>
-	/// 태그 아이템의 CSS클래스를 설정
-	/// </summary>
-	/// <param name="item"></param>
-	/// <param name="cssc"></param>
-	void OnClass(TagItem item, CssCompose cssc);
 	/// <summary>
 	/// 태그 아이템의 렌더 트리를 만듦
 	/// </summary>
@@ -66,28 +59,11 @@ public interface ITagItemHandler
 }
 
 
-/// <summary>태그 콘텐트 부위</summary>
-public enum TagContentRole
-{
-	Header,
-	Footer,
-	Content,
-}
-
-
 /// <summary>
 /// 태그 콘텐트 에이전시
 /// </summary>
 public interface ITagContentHandler
 {
-	/// <summary>
-	/// 태그 콘텐트의 CSS클래스를 설정
-	/// </summary>
-	/// <param name="role"></param>
-	/// <param name="content">콘텐트</param>
-	/// <param name="cssc">CssCompose</param>
-	void OnClass(TagContentRole role, TagContent content, CssCompose cssc);
-
 	/// <summary>
 	/// 태그 콘텐트의 렌더 트리를 만듦
 	/// </summary>
@@ -104,6 +80,12 @@ public interface ITagContentHandler
 /// </summary>
 public interface ITagListAgent
 {
+	/// <summary>
+	/// 감싸야할 태그 이름. 널이면 안감싸도록
+	/// </summary>
 	string? Tag { get; }
+	/// <summary>
+	/// 원래 태그(감싸는 태그가 아닌)의 CSS 클래스
+	/// </summary>
 	string? Class { get; }
 }

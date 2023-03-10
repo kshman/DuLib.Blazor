@@ -25,7 +25,7 @@ public interface IMarkdownProvider
 
 public static class MarkdownProviderExtension
 {
-	public static IServiceCollection AdDuMarkdownProvider(this IServiceCollection services)
+	public static IServiceCollection AddMarkdownProvider(this IServiceCollection services)
 	{
 		if (services == null)
 			throw new ArgumentNullException(nameof(services));

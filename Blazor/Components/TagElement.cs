@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Rendering;
-
-namespace Du.Blazor.Components;
+﻿namespace Du.Blazor.Components;
 
 /// <summary>태그 요소</summary>
 /// <remarks>지정한 태그를 이용해서 내용을 그림</remarks>
@@ -47,14 +45,10 @@ public class TagElement : ComponentBase
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		builder.OpenElement(0, Tag);
-
-		if (Class.IsHave())
-			builder.AddAttribute(1, "class", Class);
-
+		builder.AddAttribute(1, "class", Class);
 		builder.AddAttribute(2, "onclick", InvokeOnClickAsync);
 		builder.AddEventPreventDefaultAttribute(3, "onclick", OnClickPreventDefault);
 		builder.AddEventStopPropagationAttribute(4, "onclick", OnClickStopPropagation);
-
 		builder.AddMultipleAttributes(5, UserAttrs);
 
 		builder.AddElementReferenceCapture(6, p =>
@@ -64,7 +58,6 @@ public class TagElement : ComponentBase
 		});
 
 		builder.AddContent(7, ChildContent);
-
 		builder.CloseElement();
 	}
 

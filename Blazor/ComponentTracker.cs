@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.Extensions.Logging;
 
 namespace Du.Blazor;
 

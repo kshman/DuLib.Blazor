@@ -110,7 +110,7 @@ public interface IBrowserService
 
 public static class BrowserServiceExtension
 {
-	public static IServiceCollection AdDuBrowserServiceScoped(this IServiceCollection services)
+	public static IServiceCollection AddBrowserServiceScoped(this IServiceCollection services)
 	{
 		if (services == null)
 			throw new ArgumentNullException(nameof(services));
@@ -120,7 +120,7 @@ public static class BrowserServiceExtension
 		return services;
 	}
 
-	public static IServiceCollection AdDuBrowserServiceTransient(this IServiceCollection services)
+	public static IServiceCollection AddBrowserServiceTransient(this IServiceCollection services)
 	{
 		if (services == null)
 			throw new ArgumentNullException(nameof(services));

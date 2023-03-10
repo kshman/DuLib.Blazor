@@ -9,7 +9,7 @@
     <RootNamespace>Du</RootNamespace>
 
     <RepositoryUrl>https://github.com/kshman/DuLib.Blazor</RepositoryUrl>
-    <Version>0.1.14</Version>
+    <Version>0.1.17</Version>
     <Title>DuLib.Blazor</Title>
     <PackageId>DuLib.Blazor</PackageId>
     <Product>DuLib.Blazor</Product>
@@ -35,7 +35,9 @@
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
+  </ItemGroup>
 
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -51,6 +53,18 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="sassconfig.json" />
+    <None Include="sassconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Content Remove="wwwroot\ref\**" />
+    <None Remove="wwwroot\ref\**" />
+    <Content Remove="Blazor.Bootstrap\Supp\Dummy.razor" />
+    <None Include="Blazor.Bootstrap\Supp\Dummy.razor" />
   </ItemGroup>
 
 </Project>

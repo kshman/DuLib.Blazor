@@ -5,18 +5,18 @@ namespace Du.Blazor.Supp;
 internal static class ThrowIf
 {
 	// 컨테이너가 널이면 예외
-	internal static void ContainerIsNull<TContainer, TItem>(TItem item, [NotNull] TContainer? container)
+	internal static void ContainerIsNull<TContainer>(object item, [NotNull] TContainer? container)
 	{
 		if (container is not null)
 			return;
 
 		throw new InvalidOperationException(Settings.UseLocaleMesg
-			? $"{typeof(TItem)}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{typeof(TContainer)}> 컨테이너 아래 있어야 해요."
-			: $"{typeof(TItem)}: No container found. This component must be contained within <{typeof(TContainer)}> container component.");
+			? $"{item.GetType().Name}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{typeof(TContainer)}> 컨테이너 아래 있어야 해요."
+			: $"{item.GetType().Name}: No container found. This component must be contained within <{typeof(TContainer)}> container component.");
 	}
 
 	//
-	internal static void ContainerIsNull<TItem>(TItem item, params object?[] containers)
+	internal static void ContainerIsNull(object item, params object?[] containers)
 	{
 		if (containers.Any(c => c is not null))
 			return;
@@ -24,19 +24,19 @@ internal static class ThrowIf
 		var names = from c in containers where c is not null select c.GetType().Name;
 		var join = string.Join(Settings.UseLocaleMesg ? "또는 " : " or ", names);
 		throw new InvalidOperationException(Settings.UseLocaleMesg
-			? $"{typeof(TItem)}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{join}> 컨테이너 아래 있어야 해요."
-			: $"{typeof(TItem)}: No container found. This component must be contained within <{join}> components");
+			? $"{item.GetType().Name}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{join}> 컨테이너 아래 있어야 해요."
+			: $"{item.GetType().Name}: No container found. This component must be contained within <{join}> components");
 	}
 
 	//
-	internal static void ItemNotNull<TItem>(TItem? item)
+	internal static void ItemNotNull(object? item)
 	{
 		if (item is null)
 			return;
 
 		throw new InvalidOperationException(Settings.UseLocaleMesg
-			? $"{typeof(TItem)}, {nameof(item)}: 여기서는 반드시 널이어야 해요."
-			: $"{typeof(TItem)}, {nameof(item)}: Must be null here");
+			? $"{item.GetType().Name}, {nameof(item)}: 여기서는 반드시 널이어야 해요."
+			: $"{item.GetType().Name}, {nameof(item)}: Must be null here");
 	}
 
 	// 컴포넌트 캐스트가 안되면 예외
