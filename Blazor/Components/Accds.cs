@@ -20,14 +20,14 @@ public class Accd : ComponentSubset<Accd, Accds>
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		/*
-		<div class="active">
-			<button type="button" id="" @onClick="" @onClick:StopPropagation="true">
-				제목
-			</button>
-			<div>
-				내용
+			<div class="active">
+				<button type="button" id="" @onClick="" @onClick:StopPropagation="true">
+					제목
+				</button>
+				<div>
+					내용
+				</div>
 			</div>
-		</div>
 		 */
 		builder.OpenElement(0, "div");
 		builder.AddAttribute(1, "class", InternalOpened.IfTrue("active"));
@@ -92,11 +92,11 @@ public class Accds : ComponentContainer<Accd>
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		/*
-		<div class="accd accd-border">
-			<CascadingValue Value="this" IsFixed="true">
-				ACCD 아이템
-			</CascadingValue>
-		</div>
+			<div class="accd accd-border">
+				<CascadingValue Value="this" IsFixed="true">
+					ACCD 아이템
+				</CascadingValue>
+			</div>
 		 */
 		builder.OpenElement(0, "div");
 		builder.AddAttribute(1, "class", Cssc.Class("accd", Border.IfTrue("accd-border")));

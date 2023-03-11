@@ -3,13 +3,13 @@
 // 아코디언
 .accd {
   // 배경색
-  --accd-bg-nulo: #{$bg-ctrl};
+  --accd-bg-text: #{$bg-ctrl};
   --accd-bg-hover: #{$bg-ctrl-hover};
   --accd-bg-active: #{$bg-ctrl-active};
-  --accd-bg-panel: #{$bg-ctrl-panel};
   // 글자색
-  --accd-cc: #{$cc};
-  --accd-cc-arrow: #{$cc-ctrl-tool};
+  --accd-cc-text: #{$cc};
+  --accd-cc-icon: #{$cc-ctrl-tool};
+  --accd-cc-hover: #{$cc};
   --accd-cc-active: #{$cc-ctrl-active};
   --accd-cc-border: #{$cc-ctrl-bdr};
   // 아이콘
@@ -18,38 +18,35 @@
   & > div {
     // 눌러
     & > button {
-      padding: 1rem 1.5rem;
       width: 100%;
+      padding: 1rem 1.5rem;
       text-align: left;
-      color: var(--accd-cc);
-      background-color: var(--accd-bg-nulo);
+      color: var(--accd-cc-text);
+      background-color: var(--accd-bg-text);
       border: none;
       outline: none;
-      transition: 0.4s;
+      transition: 0.2s;
       // 호버
       &:hover {
+        color: var(--accd-cc-hover);
         background-color: var(--accd-bg-hover);
       }
       // 애프터 (오른쪽 화살표)
       &:after {
-        content: '';
         float: right;
         width: 1rem;
         height: 1rem;
         margin-left: auto;
-        background-image: var(--accd-ic);
-        background-repeat: no-repeat;
-        background-size: 1rem;
+        content: '';
+        background: var(--accd-ic) no-repeat 1rem;
         transition: transform 0.2s ease-in-out;
       }
     }
     // 패널
     & > div {
       display: none;
-      padding: 0 1.1rem;
-      color: var(--accd-cc);
-      background-color: var(--accd-bg-pnl);
       overflow: hidden;
+      padding: 0 1.1rem;
     }
   }
   // 액티브
