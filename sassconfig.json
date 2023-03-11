@@ -5,7 +5,7 @@
     "style": "Compressed"
   },
   {
-    "outputFile": "wwwroot/content.nested.css",
+    "outputFile": "wwwroot/ref/content.nested.css",
     "inputFile": "Scss/content.scss",
     "style": "Nested"
   }
