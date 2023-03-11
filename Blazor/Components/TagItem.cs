@@ -103,7 +103,7 @@ public class TagItem : TagTextBase
 /// <remarks>
 /// 태그를 정의할때 텍스트가 필요하면 이 클래스를 상속할것.
 /// </remarks>
-public abstract class TagTextBase : ComponentObject
+public abstract class TagTextBase : ComponentContent
 {
 	/// <summary>텍스트 속성</summary>
 	[Parameter] public string? Text { get; set; }

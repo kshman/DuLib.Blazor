@@ -3,7 +3,7 @@
 /// <summary>
 /// 이미지 태그
 /// </summary>
-public class TagImage : BaseComponent
+public class TagImage : ComponentProp
 {
 	/// <summary>이미지 URL</summary>
 	[Parameter] public string? Image { get; set; }

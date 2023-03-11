@@ -34,7 +34,7 @@ public class TagFooter : TagContent
 /// <summary>
 /// 기본 태그 콘텐트
 /// </summary>
-public class TagContent : ComponentObject
+public class TagContent : ComponentContent
 {
 	[CascadingParameter] public ITagContentHandler? ContentHandler { get; set; }
 

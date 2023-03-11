@@ -5,7 +5,7 @@ public enum TabType
 	Box,
 }
 
-public class Tab : ComponentObject, IAsyncDisposable
+public class Tab : ComponentContent, IAsyncDisposable
 {
 	[CascadingParameter] public Tabs? Tabs { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Du.Blazor.Components;
 
-public class Accd : ComponentObject, IAsyncDisposable
+public class Accd : ComponentContent, IAsyncDisposable
 {
 	[CascadingParameter] public Accds? Accds { get; set; }
 
