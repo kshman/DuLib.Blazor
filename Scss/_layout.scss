@@ -1,0 +1,29 @@
+﻿@import "_include";
+
+//:root { }
+
+// 바디 기본 - 글꼴
+.d-font {
+  font-family: $serif;
+}
+
+// 바디 기본 - 색깔
+.d-ccbg {
+  background-color: $bg;
+  color: $cc;
+}
+
+// 예제용
+.d-ex {
+  padding: 1rem 1.5rem;
+  margin: 0.5rem 1rem;
+  border: thick double #a9f27d;
+
+  &.purple {
+    border: 2px solid rebeccapurple;
+  }
+
+  &.blue {
+    border: 2px solid blue;
+  }
+}

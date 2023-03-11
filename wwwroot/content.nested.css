@@ -1,40 +1,41 @@
-﻿html, body {
-  font-family: "Malgun Gothic", "Segoe UI", "Apple SD Gothic Neo", "Helvetica Neue", "Noto Sans", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji";
-  font-size: 1rem;
+﻿.d-font {
+  font-family: "Malgun Gothic", "Segoe UI", "Apple SD Gothic Neo", "Helvetica Neue", "Noto Sans", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji"; }
+
+.d-ccbg {
   background-color: #212529;
   color: #adb5bd; }
 
-[role=button] {
-  cursor: pointer; }
-
-@keyframes e-fdi {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
+.d-ex {
+  padding: 1rem 1.5rem;
+  margin: 0.5rem 1rem;
+  border: thick double #a9f27d; }
+  .d-ex.purple {
+    border: 2px solid rebeccapurple; }
+  .d-ex.blue {
+    border: 2px solid blue; }
 
 .accd {
   --accd-bg-nulo: #1e1e1e;
   --accd-bg-hover: #2b3035;
   --accd-bg-active: #031633;
-  --accd-bg-pnl: #1e1e1e;
+  --accd-bg-panel: #1e1e1e;
   --accd-cc: #adb5bd;
   --accd-cc-arrow: #fff;
   --accd-cc-active: #6ea8fe;
-  --accd-cc-bdr: #495057;
+  --accd-cc-border: #495057;
   --accd-ic: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e"); }
-  .accd .item .nulo {
-    background-color: var(--accd-bg-nulo);
-    color: var(--accd-cc);
-    padding: 1rem;
+  .accd > div > button {
+    padding: 1rem 1.5rem;
     width: 100%;
-    border: none;
     text-align: left;
+    color: var(--accd-cc);
+    background-color: var(--accd-bg-nulo);
+    border: none;
     outline: none;
     transition: 0.4s; }
-    .accd .item .nulo:hover {
+    .accd > div > button:hover {
       background-color: var(--accd-bg-hover); }
-    .accd .item .nulo:after {
+    .accd > div > button:after {
       content: '';
       float: right;
       width: 1rem;
@@ -44,23 +45,24 @@
       background-repeat: no-repeat;
       background-size: 1rem;
       transition: transform 0.2s ease-in-out; }
-  .accd .item .pnl {
-    padding: 0 1.1rem;
+  .accd > div > div {
     display: none;
-    background-color: var(--accd-bg-pnl);
+    padding: 0 1.1rem;
     color: var(--accd-cc);
+    background-color: var(--accd-bg-pnl);
     overflow: hidden; }
-  .accd .item.active .nulo {
-    background-color: var(--accd-bg-active);
-    color: var(--accd-cc-active); }
-    .accd .item.active .nulo:after {
+  .accd > div.active > button {
+    color: var(--accd-cc-active);
+    background-color: var(--accd-bg-active); }
+    .accd > div.active > button:after {
       transform: rotate(-180deg); }
-  .accd .item.active .pnl {
+  .accd > div.active > div {
     display: block; }
-  .accd.bdr .item {
-    border: 1px solid var(--accd-cc-bdr); }
-    .accd.bdr .item:not(:first-of-type) {
-      border-top: 0; }
+
+.accd-border > div {
+  border: 1px solid var(--accd-cc-border); }
+  .accd-border > div:not(:first-of-type) {
+    border-top: 0; }
 
 .tab {
   --tab-bg: #212529;
@@ -101,15 +103,18 @@
     border: 1px solid var(--tab-cc-bdr);
     border-top: 0; }
   .tab.fdi .pnl {
-    animation: e-fdi .5s; }
+    animation: e-fade-in .5s; }
 
-.dz-ex {
-  padding: 1rem 1.5rem;
-  margin: 0.5rem 1rem;
-  border: thick double #a9f27d; }
-  .dz-ex.purple {
-    border: 2px solid rebeccapurple; }
-  .dz-ex.blue {
-    border: 2px solid blue; }
+@keyframes e-fade-in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes e-fade-out {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
 /*# sourceMappingURL=content.css.map */
