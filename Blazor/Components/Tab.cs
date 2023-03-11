@@ -17,7 +17,7 @@ public class Tab : ComponentContent, IAsyncDisposable
 	{
 		ThrowIf.ContainerIsNull(this, Tabs);
 
-		FillAutoId();
+		FillInternalId();
 
 		return Tabs.AddItemAsync(this);
 	}

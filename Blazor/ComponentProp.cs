@@ -6,31 +6,28 @@
 public abstract class ComponentProp : ComponentBase
 {
 	/// <summary>클래스 지정</summary>
-	[Parameter]
-	public string? Class { get; set; }
+	[Parameter] public string? Class { get; set; }
 
 	/// <summary>컴포넌트 아이디</summary>
-	[Parameter]
-	public string? Id { get; set; }
+	[Parameter] public string? Id { get; set; }
 
 	/// <summary>사용자가 설정한 속성 지정</summary>
-	[Parameter(CaptureUnmatchedValues = true)]
-	public Dictionary<string, object>? UserAttrs { get; set; }
+	[Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? UserAttrs { get; set; }
 
-	//
-	internal string? ActualClass => Cssc.Class(Class, ComponentClass);
-
-	//
+	/// <summary>아래 컴포넌트가 미리 지정할 수 있는 CSS 클래스</summary>
 	protected virtual string? ComponentClass => null;
 
-	//
+	// 실제 CSS 클래스
+	internal string? ActualClass => Cssc.Class(Class, ComponentClass);
+
+	// 아토믹 인덱스
 	private static uint _id_atomic_index = 1;
 
-	//
-	protected void FillAutoId() =>
+	/// <summary>내부적으로 아이디를 만들어줌</summary>
+	protected void FillInternalId() =>
 		Id ??= $"DZ_{Interlocked.Increment(ref _id_atomic_index):X}";
 
-	//
+	/// <inheritdoc />
 	public override string ToString() => Id is null
 		? $"<{GetType().Name}>"
 		: $"<{GetType().Name}#{Id}>";

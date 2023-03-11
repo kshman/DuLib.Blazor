@@ -1,9 +1,7 @@
 ﻿namespace Du.Blazor.Components;
 
-public class Accd : ComponentContent, IAsyncDisposable
+public class Accd : ComponentSubset<Accd, Accds>
 {
-	[CascadingParameter] public Accds? Accds { get; set; }
-
 	[Parameter] public string? Text { get; set; }
 	[Parameter] public bool Open { get; set; }
 
@@ -13,13 +11,9 @@ public class Accd : ComponentContent, IAsyncDisposable
 	/// <inheritdoc />
 	protected override Task OnInitializedAsync()
 	{
-		ThrowIf.ContainerIsNull(this, Accds);
-
-		FillAutoId();
-
 		InternalOpened = Open;
 
-		return Accds.AddItemAsync(this);
+		return base.OnInitializedAsync();
 	}
 
 	/// <inheritdoc />
@@ -56,24 +50,12 @@ public class Accd : ComponentContent, IAsyncDisposable
 	}
 
 	//
-	public async ValueTask DisposeAsync()
-	{
-		if (Accds is not null)
-		{
-			await Accds.RemoveItemAsync(this);
-			Accds = null;
-		}
-
-		GC.SuppressFinalize(this);
-	}
-
-	//
 	private async Task HandleOnClickAsync(MouseEventArgs e)
 	{
 		InternalOpened = !InternalOpened;
 
-		if (Accds is not null)
-			await Accds.HandleAccdAsync(this);
+		if (Storage is not null)
+			await Storage.HandleAccdAsync(this);
 	}
 }
 
