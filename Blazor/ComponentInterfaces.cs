@@ -48,21 +48,21 @@ public interface IComponentContainer<TItem> : IComponentStrage<TItem>
 
 /// <summary>태그 아이템 핸들러</summary>
 /// <remarks>컨테이너가 아닌것은 개체를 소유하지 않고 처리만 도와주기 때문</remarks>
-public interface ITagItemHandler
+public interface ITagHandler
 {
 	/// <summary>
 	/// 태그 아이템의 렌더 트리를 만듦
 	/// </summary>
-	/// <param name="item"></param>
+	/// <param name="tag"></param>
 	/// <param name="builder"></param>
-	void OnRender(TagItem item, RenderTreeBuilder builder);
+	void OnRender(TagProp tag, RenderTreeBuilder builder);
 }
 
 
 /// <summary>
 /// 태그 콘텐트 에이전시
 /// </summary>
-public interface ITagContentHandler
+public interface IContentHandler
 {
 	/// <summary>
 	/// 태그 콘텐트의 렌더 트리를 만듦
@@ -78,7 +78,7 @@ public interface ITagContentHandler
 /// <summary>
 /// 리스트 에이전트
 /// </summary>
-public interface ITagListAgent
+public interface IListAgent
 {
 	/// <summary>
 	/// 감싸야할 태그 이름. 널이면 안감싸도록

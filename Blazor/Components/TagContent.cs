@@ -36,7 +36,7 @@ public class TagFooter : TagContent
 /// </summary>
 public class TagContent : ComponentContent
 {
-	[CascadingParameter] public ITagContentHandler? ContentHandler { get; set; }
+	[CascadingParameter] public IContentHandler? ContentHandler { get; set; }
 
 	//
 	[Inject] protected ILogger<TagContent> Logger { get; set; } = default!;
