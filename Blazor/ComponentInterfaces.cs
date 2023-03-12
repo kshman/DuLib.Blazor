@@ -67,11 +67,9 @@ public interface IContentHandler
 	/// <summary>
 	/// 태그 콘텐트의 렌더 트리를 만듦
 	/// </summary>
-	/// <param name="role">
-	/// </param>
 	/// <param name="content">콘텐트</param>
 	/// <param name="builder">빌드 개체</param>
-	void OnRender(TagContentRole role, TagContent content, RenderTreeBuilder builder);
+	void OnRender(TagCtt content, RenderTreeBuilder builder);
 }
 
 

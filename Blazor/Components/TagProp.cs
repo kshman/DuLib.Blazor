@@ -1,5 +1,15 @@
 ﻿namespace Du.Blazor.Components;
 
+public enum TagRole
+{
+	Block,
+	Image,
+	Header,
+	Footer,
+	Content,
+}
+
+
 /// <summary>
 /// 태그 아이템 기본. 텍스트 속성만 갖고 있음<br/>
 /// 이 클래스에서는 컨테이너/부모/채용자/연결자 등을 정의하지 않음<br/>
@@ -23,11 +33,15 @@ public abstract class TagProp : ComponentContent
 	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
 	//
-	protected readonly string _tag;
+	public string TagName { get; }
+	public TagRole TagRole { get; }
 
 	//
-	protected TagProp(string tag) =>
-		_tag = tag;
+	protected TagProp(string tag, TagRole role)
+	{
+		TagName = tag;
+		TagRole = role;
+	}
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -50,7 +64,7 @@ public abstract class TagProp : ComponentContent
 		 *     @ChildContent
 		 * </div>
 		 */
-		builder.OpenElement(0, _tag);
+		builder.OpenElement(0, TagName);
 		builder.AddAttribute(1, "class", ActualClass);
 		builder.AddAttribute(2, "id", Id);
 
@@ -81,7 +95,7 @@ public abstract class TagProp : ComponentContent
 
 		builder.OpenElement(0, wrapTag);
 
-		builder.OpenElement(2, _tag);
+		builder.OpenElement(2, TagName);
 		builder.AddAttribute(3, "class", ActualClass);
 		builder.AddAttribute(4, "id", Id);
 
@@ -105,8 +119,23 @@ public abstract class TagProp : ComponentContent
 }
 
 
-/// <summary>태그 P 아이템</summary>
-public class TagP : TagProp
+/// <summary>태그 블록</summary>
+public class TagBlock : TagProp
+{
+	//
+	public TagBlock()
+		: base("div", TagRole.Block)
+	{ }
+
+	//
+	protected TagBlock(string tag)
+		: base(tag, TagRole.Block)
+	{ }
+}
+
+
+/// <summary>태그 P</summary>
+public class TagP : TagBlock
 {
 	//
 	public TagP()
@@ -115,8 +144,8 @@ public class TagP : TagProp
 }
 
 
-/// <summary>태그 DIV 아이템</summary>
-public class TagDiv : TagProp
+/// <summary>태그 DIV</summary>
+public class TagDiv : TagBlock
 {
 	public TagDiv()
 		: base("div")
@@ -124,8 +153,8 @@ public class TagDiv : TagProp
 }
 
 
-/// <summary>태그 SPAN 아이템</summary>
-public class TagSpan : TagProp
+/// <summary>태그 SPAN</summary>
+public class TagSpan : TagBlock
 {
 	public TagSpan()
 		: base("span")
@@ -147,7 +176,7 @@ public class TagImage : TagProp
 
 	//
 	public TagImage()
-		: base("img")
+		: base("img", TagRole.Image)
 	{ }
 
 	/// <inheritdoc />
@@ -171,7 +200,7 @@ public class TagImage : TagProp
 	//
 	private void RenderTagImage(RenderTreeBuilder builder)
 	{
-		builder.OpenElement(0, _tag);
+		builder.OpenElement(0, TagName);
 		builder.AddAttribute(1, "class", ActualClass);
 		builder.AddAttribute(2, "src", Image);
 		builder.AddAttribute(3, "alt", Text);
@@ -187,4 +216,61 @@ public class TagImage : TagProp
 
 		builder.CloseElement();
 	}
+}
+
+
+/// <summary>
+/// 기본 태그 콘텐트
+/// </summary>
+public class TagCtt : ComponentContent
+{
+	[CascadingParameter] public IContentHandler? ContentHandler { get; set; }
+
+	//
+	[Inject] protected ILogger<TagCtt> Logger { get; set; } = default!;
+
+	//
+	public TagRole TagRole { get; }
+
+	//
+	public TagCtt() =>
+		TagRole = TagRole.Content;
+
+	//
+	protected TagCtt(TagRole role) =>
+		TagRole = role;
+
+	//
+	protected override void OnInitialized()
+	{
+		LogIf.ContainerIsNull(Logger, this, ContentHandler);
+
+		base.OnInitialized();
+	}
+
+	// 
+	protected override void BuildRenderTree(RenderTreeBuilder builder) =>
+		ContentHandler?.OnRender(this, builder);
+}
+
+
+/// <summary>
+/// 기본 태그 헤더
+/// </summary>
+public class TagHdr : TagCtt
+{
+	public TagHdr()
+		: base(TagRole.Header)
+	{ }
+}
+
+
+/// <summary>
+/// 기본 태그 풋타
+/// </summary>
+public class TagFut : TagCtt
+{
+	public TagFut()
+		: base(TagRole.Footer)
+	{ }
 }
