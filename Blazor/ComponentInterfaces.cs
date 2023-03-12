@@ -69,7 +69,7 @@ public interface IContentHandler
 	/// </summary>
 	/// <param name="content">콘텐트</param>
 	/// <param name="builder">빌드 개체</param>
-	void OnRender(TagCtt content, RenderTreeBuilder builder);
+	void OnRender(TagContent content, RenderTreeBuilder builder);
 }
 
 

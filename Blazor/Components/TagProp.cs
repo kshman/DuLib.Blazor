@@ -222,22 +222,22 @@ public class TagImage : TagProp
 /// <summary>
 /// 기본 태그 콘텐트
 /// </summary>
-public class TagCtt : ComponentContent
+public class TagContent : ComponentContent
 {
 	[CascadingParameter] public IContentHandler? ContentHandler { get; set; }
 
 	//
-	[Inject] protected ILogger<TagCtt> Logger { get; set; } = default!;
+	[Inject] protected ILogger<TagContent> Logger { get; set; } = default!;
 
 	//
 	public TagRole TagRole { get; }
 
 	//
-	public TagCtt() =>
+	public TagContent() =>
 		TagRole = TagRole.Content;
 
 	//
-	protected TagCtt(TagRole role) =>
+	protected TagContent(TagRole role) =>
 		TagRole = role;
 
 	//
@@ -257,9 +257,9 @@ public class TagCtt : ComponentContent
 /// <summary>
 /// 기본 태그 헤더
 /// </summary>
-public class TagHdr : TagCtt
+public class TagHeader : TagContent
 {
-	public TagHdr()
+	public TagHeader()
 		: base(TagRole.Header)
 	{ }
 }
@@ -268,9 +268,9 @@ public class TagHdr : TagCtt
 /// <summary>
 /// 기본 태그 풋타
 /// </summary>
-public class TagFut : TagCtt
+public class TagFooter : TagContent
 {
-	public TagFut()
+	public TagFooter()
 		: base(TagRole.Footer)
 	{ }
 }

@@ -1,0 +1,76 @@
+@import "../include";
+
+// 버튼 -> 눌러 = nulo
+.nulo {
+  // 배경색
+  --nulo-bg: #{$bg-ctrl};
+  // 글자색
+  --nulo-cc: #{$cc};
+  // 속성
+  box-shadow: none;
+  user-select: none;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  margin: .3rem 0;
+  padding: .2rem .75rem;
+  transition: all .15s;
+  background: var(--nulo-bg);
+  cursor: pointer;
+  border: 0;
+  border-radius: 0.2rem;
+  color: var(--nulo-cc);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  // 액티브
+  &:active {
+    box-shadow: inset 0 0 0 99rem, rgba(#333, .25);
+  }
+  // 포커스 또는 호버
+  &:focus, &:hover {
+    box-shadow: inset 0 0 0 99rem rgba(#333, .1);
+  }
+  // 색깔-primary
+  &.primary {
+    --nulo-bg: #{$bg-primary};
+    --nulo-cc: #fff;
+  }
+  // 색깔-success
+  &.success {
+    --nulo-bg: #{$bg-success};
+    --nulo-cc: #fff;
+  }
+  // 색깔-danger
+  &.danger {
+    --nulo-bg: #{$bg-danger};
+    --nulo-cc: #fff;
+  }
+  // 색깔-warning
+  &.warning {
+    --nulo-bg: #{$bg-warning};
+    --nulo-cc: #000;
+  }
+  // 색깔-info
+  &.info {
+    --nulo-bg: #{$bg-info};
+    --nulo-cc: #000;
+  }
+  // 색깔-light
+  &.light {
+    --nulo-bg: #{$bg-light};
+    --nulo-cc: #000;
+  }
+  // 색깔-dark
+  &.dark {
+    --nulo-bg: #{$bg-danger};
+    --nulo-cc: #fff;
+  }
+}
+
+// 가상
+.usp.nulo {
+  background-color: transparent;
+  color: inherit;
+}
+

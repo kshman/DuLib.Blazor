@@ -16,31 +16,31 @@
     overflow: hidden;
     // 탭 눌러
     & > button {
+      outline: none;
       float: left;
       padding: 1rem 1rem;
-      color: var(--tab-cc);
+      transition: .2s;
       background: var(--tab-bg);
       border: none;
-      outline: none;
       font-size: 1rem;
-      transition: .2s;
+      color: var(--tab-cc);
       // 호버
       &:hover {
-        color: var(--tab-cc-hover);
         background-color: var(--tab-bg-hover);
+        color: var(--tab-cc-hover);
       }
       // 액티브
       &.active {
-        color: var(--tab-cc-active);
         background-color: var(--tab-bg-active);
+        color: var(--tab-cc-active);
       }
     }
   }
   // 패널
   & > div[role=tabpanel] {
     display: none;
-    padding: .1rem 1rem;
     margin-top: -1px;
+    padding: .1rem 1rem;
     // 액티브
     &.active {
       display: block;

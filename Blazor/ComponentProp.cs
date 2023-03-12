@@ -15,10 +15,10 @@ public abstract class ComponentProp : ComponentBase
 	[Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? UserAttrs { get; set; }
 
 	/// <summary>아래 컴포넌트가 미리 지정할 수 있는 CSS 클래스</summary>
-	protected virtual string? ComponentClass => null;
+	protected string? ComponentClass { get; set; } = null;
 
 	// 실제 CSS 클래스
-	internal string? ActualClass => Cssc.Class(Class, ComponentClass);
+	internal string? ActualClass => Cssc.Class(ComponentClass, Class);
 
 	// 아토믹 인덱스
 	private static uint _id_atomic_index = 1;
