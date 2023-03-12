@@ -16,5 +16,9 @@
   {
     "outputFile": "Scss/_component.css",
     "inputFile": "Scss/_component.scss"
+  },
+  {
+    "outputFile": "Scss/_component.css",
+    "inputFile": "Scss/_component.scss"
   }
 ]

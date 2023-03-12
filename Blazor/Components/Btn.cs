@@ -43,7 +43,8 @@ public class Btn : Nulo
 		{
 			builder.OpenElement(10, "a");
 			builder.AddAttribute(11, "class", ActualClass);
-			builder.AddAttribute(12, "href", Link);
+			if (Link.TestHave(true))
+				builder.AddAttribute(12, "href", Link);
 			builder.AddAttribute(13, "target", Target);
 		}
 		else
@@ -60,8 +61,10 @@ public class Btn : Nulo
 		// 17, 버튼 속성
 		// 18, 버튼 속성
 		builder.AddMultipleAttributes(19, UserAttrs);
-		builder.AddContent(20, Text);
-		builder.AddContent(21, ChildContent);
+		if (ChildContent is null)
+			builder.AddContent(20, Text);
+		else
+			builder.AddContent(21, ChildContent);
 		builder.CloseElement(); // a 또는 button
 
 		if (ListAgent?.Tag is not null)

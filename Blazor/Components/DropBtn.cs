@@ -5,9 +5,10 @@
 /// </summary>
 public class DropBtn : Nulo, IListAgent
 {
-	[Parameter] public TagDirection? Direction { get; set; }
+	[Parameter] public TagAlignment? Alignment { get; set; }
 	[Parameter] public string? PanelClass { get; set; }
 	[Parameter] public bool TextOnSelect { get; set; } = true;
+	[Parameter] public bool Border { get; set; }
 
 	//
 	private string? _actual_text;
@@ -40,7 +41,10 @@ public class DropBtn : Nulo, IListAgent
 			</div>
 		 */
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", "dpd");
+		builder.AddAttribute(1, "class", Cssc.Class(
+			"dpd",
+			Border.IfTrue("dpd-border"),
+			(Alignment == TagAlignment.Right).IfTrue("dpd-align-right")));
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
@@ -52,10 +56,18 @@ public class DropBtn : Nulo, IListAgent
 		builder.CloseElement(); // button
 
 		builder.OpenElement(20, "div");
-		builder.AddContent(21, ChildContent);
-		builder.CloseElement(); // div
+		builder.AddAttribute(21, "class", PanelClass);
 
-		builder.CloseElement(); // div
+		builder.OpenComponent<CascadingValue<DropBtn>>(22);
+		builder.AddAttribute(23, "Value", this);
+		builder.AddAttribute(24, "IsFixed", true);
+		builder.AddAttribute(25, "ChildContent", (RenderFragment)((b) =>
+			b.AddContent(7, ChildContent)));
+		builder.CloseComponent(); // CascadingValue<Accds>, 콘텐트
+
+		builder.CloseElement(); // div, 패널
+
+		builder.CloseElement(); // div, 메인
 	}
 
 	#region IListAgent
@@ -68,11 +80,18 @@ public class DropBtn : Nulo, IListAgent
 	/// <inheritdoc />
 	Task IListAgent.OnResponseAsync(ComponentProp component)
 	{
-		if (!TextOnSelect) 
+		if (!TextOnSelect)
 			return Task.CompletedTask;
 
 		if (component is Nulo nulo)
+		{
 			_actual_text = nulo.Text;
+
+			if (_actual_text.WhiteSpace())
+				_actual_text = Text;
+
+			StateHasChanged();
+		}
 
 		return Task.CompletedTask;
 	}

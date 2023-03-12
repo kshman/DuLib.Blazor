@@ -20,3 +20,10 @@ public enum TagDirection
 	Down,
 	Left,
 }
+
+// 정렬
+public enum TagAlignment
+{
+	Left,
+	Right,
+}
