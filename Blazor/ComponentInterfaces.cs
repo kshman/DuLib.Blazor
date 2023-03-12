@@ -86,4 +86,10 @@ public interface IListAgent
 	/// 원래 태그(감싸는 태그가 아닌)의 CSS 클래스
 	/// </summary>
 	string? Class { get; }
+	/// <summary>
+	/// 반응에 대한 처리
+	/// </summary>
+	/// <param name="component"></param>
+	/// <returns></returns>
+	Task OnResponseAsync(ComponentProp component);
 }

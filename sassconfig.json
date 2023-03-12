@@ -8,5 +8,13 @@
     "outputFile": "wwwroot/ref/content.nested.css",
     "inputFile": "Scss/content.scss",
     "style": "Nested"
+  },
+  {
+    "outputFile": "Scss/content.css",
+    "inputFile": "Scss/content.scss"
+  },
+  {
+    "outputFile": "Scss/_component.css",
+    "inputFile": "Scss/_component.scss"
   }
 ]

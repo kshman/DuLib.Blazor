@@ -43,7 +43,7 @@ public abstract class ComponentContent : ComponentProp
 	[Parameter] public RenderFragment? ChildContent { get; set; }
 
 	// 태그로 자식 콘텐트를 감써서 그린다
-	internal void RenderWithTag(RenderTreeBuilder builder, string tag = "div")
+	internal void RenderTag(RenderTreeBuilder builder, string tag = "div")
 	{
 		/*
 		 * <tag class="@CssClass" id="@Id" @attributes="UserAttrs">
@@ -60,7 +60,7 @@ public abstract class ComponentContent : ComponentProp
 	}
 
 	// 태그로 자식 콘텐츠를 캐스캐이딩해서 그린다
-	internal void RenderCascadingWithTag<TComponent>(RenderTreeBuilder builder, string tag = "div")
+	internal void RenderCascadingTag<TComponent>(RenderTreeBuilder builder, string tag = "div")
 	{
 		/*
 		 * <tag class="@CssClass" id="@Id" @attributes="@UserAttrs">
