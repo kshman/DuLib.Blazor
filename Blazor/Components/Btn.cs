@@ -59,7 +59,7 @@ public class Btn : ComponentContent
 		else
 		{
 			builder.OpenElement(10, "button");
-			builder.AddAttribute(11, _btn_type == BtnType.Submit ? "submit" : "button");
+			builder.AddAttribute(11, "type", _btn_type == BtnType.Submit ? "submit" : "button");
 			builder.AddAttribute(12, "class", ActualClass);
 			builder.AddAttribute(13, "role", "button");
 			builder.AddAttribute(14, "formtarget", Target);

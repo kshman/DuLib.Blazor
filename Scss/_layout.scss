@@ -3,18 +3,18 @@
 //:root { }
 
 // 바디 기본 - 글꼴
-.d-font {
+.font-serif {
   font-family: $serif;
 }
 
 // 바디 기본 - 색깔
-.d-ccbg {
+.cc-bg {
   background-color: $bg;
   color: $cc;
 }
 
 // 예제용
-.d-ex {
+.dzex {
   padding: 1rem 1.5rem;
   margin: 0.5rem 1rem;
   border: thick double #a9f27d;

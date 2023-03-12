@@ -1,17 +1,17 @@
-﻿.d-font {
+﻿.font-serif {
   font-family: "Malgun Gothic", "Segoe UI", "Apple SD Gothic Neo", "Helvetica Neue", "Noto Sans", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji"; }
 
-.d-ccbg {
+.cc-bg {
   background-color: #212529;
   color: #adb5bd; }
 
-.d-ex {
+.dzex {
   padding: 1rem 1.5rem;
   margin: 0.5rem 1rem;
   border: thick double #a9f27d; }
-  .d-ex.purple {
+  .dzex.purple {
     border: 2px solid rebeccapurple; }
-  .d-ex.blue {
+  .dzex.blue {
     border: 2px solid blue; }
 
 .accd {
@@ -114,16 +114,19 @@
   transition: all .15s;
   background: var(--nulo-bg);
   cursor: pointer;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 0.2rem;
   color: var(--nulo-cc);
   text-align: center;
   text-decoration: none;
-  vertical-align: middle; }
+  vertical-align: baseline; }
   .nulo:active {
     box-shadow: inset 0 0 0 99rem, rgba(51, 51, 51, 0.25); }
-  .nulo:focus, .nulo:hover {
-    box-shadow: inset 0 0 0 99rem rgba(51, 51, 51, 0.1); }
+  .nulo:focus {
+    box-shadow: inset 0 0 0 99rem rgba(255, 255, 255, 0.2); }
+  .nulo:hover {
+    box-shadow: inset 0 0 0 99rem rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--nulo-cc); }
   .nulo.primary {
     --nulo-bg: #0d6efd;
     --nulo-cc: #fff; }
