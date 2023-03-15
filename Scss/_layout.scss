@@ -1,5 +1,16 @@
 ﻿@import "_variables.scss";
 
+// 바디
+.body {
+  margin: 0;
+  background-color: #{$bg};
+  color: #{$cc};
+  font-family: #{$serif};
+  font-size: #{$font-size};
+  font-weight: #{$font-weight};
+  line-height: #{$line-height};
+}
+
 // 예제용
 .dzex {
   padding: 1rem 1.5rem;
@@ -18,10 +29,10 @@
 }
 
 // 보통
-.variant-normal {
+.var-nrm {
   border: 1px solid transparent;
-  color: #{$cc};
-  background: #{$normal-rest};
+  color: #{$normal-cc};
+  background: #{$normal-bg};
   // 호버
   &:hover {
     background: #{$normal-hover};
@@ -36,11 +47,21 @@
   }
 }
 
+.var-nrm-d {
+  color: #{$normal-cc};
+  background: #{$normal-bg};
+}
+
+.var-nrm-a {
+  color: #{$normal-cc};
+  background: #{$normal-active};
+}
+
 // 화사하게
-.variant-splendid {
+.var-spn {
   border: 1px solid transparent;
-  color: #{$cc};
-  background: #{$splend-rest};
+  color: #{$splend-cc};
+  background: #{$splend-bg};
   // 호버
   &:hover {
     background: #{$splend-hover};
@@ -55,11 +76,21 @@
   }
 }
 
+.var-spn-d {
+  color: #{$splend-cc};
+  background: #{$splend-bg};
+}
+
+.var-spn-a {
+  color: #{$splend-cc};
+  background: #{$splend-active};
+}
+
 // 심플
-.variant-simple {
+.var-sme {
   border: 1px solid transparent;
-  color: #{$cc};
-  background: #{$simple-rest};
+  color: #{$simple-cc};
+  background: #{$simple-bg};
   // 호버
   &:hover {
     background: #{$simple-hover};
@@ -67,17 +98,28 @@
   // 포커스
   &:focus {
     background: #{$simple-focus};
+    color: #{$simple-cc-focus};
   }
   // 액티브
   &:active, &.active {
     background: #{$simple-active};
-    color: #{$cc-accent};
+    color: #{$simple-cc};
   }
 }
 
+.var-sme-d {
+  color: #{$simple-cc};
+  background: #{$simple-bg};
+}
+
+.var-sme-a {
+  color: #{$simple-cc};
+  background: #{$simple-active};
+}
+
 // 아웃라인
-.variant-outline {
-  border: 1px solid #{$normal-rest};
+.var-oue {
+  border: 1px solid #{$normal-bg};
   color: #{$cc};
   background: transparent;
   // 호버
@@ -93,4 +135,44 @@
     border: 1px solid #{$normal-active};
     color: #{$cc-accent};
   }
+}
+
+.var-oue-d {
+  border: 1px solid #{$normal-bg};
+  color: #{$cc};
+  background: transparent;
+}
+
+.var-oue-a {
+  border: 1px solid #{$normal-active};
+  color: #{$cc-accent};
+}
+
+// 프라이머리
+.var-pri {
+  border: 1px solid transparent;
+  color: #{$primary-cc};
+  background: #{$primary-bg};
+  // 호버
+  &:hover {
+    background: #{$primary-hover};
+  }
+  // 포커스
+  &:focus {
+    background: #{$primary-focus};
+  }
+  // 액티브
+  &:active, &.active {
+    background: #{$primary-active};
+  }
+}
+
+.var-pri-d {
+  color: #{$primary-cc};
+  background: #{$primary-bg};
+}
+
+.var-pri-a {
+  color: #{$primary-cc};
+  background: #{$primary-active};
 }

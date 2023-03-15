@@ -1,11 +1,5 @@
 ﻿namespace Du.Blazor.Components;
 
-public enum TabType
-{
-	Box,
-}
-
-
 public class Tab : ComponentSubset<Tab, Tabs>
 {
 	[Parameter] public string? Text { get; set; }
@@ -15,15 +9,15 @@ public class Tab : ComponentSubset<Tab, Tabs>
 
 public class Tabs : ComponentContainer<Tab>
 {
-	[Parameter] public TabType? Type { get; set; }
+	[Parameter] public Variant? Variant { get; set; }
 	[Parameter] public bool Border { get; set; }
 	[Parameter] public bool TabOnly { get; set; }
-	[Parameter] public bool DontActiveOnCreation { get; set; }
+	[Parameter] public bool NoCurrentStart { get; set; } // 첨에 탭만 보이고, 선택이 없음
 
-	[Parameter] public EventCallback<string> OnSelect { get; set; }
+	[Parameter] public EventCallback<Tab> OnChange { get; set; }
 
 	/// <inheritdoc />
-	protected override bool SelectFirst => !DontActiveOnCreation;
+	protected override bool SelectFirst => !NoCurrentStart;
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -70,7 +64,10 @@ public class Tabs : ComponentContainer<Tab>
 
 			builder.OpenElement(30, "button");
 			builder.AddAttribute(31, "type", "button");
-			builder.AddAttribute(32, "class", Cssc.Class(cur.IfTrue("active"), item.ActualClass));
+			builder.AddAttribute(32, "class", Cssc.Class(
+				(Variant ?? Settings.Variant).ToCss(),
+				cur.IfTrue("active"), 
+				item.ActualClass));
 			builder.AddAttribute(33, "role", "tab");
 			builder.AddAttribute(34, "aria-selected", cur.ToHtml());
 			builder.AddAttribute(35, "aria-controls", item.Id);
@@ -106,7 +103,7 @@ public class Tabs : ComponentContainer<Tab>
 	protected override async Task<bool> OnItemSelectedAsync(Tab? item, Tab? previous)
 	{
 		if (item is not null)
-			await InvokeOnActive(item.Id!);
+			await InvokeOnActive(item);
 
 		return true;
 	}
@@ -116,8 +113,8 @@ public class Tabs : ComponentContainer<Tab>
 		SelectItemAsync(tab, true);
 
 	//
-	private Task InvokeOnActive(string id) =>
-		OnSelect.HasDelegate is false
+	private Task InvokeOnActive(Tab tab) =>
+		OnChange.HasDelegate is false
 			? Task.CompletedTask
-			: OnSelect.InvokeAsync(id);
+			: OnChange.InvokeAsync(tab);
 }

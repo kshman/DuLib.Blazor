@@ -26,11 +26,21 @@ internal static class TypeSupp
 	internal static bool ShouldAwaitTask(this Task task) =>
 		task.Status is not TaskStatus.RanToCompletion and not TaskStatus.Canceled;
 
-	private static string ToCssName(this Variant v) =>
-		v.ToString("F").ToLower();
+	private static string ToCssName(this Variant v) => v switch
+	{
+		Variant.Normal => "nrm",
+		Variant.Splendid => "spn",
+		Variant.Simple => "sme",
+		Variant.Outline => "oue",
+		Variant.Primary => "pri",
+		_ => LogIf.ArgumentOutOfRange<string>(v, nameof(v))
+	};
 
-	internal static string ToCss(this Variant v, string lead = "variant") =>
-		$"{lead}-{v.ToCssName()}";
+	internal static string ToCss(this Variant v) =>
+		$"var-{v.ToCssName()}";
+
+	internal static string ToCss(this Variant v, string tail) =>
+		$"var-{v.ToCssName()}-{tail}";
 
 	internal static string ToCss(this TagVariant v) => v switch
 	{

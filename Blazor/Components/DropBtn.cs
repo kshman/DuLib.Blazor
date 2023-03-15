@@ -1,19 +1,23 @@
-﻿using System.Runtime.Intrinsics.Arm;
-
-namespace Du.Blazor.Components;
+﻿namespace Du.Blazor.Components;
 
 /// <summary>
 /// 드랍 다운
 /// </summary>
-public class DropBtn : Nulo, IListAgent
+public class DropBtn : Nulo, IComponentResponse
 {
-	[Parameter] public TagAlignment? Alignment { get; set; }
+	/// <summary>오른쪽으로 정렬</summary>
+	[Parameter] public bool Right { get; set; }
+	/// <summary></summary>
 	[Parameter] public string? PanelClass { get; set; }
-	[Parameter] public bool TextOnSelect { get; set; } = true;
-	[Parameter] public bool CloseOnSelect { get; set; } = true;
+	/// <summary>선택한 아이템의 TEXT를 버튼 TEXT로 표시한다</summary>
+	[Parameter] public bool SelectText { get; set; } = true;
+	/// <summary>선택하면 닫힌다</summary>
+	[Parameter] public bool SelfClose { get; set; } = true;
+	/// <summary>모서리 표시</summary>
 	[Parameter] public bool Border { get; set; }
 
-	[Parameter] public EventCallback<string?> OnSelect { get; set; }
+	/// <summary></summary>
+	[Parameter] public EventCallback<ComponentProp> OnSelect { get; set; }
 
 	//
 	private string? _actual_text;
@@ -24,8 +28,8 @@ public class DropBtn : Nulo, IListAgent
 		_actual_text = Text;
 
 	/// <inheritdoc />
-	//protected override void OnParametersSet() =>
-	//	ComponentClass = BuildClassName();
+	protected override void OnParametersSet() =>
+		ComponentClass = GetClassName();
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -46,7 +50,7 @@ public class DropBtn : Nulo, IListAgent
 		builder.AddAttribute(1, "class", Cssc.Class(
 			"dpd",
 			Border.IfTrue("dpd-border"),
-			(Alignment == TagAlignment.Right).IfTrue("dpd-right")));
+			Right.IfTrue("dpd-right")));
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
@@ -75,42 +79,39 @@ public class DropBtn : Nulo, IListAgent
 		builder.CloseElement(); // div, 메인
 	}
 
-	#region IListAgent
+	#region IComponentResponse
 	/// <inheritdoc />
-	string? IListAgent.Tag => null;
-
-	/// <inheritdoc />
-	string? IListAgent.Class => null;
-
-	/// <inheritdoc />
-	async Task IListAgent.OnResponseAsync(ComponentProp component)
+	async Task IComponentResponse.OnResponseAsync(ComponentProp component)
 	{
 		// 일단 닫는다
-		if (CloseOnSelect)
-		{
+		if (SelfClose)
 			_short_bye = true;
 
-			// 주석 처리 했으니 안닫힘
-			//StateHasChanged(); 
+		// 텍스트 처리
+		if (SelectText)
+		{
+			if (component is Nulo nulo)
+			{
+				// 눌러면 눌러 텍스트, 없으면 원래 텍스트
+				_actual_text = nulo.Text ?? Text;
+			}
 		}
 
-		// 눌러 처리 -> 이 안에서 뭔가 하면 StateHasChange가 발동할 것이고, 그러면 자동으로 닫힐 것이다
-		if (component is Nulo nulo)
+		// 암튼 눌렸으니 알림
+		if (OnSelect.HasDelegate)
+			await OnSelect.InvokeAsync(component);
+		else
 		{
-			if (nulo.Text is not null)
+			if (component is Nulo { InternalType: NuloType.Link })
 			{
-				if (TextOnSelect)
-					_actual_text = nulo.Text;
-
-				await OnSelect.InvokeAsync(_actual_text);
+				// 링크를 누르셧꾼요. 무시
+				// 왜냐하면 페이지 이동하면서 리프레시하겠지
+				// 링크가 없으면 안하겠지?
 			}
-			else
+			else if (SelfClose)
 			{
-				if (TextOnSelect)
-					_actual_text = Text;
-
-				if (nulo.Id is not null)
-					await OnSelect.InvokeAsync(nulo.Id);
+				// 아니.. 이벤트 처리가 없으면 리프레시가 안된다. 강제로 처리
+				StateHasChanged();
 			}
 		}
 
@@ -119,7 +120,7 @@ public class DropBtn : Nulo, IListAgent
 		{
 			await Task.Delay(1);
 
-			if (CloseOnSelect)
+			if (SelfClose)
 				_short_bye = false;
 
 			StateHasChanged();

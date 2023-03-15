@@ -21,7 +21,7 @@ public abstract class TagProp : ComponentContent
 {
 	/// <summary>태그 핸들러</summary>
 	[CascadingParameter]
-	public ITagHandler? TagHandler { get; set; }
+	public ITagPropHandler? TagHandler { get; set; }
 
 	/// <summary>텍스트 속성</summary>
 	[Parameter] public string? Text { get; set; }
@@ -224,7 +224,7 @@ public class TagImage : TagProp
 /// </summary>
 public class TagContent : ComponentContent
 {
-	[CascadingParameter] public IContentHandler? ContentHandler { get; set; }
+	[CascadingParameter] public ITagContentHandler? ContentHandler { get; set; }
 
 	//
 	[Inject] protected ILogger<TagContent> Logger { get; set; } = default!;

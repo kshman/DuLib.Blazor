@@ -15,25 +15,38 @@ $cc-light: #fbfbfe;
 $cc-black: #000;
 $cc-dark: #212529;
 $cc-border: #838288;
+$cc-hover: #212529;
+$cc-focus: transparent;
 $cc-accent: #0360b9;
 
 // normal
-$normal-rest: #2b2a33;
+$normal-cc: $cc;
+$normal-bg: #2b2a33;
 $normal-hover: #3f3f43;
 $normal-focus: #3f3f43;
-$normal-active: #16424e;
+$normal-active: #545459;
 
-// accent
-$splend-rest: #023b8f;
-$splend-hover: #0360b9;
-$splend-focus: #0360b9;
-$splend-active: #012e7f;
+// splendid
+$splend-cc: $cc;
+$splend-bg: #16424e;
+$splend-hover: #126072;
+$splend-focus: #126072;
+$splend-active: #16768C;
 
 // simple
-$simple-rest: transparent;
-$simple-hover: #4b4b4b;
-$simple-focus: #4b4b4b;
-$simple-active: #3f3f43;
+$simple-cc: $cc;
+$simple-cc-focus: #a0faea;
+$simple-bg: transparent;
+$simple-hover: #3f3f43;
+$simple-focus: transparent;
+$simple-active: #4b4b4b;
+
+// primary (부트스트랩 비스므리)
+$primary-cc: $cc;
+$primary-bg: #023b8f;
+$primary-hover: #012e7f;
+$primary-focus: #012e7f;
+$primary-active: #0360b9;
 
 // outline
 //..은 normal의 외곽선 버전

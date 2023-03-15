@@ -99,12 +99,6 @@
 
 // 버튼 -> 눌러 = nulo
 .nulo {
-  // 색깔
-  --nulo-bg: transparent;
-  --nulo-cc: inherit;
-}
-
-.nulo {
   // 속성
   display: inline-block;
   overflow: visible;
@@ -124,16 +118,13 @@
 }
 // 사용자 정의
 .usp.nulo {
-  // 속성
-  background: var(--nulo-bg);
-  color: var(--nulo-cc);
   // 포커스 & 호버
   &:focus, &:hover {
-    box-shadow: inset 0 0 0 99rem rgba(#fff, .1);
+    box-shadow: inset 0 0 0 99rem rgba(#333, .2);
   }
   // 액티브
   &:active, &.active {
-    box-shadow: inset 0 0 0 99rem rgba(#333, .2);
+    box-shadow: inset 0 0 0 99rem rgba(#fff, .1);
   }
 }
 
@@ -195,7 +186,7 @@
       background: var(--dpd-active);
     }
     // 콘텐트 버튼 호버
-    & > a:hover, & > a:focus, & > button:hover, & > button:hover {
+    & > a:hover, & > a:focus, & > button:hover, & > button:focus {
       background: var(--dpd-hover);
       text-decoration: none;
     }

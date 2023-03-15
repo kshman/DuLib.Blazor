@@ -1,4 +1,6 @@
-﻿namespace Du.Blazor;
+﻿using Du.Blazor.Components;
+
+namespace Du.Blazor;
 
 /// <summary>
 /// 블레이저 설정
@@ -14,4 +16,7 @@ public static class Settings
 #else
 		= false;
 #endif
+
+	//
+	public static Variant Variant = Variant.Normal;
 }

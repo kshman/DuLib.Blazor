@@ -8,9 +8,11 @@ namespace Du.Blazor.Components;
 public class Btn : Nulo
 {
 	/// <summary>리스트 에이전시</summary>
-	[CascadingParameter] public IListAgent? ListAgent { get; set; }
+	[CascadingParameter] public IComponentListAgent? ListAgent { get; set; }
 	/// <summary>콘텐트 핸들러</summary>
-	[CascadingParameter] public IContentHandler? ContentHandler { get; set; }
+	[CascadingParameter] public ITagContentHandler? ContentHandler { get; set; }
+	/// <summary>반응 처리기</summary>
+	[CascadingParameter] public IComponentResponse? ResponseHandler { get; set; }
 	/// <summary>에디트 컨텍스트</summary>
 	[CascadingParameter] public EditContext? EditContext { get; set; }
 
@@ -27,12 +29,10 @@ public class Btn : Nulo
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		_nulo_type = Link is not null ? NuloType.Link
+		InternalType = Link is not null ? NuloType.Link
 			: EditContext is not null ? NuloType.Submit : NuloType.Button;
 
-		ComponentClass = ListAgent is not null
-			? ListAgent.Class
-			: Cssc.Class(Pseudo.IfTrue("usp"), "nulo", (Variant ?? defaultVariant).ToCss());
+		ComponentClass = ListAgent is not null ? ListAgent.Class : GetClassName();
 	}
 
 	/// <inheritdoc />
@@ -41,7 +41,7 @@ public class Btn : Nulo
 		if (ListAgent?.Tag is not null)
 			builder.OpenElement(0, ListAgent.Tag); // wrap
 
-		if (_nulo_type == NuloType.Link)
+		if (InternalType == NuloType.Link)
 		{
 			builder.OpenElement(10, "a");
 			builder.AddAttribute(11, "class", ActualClass);
@@ -52,7 +52,7 @@ public class Btn : Nulo
 		else
 		{
 			builder.OpenElement(10, "button");
-			builder.AddAttribute(11, "type", _nulo_type == NuloType.Submit ? "submit" : "button");
+			builder.AddAttribute(11, "type", InternalType == NuloType.Submit ? "submit" : "button");
 			builder.AddAttribute(12, "class", ActualClass);
 			builder.AddAttribute(13, "role", "button");
 			builder.AddAttribute(14, "formtarget", Target);
@@ -80,11 +80,19 @@ public class Btn : Nulo
 		{
 			_handle_click = true;
 
-			ListAgent?.OnResponseAsync(this);
-
-			if (OnClick.HasDelegate)
+			if (ResponseHandler is not null)
+			{
+				// 반응이 있으면 거기서 일해
+				await ResponseHandler.OnResponseAsync(this);
+			}
+			else if (OnClick.HasDelegate)
+			{
+				// 클릭이 있으면 거기서 일해
 				await InvokeOnClickAsync(e);
-			else if (EditContext != null && _nulo_type == NuloType.Submit)
+			}
+			else if (EditContext != null && InternalType == NuloType.Submit)
+			{
+				// 그것도 아니고 폼이면 폼잡아
 				switch (EditContext.Validate())
 				{
 					case true when OnValidClick.HasDelegate:
@@ -95,6 +103,8 @@ public class Btn : Nulo
 						await InvokeOnInvalidClickAsync(e);
 						break;
 				}
+
+			}
 
 			_handle_click = false;
 		}
@@ -111,8 +121,6 @@ public class Btn : Nulo
 /// </summary>
 public abstract class Nulo : ComponentContent
 {
-	protected const Variant defaultVariant = Components.Variant.Normal;
-
 	/// <summary>텍스트</summary>
 	[Parameter] public string? Text { get; set; }
 	/// <summary>바리언트.</summary>
@@ -124,8 +132,16 @@ public abstract class Nulo : ComponentContent
 	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
 	//
+	internal NuloType InternalType { get; set; }
+
+	//
 	protected bool _handle_click;
-	protected NuloType _nulo_type;
+
+	//
+	protected string? GetClassName(string? baseClass = "nulo")
+	{
+		return Cssc.Class(Pseudo.IfTrue("usp"), (Variant ?? Settings.Variant).ToCss(), baseClass);
+	}
 
 	// 마우스 핸들러
 	protected virtual async Task HandleOnClickAsync(MouseEventArgs e)
@@ -145,7 +161,7 @@ public abstract class Nulo : ComponentContent
 	protected virtual Task InvokeOnClickAsync(MouseEventArgs e) => OnClick.InvokeAsync(e);
 
 	//
-	protected enum NuloType
+	internal enum NuloType
 	{
 		Link,
 		Button,

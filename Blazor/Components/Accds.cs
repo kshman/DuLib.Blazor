@@ -3,7 +3,7 @@
 public class Accd : ComponentSubset<Accd, Accds>
 {
 	[Parameter] public string? Text { get; set; }
-	[Parameter] public Variant Variant { get; set; } = Variant.Normal;
+	[Parameter] public Variant? Variant { get; set; }
 	[Parameter] public bool Open { get; set; }
 
 	// 
@@ -36,7 +36,7 @@ public class Accd : ComponentSubset<Accd, Accds>
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
-		builder.AddAttribute(12, "class", Cssc.Class(ActualClass, Variant.ToCss(), active));
+		builder.AddAttribute(12, "class", Cssc.Class(ActualClass, (Variant ?? Settings.Variant).ToCss(), active));
 		builder.AddAttribute(13, "id", Id);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		builder.AddEventStopPropagationAttribute(15, "onclick", true);
@@ -119,7 +119,7 @@ public class Accds : ComponentContainer<Accd>
 	internal async Task HandleAccdAsync(Accd accd)
 	{
 		if (Separate)
-			await InvokeOpenClose(accd.Id!, accd.InternalOpened);
+			await InvokeOpenClose(accd);
 		else
 		{
 			var prev = SelectedItem;
@@ -127,22 +127,18 @@ public class Accds : ComponentContainer<Accd>
 			if (prev != accd && prev is not null)
 			{
 				prev.InternalOpened = false;
-				await InvokeOpenClose(prev.Id!, false);
+				await InvokeOpenClose(prev);
 			}
 
-			await InvokeOpenClose(accd.Id!, accd.InternalOpened);
+			await InvokeOpenClose(accd);
 		}
 
 		await SelectItemAsync(accd);
 	}
 
 	//
-	private Task InvokeOpenClose(string id, bool open) =>
+	private Task InvokeOpenClose(Accd accd) =>
 		OnExpand.HasDelegate is false
 			? Task.CompletedTask
-			: OnExpand.InvokeAsync(new ExpandEventArgs
-			{
-				Id = id,
-				Expand = open,
-			});
+			: OnExpand.InvokeAsync(new ExpandEventArgs(accd, accd.InternalOpened));
 }

@@ -8,5 +8,15 @@
     "outputFile": "wwwroot/ref/content.nested.css",
     "inputFile": "Scss/content.scss",
     "style": "Nested"
+  },
+  {
+    "outputFile": "wwwroot/reboot.css",
+    "inputFile": "Scss/reboot.scss",
+    "style": "Compressed"
+  },
+  {
+    "outputFile": "wwwroot/ref/reboot.nested.css",
+    "inputFile": "Scss/reboot.scss",
+    "style": "Nested"
   }
 ]

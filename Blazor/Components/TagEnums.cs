@@ -7,6 +7,7 @@ public enum Variant
 	Splendid,
 	Simple,
 	Outline,
+	Primary,
 }
 
 
@@ -20,22 +21,6 @@ public enum TagVariant
 	Info,
 	Light,
 	Dark,
-}
-
-// 방향
-public enum TagDirection
-{
-	Up,
-	Right,
-	Down,
-	Left,
-}
-
-// 정렬
-public enum TagAlignment
-{
-	Left,
-	Right,
 }
 
 // 라이닝
