@@ -1,6 +1,16 @@
 ﻿namespace Du.Blazor.Components;
 
 // 바리언트
+public enum Variant
+{
+	Normal,
+	Splendid,
+	Simple,
+	Outline,
+}
+
+
+// 바리언트
 public enum TagVariant
 {
 	Primary,
@@ -26,4 +36,11 @@ public enum TagAlignment
 {
 	Left,
 	Right,
+}
+
+// 라이닝
+public enum TagRound
+{
+	Circle,
+	Pill,
 }

@@ -20,7 +20,7 @@ public class Tabs : ComponentContainer<Tab>
 	[Parameter] public bool TabOnly { get; set; }
 	[Parameter] public bool DontActiveOnCreation { get; set; }
 
-	[Parameter] public EventCallback<string> OnActive { get; set; }
+	[Parameter] public EventCallback<string> OnSelect { get; set; }
 
 	/// <inheritdoc />
 	protected override bool SelectFirst => !DontActiveOnCreation;
@@ -117,7 +117,7 @@ public class Tabs : ComponentContainer<Tab>
 
 	//
 	private Task InvokeOnActive(string id) =>
-		OnActive.HasDelegate is false
+		OnSelect.HasDelegate is false
 			? Task.CompletedTask
-			: OnActive.InvokeAsync(id);
+			: OnSelect.InvokeAsync(id);
 }

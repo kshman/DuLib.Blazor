@@ -30,7 +30,9 @@ public class Btn : Nulo
 		_nulo_type = Link is not null ? NuloType.Link
 			: EditContext is not null ? NuloType.Submit : NuloType.Button;
 
-		ComponentClass = ListAgent is not null ? ListAgent.Class : Cssc.Class("nulo", VariantString);
+		ComponentClass = ListAgent is not null
+			? ListAgent.Class
+			: Cssc.Class(Pseudo.IfTrue("usp"), "nulo", (Variant ?? defaultVariant).ToCss());
 	}
 
 	/// <inheritdoc />
@@ -109,10 +111,14 @@ public class Btn : Nulo
 /// </summary>
 public abstract class Nulo : ComponentContent
 {
+	protected const Variant defaultVariant = Components.Variant.Normal;
+
 	/// <summary>텍스트</summary>
 	[Parameter] public string? Text { get; set; }
 	/// <summary>바리언트.</summary>
-	[Parameter] public TagVariant? Variant { get; set; }
+	[Parameter] public Variant? Variant { get; set; }
+	/// <summary>사용자 설정 정의(User setting pretend)</summary>
+	[Parameter] public bool Pseudo { get; set; }
 
 	/// <summary>마우스 눌린 이벤트 지정.</summary>
 	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -120,9 +126,6 @@ public abstract class Nulo : ComponentContent
 	//
 	protected bool _handle_click;
 	protected NuloType _nulo_type;
-
-	//
-	protected string? VariantString => Variant?.ToString("F").ToLower();
 
 	// 마우스 핸들러
 	protected virtual async Task HandleOnClickAsync(MouseEventArgs e)

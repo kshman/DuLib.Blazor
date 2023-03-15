@@ -1,4 +1,6 @@
-﻿namespace Du.Blazor.Components;
+﻿using System.Runtime.Intrinsics.Arm;
+
+namespace Du.Blazor.Components;
 
 /// <summary>
 /// 드랍 다운
@@ -8,22 +10,22 @@ public class DropBtn : Nulo, IListAgent
 	[Parameter] public TagAlignment? Alignment { get; set; }
 	[Parameter] public string? PanelClass { get; set; }
 	[Parameter] public bool TextOnSelect { get; set; } = true;
+	[Parameter] public bool CloseOnSelect { get; set; } = true;
 	[Parameter] public bool Border { get; set; }
+
+	[Parameter] public EventCallback<string?> OnSelect { get; set; }
 
 	//
 	private string? _actual_text;
+	private bool _short_bye;
 
 	/// <inheritdoc />
-	protected override void OnInitialized()
-	{
+	protected override void OnInitialized() =>
 		_actual_text = Text;
-	}
 
 	/// <inheritdoc />
-	protected override void OnParametersSet()
-	{
-		ComponentClass = Cssc.Class("nulo", VariantString);
-	}
+	//protected override void OnParametersSet() =>
+	//	ComponentClass = BuildClassName();
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -44,7 +46,7 @@ public class DropBtn : Nulo, IListAgent
 		builder.AddAttribute(1, "class", Cssc.Class(
 			"dpd",
 			Border.IfTrue("dpd-border"),
-			(Alignment == TagAlignment.Right).IfTrue("dpd-align-right")));
+			(Alignment == TagAlignment.Right).IfTrue("dpd-right")));
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
@@ -55,17 +57,20 @@ public class DropBtn : Nulo, IListAgent
 		builder.AddContent(17, _actual_text);
 		builder.CloseElement(); // button
 
-		builder.OpenElement(20, "div");
-		builder.AddAttribute(21, "class", PanelClass);
+		if (!_short_bye)
+		{
+			builder.OpenElement(20, "div");
+			builder.AddAttribute(21, "class", PanelClass);
 
-		builder.OpenComponent<CascadingValue<DropBtn>>(22);
-		builder.AddAttribute(23, "Value", this);
-		builder.AddAttribute(24, "IsFixed", true);
-		builder.AddAttribute(25, "ChildContent", (RenderFragment)((b) =>
-			b.AddContent(7, ChildContent)));
-		builder.CloseComponent(); // CascadingValue<Accds>, 콘텐트
+			builder.OpenComponent<CascadingValue<DropBtn>>(22);
+			builder.AddAttribute(23, "Value", this);
+			builder.AddAttribute(24, "IsFixed", true);
+			builder.AddAttribute(25, "ChildContent", (RenderFragment)((b) =>
+				b.AddContent(7, ChildContent)));
+			builder.CloseComponent(); // CascadingValue<Accds>, 콘텐트
 
-		builder.CloseElement(); // div, 패널
+			builder.CloseElement(); // div, 패널
+		}
 
 		builder.CloseElement(); // div, 메인
 	}
@@ -78,22 +83,51 @@ public class DropBtn : Nulo, IListAgent
 	string? IListAgent.Class => null;
 
 	/// <inheritdoc />
-	Task IListAgent.OnResponseAsync(ComponentProp component)
+	async Task IListAgent.OnResponseAsync(ComponentProp component)
 	{
-		if (!TextOnSelect)
-			return Task.CompletedTask;
+		// 일단 닫는다
+		if (CloseOnSelect)
+		{
+			_short_bye = true;
 
+			// 주석 처리 했으니 안닫힘
+			//StateHasChanged(); 
+		}
+
+		// 눌러 처리 -> 이 안에서 뭔가 하면 StateHasChange가 발동할 것이고, 그러면 자동으로 닫힐 것이다
 		if (component is Nulo nulo)
 		{
-			_actual_text = nulo.Text;
+			if (nulo.Text is not null)
+			{
+				if (TextOnSelect)
+					_actual_text = nulo.Text;
 
-			if (_actual_text.WhiteSpace())
-				_actual_text = Text;
+				await OnSelect.InvokeAsync(_actual_text);
+			}
+			else
+			{
+				if (TextOnSelect)
+					_actual_text = Text;
+
+				if (nulo.Id is not null)
+					await OnSelect.InvokeAsync(nulo.Id);
+			}
+		}
+
+		// 잠시 대기했다.... 원래대로
+		try
+		{
+			await Task.Delay(1);
+
+			if (CloseOnSelect)
+				_short_bye = false;
 
 			StateHasChanged();
 		}
-
-		return Task.CompletedTask;
+		catch
+		{
+			// 무슨 예외가 날지도 몰라서 그냥 해 둠
+		}
 	}
 	#endregion
 }

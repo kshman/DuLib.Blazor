@@ -1,17 +1,4 @@
-﻿@import "_include";
-
-//:root { }
-
-// 바디 기본 - 글꼴
-.font-serif {
-  font-family: $serif;
-}
-
-// 바디 기본 - 색깔
-.cc-bg {
-  background-color: $bg;
-  color: $cc;
-}
+﻿@import "_variables.scss";
 
 // 예제용
 .dzex {
@@ -19,11 +6,91 @@
   margin: 0.5rem 1rem;
   border: thick double #a9f27d;
 
-  &.purple {
-    border: 2px solid rebeccapurple;
+  &.pri {
+    border: 1px solid #838288;
+    border-radius: 0.15rem;
   }
 
-  &.blue {
-    border: 2px solid blue;
+  &.sec {
+    border: 1px solid #00ddff;
+    border-radius: 0.15rem;
+  }
+}
+
+// 보통
+.variant-normal {
+  border: 1px solid transparent;
+  color: #{$cc};
+  background: #{$normal-rest};
+  // 호버
+  &:hover {
+    background: #{$normal-hover};
+  }
+  // 포커스
+  &:focus {
+    background: #{$normal-focus};
+  }
+  // 액티브
+  &:active, &.active {
+    background: #{$normal-active};
+  }
+}
+
+// 화사하게
+.variant-splendid {
+  border: 1px solid transparent;
+  color: #{$cc};
+  background: #{$splend-rest};
+  // 호버
+  &:hover {
+    background: #{$splend-hover};
+  }
+  // 포커스
+  &:focus {
+    background: #{$splend-focus};
+  }
+  // 액티브
+  &:active, &.active {
+    background: #{$splend-active};
+  }
+}
+
+// 심플
+.variant-simple {
+  border: 1px solid transparent;
+  color: #{$cc};
+  background: #{$simple-rest};
+  // 호버
+  &:hover {
+    background: #{$simple-hover};
+  }
+  // 포커스
+  &:focus {
+    background: #{$simple-focus};
+  }
+  // 액티브
+  &:active, &.active {
+    background: #{$simple-active};
+    color: #{$cc-accent};
+  }
+}
+
+// 아웃라인
+.variant-outline {
+  border: 1px solid #{$normal-rest};
+  color: #{$cc};
+  background: transparent;
+  // 호버
+  &:hover {
+    border: 1px solid #{$normal-hover};
+  }
+  // 포커스
+  &:focus {
+    border: 1px solid #{$normal-focus};
+  }
+  // 액티브
+  &:active, &.active {
+    border: 1px solid #{$normal-active};
+    color: #{$cc-accent};
   }
 }

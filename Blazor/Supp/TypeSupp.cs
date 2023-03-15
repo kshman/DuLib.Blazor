@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Du.Blazor.Components;
 
 namespace Du.Blazor.Supp;
 
@@ -24,4 +25,35 @@ internal static class TypeSupp
 
 	internal static bool ShouldAwaitTask(this Task task) =>
 		task.Status is not TaskStatus.RanToCompletion and not TaskStatus.Canceled;
+
+	private static string ToCssName(this Variant v) =>
+		v.ToString("F").ToLower();
+
+	internal static string ToCss(this Variant v, string lead = "variant") =>
+		$"{lead}-{v.ToCssName()}";
+
+	internal static string ToCss(this TagVariant v) => v switch
+	{
+		TagVariant.Primary => "pri",
+		TagVariant.Success => "suc",
+		TagVariant.Danger => "dng",
+		TagVariant.Warning => "wrn",
+		TagVariant.Info => "inf",
+		TagVariant.Light => "lgt",
+		TagVariant.Dark => "drk",
+		_ => LogIf.ArgumentOutOfRange<string>(v, nameof(v))
+	};
+
+	internal static string ToCss(this TagVariant v, string lead) =>
+		$"{lead}-{v.ToCss()}";
+
+	private static string ToCss(this TagRound r) => r switch
+	{
+		TagRound.Circle => "c",
+		TagRound.Pill => "p",
+		_ => LogIf.ArgumentOutOfRange<string>(r, nameof(r))
+	};
+
+	internal static string ToCss(this TagRound r, string lead) =>
+		$"{lead}-{r.ToCss()}";
 }
