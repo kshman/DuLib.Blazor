@@ -3,7 +3,10 @@
 public class Badge : ComponentContent
 {
 	[Parameter] public Variant? Variant { get; set; }
+	[Parameter] public bool Active { get; set; } = true;
 	[Parameter] public bool Round { get; set; }
+
+	[Parameter] public bool Outer { get; set; }
 	[Parameter] public bool Bottom { get; set; }
 
 	[Parameter] public string? Color { get; set; }
@@ -16,12 +19,12 @@ public class Badge : ComponentContent
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		if (ChildContent is null)
+		if (Outer is false)
 		{
 			// 안쪽 뱃지
 			ComponentClass = Cssc.Class(
 				"bdg bdg-i",
-				(Variant ?? Settings.Variant).ToCss(),
+				(Variant ?? Settings.Variant).ToCss(Active ? "a" : "d"),
 				Round.IfTrue("dgrm"));
 		}
 		else
@@ -29,7 +32,7 @@ public class Badge : ComponentContent
 			// 바깥쪽 뱃지
 			ComponentClass = Cssc.Class(
 				"bdg",
-				(Variant ?? Settings.Variant).ToCss(),
+				(Variant ?? Settings.Variant).ToCss(Active ? "a" : "d"),
 				Round.IfTrue("dgrm"),
 				Bottom ? "brb" : "brt");
 		}
@@ -43,7 +46,7 @@ public class Badge : ComponentContent
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
-		if (ChildContent is null)
+		if (Outer is false)
 			RenderInner(builder);
 		else
 			RenderOuter(builder);
