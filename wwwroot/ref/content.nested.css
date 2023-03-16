@@ -213,7 +213,9 @@
   --dpd-drop: #212529;
   --dpd-hover: #3f3f43;
   --dpd-active: #545459;
-  --dpd-border: #838288;
+  --dpd-border: #838288; }
+
+.dpd {
   position: relative;
   display: inline-block; }
   .dpd > div {
@@ -269,7 +271,6 @@
   display: inline-block;
   padding: 0.3rem 0.65rem;
   border-radius: 0.375rem;
-  color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
@@ -277,11 +278,26 @@
   vertical-align: baseline; }
   .bdg:empty {
     display: none; }
-  .bdg.circle {
+  .bdg.dgrm {
     border-radius: 50rem; }
 
-.nulo .bdg, .unulo .bdg {
+.nulo .bdg-i {
   position: relative;
   top: -1px; }
+
+.bdg-o > * {
+  position: relative; }
+
+.bdg-o .bdg {
+  position: absolute;
+  transform: translate(-50%, -50%); }
+
+.bdg-o .brt {
+  top: 0;
+  left: 100%; }
+
+.bdg-o .brb {
+  top: 100%;
+  left: 100%; }
 
 /*# sourceMappingURL=content.css.map */

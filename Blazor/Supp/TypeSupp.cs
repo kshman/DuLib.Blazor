@@ -41,29 +41,4 @@ internal static class TypeSupp
 
 	internal static string ToCss(this Variant v, string tail) =>
 		$"var-{v.ToCssName()}-{tail}";
-
-	internal static string ToCss(this TagVariant v) => v switch
-	{
-		TagVariant.Primary => "pri",
-		TagVariant.Success => "suc",
-		TagVariant.Danger => "dng",
-		TagVariant.Warning => "wrn",
-		TagVariant.Info => "inf",
-		TagVariant.Light => "lgt",
-		TagVariant.Dark => "drk",
-		_ => LogIf.ArgumentOutOfRange<string>(v, nameof(v))
-	};
-
-	internal static string ToCss(this TagVariant v, string lead) =>
-		$"{lead}-{v.ToCss()}";
-
-	private static string ToCss(this TagRound r) => r switch
-	{
-		TagRound.Circle => "c",
-		TagRound.Pill => "p",
-		_ => LogIf.ArgumentOutOfRange<string>(r, nameof(r))
-	};
-
-	internal static string ToCss(this TagRound r, string lead) =>
-		$"{lead}-{r.ToCss()}";
 }

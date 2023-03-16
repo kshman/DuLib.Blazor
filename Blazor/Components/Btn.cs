@@ -32,7 +32,7 @@ public class Btn : Nulo
 		InternalType = Link is not null ? NuloType.Link
 			: EditContext is not null ? NuloType.Submit : NuloType.Button;
 
-		ComponentClass = ListAgent is not null ? ListAgent.Class : GetClassName();
+		ComponentClass = ListAgent is not null ? ListAgent.Class : GetNuloClassName();
 	}
 
 	/// <inheritdoc />
@@ -138,7 +138,7 @@ public abstract class Nulo : ComponentContent
 	protected bool _handle_click;
 
 	//
-	protected string? GetClassName(string? baseClass = "nulo")
+	protected string? GetNuloClassName(string? baseClass = "nulo")
 	{
 		return Cssc.Class(Pseudo.IfTrue("usp"), (Variant ?? Settings.Variant).ToCss(), baseClass);
 	}

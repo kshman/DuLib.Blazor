@@ -29,7 +29,7 @@ public class DropBtn : Nulo, IComponentResponse
 
 	/// <inheritdoc />
 	protected override void OnParametersSet() =>
-		ComponentClass = GetClassName();
+		ComponentClass = GetNuloClassName();
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
