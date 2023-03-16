@@ -1,0 +1,263 @@
+@import "_variables.scss";
+
+// ACCD
+.accd {
+  --accd-border: #{$cc-border};
+  // 아이콘
+  --accd-ic: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  // 아이템
+  & > div {
+    // 눌러
+    & > button {
+      width: 100%;
+      padding: .5rem .75rem;
+      outline: none;
+      text-align: left;
+      transition: 0.2s;
+      // 애프터 (RIGHT ARROW)
+      &:after {
+        float: right;
+        width: 1rem;
+        height: 1rem;
+        margin-left: auto;
+        background: var(--accd-ic) no-repeat;
+        content: '';
+        transition: transform 0.2s ease-in-out;
+      }
+      // 애프터 뒤집기
+      &.active:after {
+        transform: rotate(-180deg);
+      }
+    }
+    // 패널
+    & > div {
+      display: none;
+      overflow: hidden;
+      padding: 0 1.1rem;
+      // 액티브
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
+// ACCD 모서리
+.accd-border {
+  & > div {
+    border: 1px solid var(--accd-border);
+    // 두번째 부터는 위에 없음
+    &:not(:first-of-type) {
+      border-top: 0;
+    }
+  }
+}
+
+
+// 탭
+.tab {
+  // 색깔
+  --tab-border: #{$cc-border};
+  // 탭 목록
+  & > div[role=tablist] {
+    overflow: hidden;
+    // 탭 눌러
+    & > button {
+      float: left;
+      padding: 0.5rem 1rem;
+      outline: none;
+      font-size: 1rem;
+      transition: .2s;
+    }
+  }
+  // 패널
+  & > div[role=tabpanel] {
+    display: none;
+    margin-top: -1px;
+    padding: .1rem 1rem;
+    // 액티브
+    &.active {
+      display: block;
+    }
+  }
+}
+// 탭 모서리
+.tab-border {
+  // 목록
+  & > div[role=tablist] > button {
+    border: 1px solid var(--tab-border);
+    // 두번째 부터는 왼쪽 없음
+    &:not(:first-of-type) {
+      border-left: 0;
+    }
+  }
+  // 패널
+  & > div[role=tabpanel] {
+    border: 1px solid var(--tab-border);
+  }
+}
+
+
+// 버튼 -> 눌러 = nulo
+.nulo {
+  // 속성
+  display: inline-block;
+  overflow: visible;
+  width: auto;
+  height: auto;
+  padding: .5rem .75rem;
+  margin: .3rem 0;
+  outline: none;
+  transition: all .2s;
+  border-radius: 4px;
+  box-shadow: none;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: baseline;
+  user-select: none;
+}
+// 사용자 정의
+.usp.nulo {
+  // 포커스 & 호버
+  &:focus, &:hover {
+    box-shadow: inset 0 0 0 99rem rgba(#333, .2);
+  }
+  // 액티브
+  &:active, &.active {
+    box-shadow: inset 0 0 0 99rem rgba(#fff, .1);
+  }
+}
+
+
+// 드랍다운
+// 색깔
+.dpd {
+  --dpd-cc: #{$cc};
+  --dpd-drop: #{$cc-dark};
+  --dpd-hover: #{$normal-hover};
+  --dpd-active: #{$normal-active};
+  --dpd-border: #{$cc-border};
+}
+// 속성
+.dpd {
+  position: relative;
+  display: inline-block;
+  // 콘텐트
+  & > div {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    min-width: 10rem;
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    background: var(--dpd-drop);
+    color: var(--dpd-cc);
+    box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,.3);
+    // 콘텐트 문장
+    & > * {
+      display: block;
+      padding: .5rem 1rem;
+    }
+    // 콘텐트 가로줄
+    & > hr {
+      overflow: hidden;
+      height: 0;
+      margin: 0.1rem 0;
+      padding: 0;
+      border-top: 1px solid var(--dpd-border);
+      opacity: .5;
+    }
+    // 콘텐트 버튼
+    & > a, & > button {
+      display: block;
+      clear: both;
+      width: 100%;
+      padding: .5rem 1rem;
+      border: 0;
+      background: inherit;
+      color: inherit;
+      text-align: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all .2s;
+      cursor: pointer;
+    }
+    // 콘텐트 버튼 액티브
+    & > a:active, & > a.active, & > button:active, & > button.active {
+      background: var(--dpd-active);
+    }
+    // 콘텐트 버튼 호버
+    & > a:hover, & > a:focus, & > button:hover, & > button:focus {
+      background: var(--dpd-hover);
+      text-decoration: none;
+    }
+  }
+  // 호버
+  &:hover > div {
+    display: block;
+  }
+}
+// 드랍다운 모서리
+.dpd-border {
+  & > div {
+    border: 1px solid var(--dpd-border);
+  }
+}
+// 드랍다운 오른쪽 정렬
+.dpd-right {
+  & > div {
+    right: 0;
+    left: auto;
+  }
+}
+
+
+// 뱃지
+.bdg {
+  display: inline-block;
+  padding: 0.3rem 0.65rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+  // 빈거
+  &:empty {
+    display: none;
+  }
+  // 동글
+  &.dgrm {
+    border-radius: 50rem;
+  }
+}
+// 안쪽 뺏지
+.bdg-i {
+  // 눌러 안 뺏지
+  .nulo & {
+    position: relative;
+    top: -1px;
+  }
+}
+// 바깥쪽 뱃지
+.bdg-o {
+  & > * {
+    position: relative;
+  }
+  // 배지 공통
+  & .bdg {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+  // 오른쪽 위
+  & .brt {
+    top: 0;
+    left: 100%;
+  }
+  // 오른쪽 아래
+  & .brb {
+    top: 100%;
+    left: 100%;
+  }
+}

@@ -51,4 +51,16 @@ internal static class LogIf
 
 		ThrowBySetting();
 	}
+
+	//
+	internal static T ArgumentOutOfRange<T>(object v, string name)
+	{
+		System.Diagnostics.Debug.WriteLine(Settings.UseLocaleMesg
+			? $"인수 {name}의 값이 범위를 벗어났어요. (값: {v})"
+			: $"Argument {name} is out of range. (value: {v})");
+
+		ThrowBySetting();
+
+		return default!;
+	}
 }

@@ -2,15 +2,16 @@
 
 /// <summary>아이템 컴포넌트 스토리지</summary>
 /// <remarks>컨테이너와 다른 점은, 스토리지는 그냥 아이템만 보관하고 관리</remarks>
-/// <typeparam name="TItem"><see cref="BaseComponent"/>를 상속한 아이템 컴포넌트</typeparam>
-public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrage<TItem>, IAsyncDisposable
-	where TItem : BaseComponent
+/// <typeparam name="TItem"><see cref="ComponentProp"/>를 상속한 아이템 컴포넌트</typeparam>
+public abstract class ComponentStorage<TItem> : ComponentContent,
+	IComponentStrage<TItem>, IAsyncDisposable
+	where TItem : ComponentProp
 {
 	//
 	protected List<TItem> Items { get; } = new();
 
-	//
-	protected bool StorageReady { get; set; }
+	/// <summary>사용할 준비가 끝났다</summary>
+	public bool Ready { get; protected set; }
 
 	// 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -20,7 +21,7 @@ public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrag
 
 		await OnAfterFirstRenderAsync();
 
-		StorageReady = true;
+		Ready = true;
 	}
 
 	//
@@ -36,7 +37,7 @@ public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrag
 	{
 		Items.Remove(item);
 
-		return StorageReady is false ? Task.CompletedTask : OnItemRemovedAsync(item);
+		return Ready is false ? Task.CompletedTask : OnItemRemovedAsync(item);
 	}
 
 	//
@@ -54,7 +55,7 @@ public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrag
 	/// <returns>비동기 처리한 태스크</returns>
 	protected virtual ValueTask DisposeAsyncCore()
 	{
-		StorageReady = false;
+		Ready = false;
 		return ValueTask.CompletedTask;
 	}
 
@@ -106,7 +107,7 @@ public abstract class ComponentStorage<TItem> : ComponentObject, IComponentStrag
 /// <see cref="SelectedItem"/>로 선택한 아이템을 처리할 수 있음
 /// </remarks>
 public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComponentContainer<TItem>
-	where TItem : BaseComponent
+	where TItem : ComponentProp
 {
 	//
 	[Parameter]
@@ -146,7 +147,7 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 
 		await OnAfterFirstRenderAsync();
 
-		StorageReady = true;
+		Ready = true;
 	}
 
 	//
@@ -209,4 +210,40 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 	/// <param name="id"></param>
 	/// <returns>비동기 처리한 태스크</returns>
 	protected virtual Task InvokeCurrentIdChangedAsync(string? id) => CurrentIdChanged.InvokeAsync(id);
+}
+
+
+/// <summary>
+/// 스토리지 또는 컨테이너에서 사용하는 서브셋
+/// </summary>
+/// <typeparam name="TThis"></typeparam>
+/// <typeparam name="TStorage"></typeparam>
+public abstract class ComponentSubset<TThis, TStorage> : ComponentContent,
+	IAsyncDisposable
+	where TThis : ComponentContent
+	where TStorage : ComponentStorage<TThis>
+{
+	[CascadingParameter] public TStorage? Storage { get; set; }
+
+	/// <inheritdoc />
+	protected override Task OnInitializedAsync()
+	{
+		ThrowIf.ContainerIsNull(this, Storage);
+
+		FillInternalId();
+
+		return Storage.AddItemAsync(this.CastFail<TThis>());
+	}
+
+	//
+	public async ValueTask DisposeAsync()
+	{
+		if (Storage is not null)
+		{
+			await Storage.RemoveItemAsync(this.CastFail<TThis>());
+			Storage = null;
+		}
+
+		GC.SuppressFinalize(this);
+	}
 }

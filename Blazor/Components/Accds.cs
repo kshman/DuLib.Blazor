@@ -1,10 +1,9 @@
 ﻿namespace Du.Blazor.Components;
 
-public class Accd : ComponentObject, IAsyncDisposable
+public class Accd : ComponentSubset<Accd, Accds>
 {
-	[CascadingParameter] public Accds? Accds { get; set; }
-
 	[Parameter] public string? Text { get; set; }
+	[Parameter] public Variant? Variant { get; set; }
 	[Parameter] public bool Open { get; set; }
 
 	// 
@@ -13,24 +12,31 @@ public class Accd : ComponentObject, IAsyncDisposable
 	/// <inheritdoc />
 	protected override Task OnInitializedAsync()
 	{
-		ThrowIf.ContainerIsNull(this, Accds);
-
-		FillAutoId();
-
 		InternalOpened = Open;
 
-		return Accds.AddItemAsync(this);
+		return base.OnInitializedAsync();
 	}
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
+		/*
+			<div>
+				<button type="button" class="active" id="" @onClick="" @onClick:StopPropagation="true">
+					제목
+				</button>
+				<div class="active">
+					내용
+				</div>
+			</div>
+		 */
+		var active = InternalOpened.IfTrue("active");
+
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", Cssc.Class("item", InternalOpened.IfTrue("active")));
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
-		builder.AddAttribute(12, "class", Cssc.Class("nulo", ActualClass));
+		builder.AddAttribute(12, "class", Cssc.Class(ActualClass, (Variant ?? Settings.Variant).ToCss(), active));
 		builder.AddAttribute(13, "id", Id);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		builder.AddEventStopPropagationAttribute(15, "onclick", true);
@@ -39,7 +45,7 @@ public class Accd : ComponentObject, IAsyncDisposable
 		builder.CloseElement(); // button
 
 		builder.OpenElement(20, "div");
-		builder.AddAttribute(21, "class", "pnl");
+		builder.AddAttribute(21, "class", active);
 		builder.AddContent(22, ChildContent);
 		builder.CloseElement(); // div
 
@@ -47,24 +53,12 @@ public class Accd : ComponentObject, IAsyncDisposable
 	}
 
 	//
-	public async ValueTask DisposeAsync()
-	{
-		if (Accds is not null)
-		{
-			await Accds.RemoveItemAsync(this);
-			Accds = null;
-		}
-
-		GC.SuppressFinalize(this);
-	}
-
-	//
 	private async Task HandleOnClickAsync(MouseEventArgs e)
 	{
 		InternalOpened = !InternalOpened;
 
-		if (Accds is not null)
-			await Accds.HandleAccdAsync(this);
+		if (Storage is not null)
+			await Storage.HandleAccdAsync(this);
 	}
 }
 
@@ -100,8 +94,15 @@ public class Accds : ComponentContainer<Accd>
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
+		/*
+			<div class="accd accd-border">
+				<CascadingValue Value="this" IsFixed="true">
+					ACCD 아이템
+				</CascadingValue>
+			</div>
+		 */
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", Cssc.Class("accd", Border.IfTrue("bdr")));
+		builder.AddAttribute(1, "class", Cssc.Class("accd", Border.IfTrue("accd-border")));
 		builder.AddMultipleAttributes(2, UserAttrs);
 
 		builder.OpenComponent<CascadingValue<Accds>>(3);
@@ -118,7 +119,7 @@ public class Accds : ComponentContainer<Accd>
 	internal async Task HandleAccdAsync(Accd accd)
 	{
 		if (Separate)
-			await InvokeOpenClose(accd.Id!, accd.InternalOpened);
+			await InvokeOpenClose(accd);
 		else
 		{
 			var prev = SelectedItem;
@@ -126,22 +127,18 @@ public class Accds : ComponentContainer<Accd>
 			if (prev != accd && prev is not null)
 			{
 				prev.InternalOpened = false;
-				await InvokeOpenClose(prev.Id!, false);
+				await InvokeOpenClose(prev);
 			}
 
-			await InvokeOpenClose(accd.Id!, accd.InternalOpened);
+			await InvokeOpenClose(accd);
 		}
 
 		await SelectItemAsync(accd);
 	}
 
 	//
-	private Task InvokeOpenClose(string id, bool open) =>
+	private Task InvokeOpenClose(Accd accd) =>
 		OnExpand.HasDelegate is false
 			? Task.CompletedTask
-			: OnExpand.InvokeAsync(new ExpandEventArgs
-			{
-				Id = id,
-				Expand = open,
-			});
+			: OnExpand.InvokeAsync(new ExpandEventArgs(accd, accd.InternalOpened));
 }

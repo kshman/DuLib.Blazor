@@ -63,8 +63,6 @@
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Content Remove="wwwroot\ref\**" />
     <None Remove="wwwroot\ref\**" />
-    <Content Remove="Blazor.Bootstrap\Supp\Dummy.razor" />
-    <None Include="Blazor.Bootstrap\Supp\Dummy.razor" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,71 @@
+﻿// 정의
+$serif: "Malgun Gothic","Segoe UI","Apple SD Gothic Neo","Helvetica Neue","Noto Sans",Helvetica,Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol","Apple Color Emoji","Noto Color Emoji";
+$monospace: Consolas, "Courier New", "Liberation Mono", SFMono-Regular, monospace;
+
+// 문서 기본
+$font-size: 14px;
+$font-weight: 400;
+$line-height: 1.5;
+$bg: #1c1b22;
+$cc: #fbfbfe;
+
+// 기본 색깔
+$cc-white: #fff;
+$cc-light: #fbfbfe;
+$cc-black: #000;
+$cc-dark: #212529;
+$cc-border: #838288;
+$cc-hover: #212529;
+$cc-focus: transparent;
+$cc-accent: #0360b9;
+
+// normal
+$normal-cc: $cc;
+$normal-bg: #2b2a33;
+$normal-hover: #3f3f43;
+$normal-focus: #3f3f43;
+$normal-active: #545459;
+
+// splendid
+$splend-cc: $cc;
+$splend-bg: #16424e;
+$splend-hover: #126072;
+$splend-focus: #126072;
+$splend-active: #16768C;
+
+// simple
+$simple-cc: $cc;
+$simple-cc-focus: #a0faea;
+$simple-bg: transparent;
+$simple-hover: #3f3f43;
+$simple-focus: transparent;
+$simple-active: #4b4b4b;
+
+// primary (부트스트랩 비스므리)
+$primary-cc: $cc;
+$primary-bg: #023b8f;
+$primary-hover: #012e7f;
+$primary-focus: #012e7f;
+$primary-active: #0360b9;
+
+// outline
+//..은 normal의 외곽선 버전
+
+// 크기 계산용
+$space-spacing: 0.5rem;
+
+@function strip($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@function em($px, $size: $font-size) {
+  @return #{ strip($px) / strip($size) }em;
+}
+
+@function rem($px, $size: $font-size) {
+  @return #{ strip($px) / strip($size) }rem;
+}
+
+@function spacing($space) {
+  @return calc(#{ $space-spacing } * #{ $space });
+}

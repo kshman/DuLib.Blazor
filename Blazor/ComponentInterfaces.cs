@@ -46,16 +46,46 @@ public interface IComponentContainer<TItem> : IComponentStrage<TItem>
 }
 
 
+/// <summary>
+/// 반응을 처리한다
+/// </summary>
+public interface IComponentResponse
+{
+	/// <summary>
+	/// 반응에 대한 처리
+	/// </summary>
+	/// <param name="component"></param>
+	/// <returns></returns>
+	Task OnResponseAsync(ComponentProp component);
+}
+
+
+/// <summary>
+/// 리스트 에이전트
+/// </summary>
+public interface IComponentListAgent
+{
+	/// <summary>
+	/// 감싸야할 태그 이름. 널이면 안감싸도록
+	/// </summary>
+	string? Tag { get; }
+	/// <summary>
+	/// 원래 태그(감싸는 태그가 아닌)의 CSS 클래스
+	/// </summary>
+	string? Class { get; }
+}
+
+
 /// <summary>태그 아이템 핸들러</summary>
 /// <remarks>컨테이너가 아닌것은 개체를 소유하지 않고 처리만 도와주기 때문</remarks>
-public interface ITagItemHandler
+public interface ITagPropHandler
 {
 	/// <summary>
 	/// 태그 아이템의 렌더 트리를 만듦
 	/// </summary>
-	/// <param name="item"></param>
+	/// <param name="tag"></param>
 	/// <param name="builder"></param>
-	void OnRender(TagItem item, RenderTreeBuilder builder);
+	void OnRender(TagProp tag, RenderTreeBuilder builder);
 }
 
 
@@ -67,25 +97,7 @@ public interface ITagContentHandler
 	/// <summary>
 	/// 태그 콘텐트의 렌더 트리를 만듦
 	/// </summary>
-	/// <param name="role">
-	/// </param>
 	/// <param name="content">콘텐트</param>
 	/// <param name="builder">빌드 개체</param>
-	void OnRender(TagContentRole role, TagContent content, RenderTreeBuilder builder);
-}
-
-
-/// <summary>
-/// 리스트 에이전트
-/// </summary>
-public interface ITagListAgent
-{
-	/// <summary>
-	/// 감싸야할 태그 이름. 널이면 안감싸도록
-	/// </summary>
-	string? Tag { get; }
-	/// <summary>
-	/// 원래 태그(감싸는 태그가 아닌)의 CSS 클래스
-	/// </summary>
-	string? Class { get; }
+	void OnRender(TagContent content, RenderTreeBuilder builder);
 }
