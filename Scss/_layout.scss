@@ -162,7 +162,7 @@
 }
 
 // 컨테이너
-.ctnr, .ctnr-f, .ctnr-600, .ctnr-900, .ctnr-1200 {
+.ctn, .ctn-f, .ctn-600, .ctn-900, .ctn-1200 {
   //
   --ctnr-gx: 1.5rem;
   --ctnr-gy: 0;
@@ -175,19 +175,19 @@
 }
 
 @media (min-width: 600px) {
-  .ctnr-600, .ctnr {
+  .ctn-600, .ctn {
     max-width: 600px;
   }
 }
 
 @media (min-width:900px) {
-  .ctnr-900, .ctnr-600, .ctnr {
+  .ctn-900, .ctn-600, .ctn {
     max-width: 900px;
   }
 }
 
 @media (min-width:1200px) {
-  .ctnr-1200, .ctnr-900, .ctnr-600, .ctnr {
+  .ctn-1200, .ctn-900, .ctn-600, .ctn {
     max-width: 1200px;
   }
 }

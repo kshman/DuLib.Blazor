@@ -25,7 +25,7 @@ public class NavMenu : ComponentProp, IComponentNav, IComponentList
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		/*
-			<div class="nvmnu" id="id">
+			<nav class="nvmnu" id="id">
 				<div class="x">
 					<span class="닫기 아이콘"></span>
 				</div>
@@ -35,10 +35,10 @@ public class NavMenu : ComponentProp, IComponentNav, IComponentList
 				<div class="m"><!-- 메뉴 -->
 					<a class="active" href="링크">링크 제목</a>
 				</div>
-			</div>
+			</nav>
 		 */
 
-		builder.OpenElement(0, "div");
+		builder.OpenElement(0, "nav");
 		builder.AddAttribute(1, "class", ComponentClass);
 		builder.AddMultipleAttributes(2, UserAttrs);
 

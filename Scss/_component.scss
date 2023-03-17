@@ -353,13 +353,13 @@
         cursor: default;
       }
     }
-    // 컨테이너
-    & > .ctnr, & > .ctnr-f, & > .ctnr-600, & > .ctnr-900, & > .ctnr-1200 {
-      display: flex;
-      flex-wrap: inherit;
-      align-items: center;
-      justify-content: space-between;
-    }
+  }
+  // 컨테이너
+  &.ctn, &.ctn-f, &.ctn-600, &.ctn-900, &.ctn-1200 {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 // 나브 토클

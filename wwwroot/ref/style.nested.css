@@ -22,9 +22,7 @@
   border: 1px solid transparent;
   color: #fbfbfe;
   background: #2b2a33; }
-  .var-nrm:hover {
-    background: #3f3f43; }
-  .var-nrm:focus {
+  .var-nrm:hover, .var-nrm:focus {
     background: #3f3f43; }
   .var-nrm:active, .var-nrm.active {
     background: #545459; }
@@ -41,9 +39,7 @@
   border: 1px solid transparent;
   color: #fbfbfe;
   background: #16424e; }
-  .var-spn:hover {
-    background: #126072; }
-  .var-spn:focus {
+  .var-spn:hover, .var-spn:focus {
     background: #126072; }
   .var-spn:active, .var-spn.active {
     background: #16768C; }
@@ -81,9 +77,7 @@
   border: 1px solid #2b2a33;
   color: #fbfbfe;
   background: transparent; }
-  .var-oue:hover {
-    border: 1px solid #3f3f43; }
-  .var-oue:focus {
+  .var-oue:hover, .var-oue:focus {
     border: 1px solid #3f3f43; }
   .var-oue:active, .var-oue.active {
     border: 1px solid #545459;
@@ -102,9 +96,7 @@
   border: 1px solid transparent;
   color: #fbfbfe;
   background: #023b8f; }
-  .var-pri:hover {
-    background: #012e7f; }
-  .var-pri:focus {
+  .var-pri:hover, .var-pri:focus {
     background: #012e7f; }
   .var-pri:active, .var-pri.active {
     background: #0360b9; }
@@ -116,6 +108,27 @@
 .var-pri-a {
   color: #fbfbfe;
   background: #0360b9; }
+
+.ctn, .ctn-f, .ctn-600, .ctn-900, .ctn-1200 {
+  --ctnr-gx: 1.5rem;
+  --ctnr-gy: 0;
+  width: 100%;
+  padding-left: calc(var(--ctnr-gx) * 0.5);
+  padding-right: calc(var(--ctnr-gx) * 0.5);
+  margin-left: auto;
+  margin-right: auto; }
+
+@media (min-width: 600px) {
+  .ctn-600, .ctn {
+    max-width: 600px; } }
+
+@media (min-width: 900px) {
+  .ctn-900, .ctn-600, .ctn {
+    max-width: 900px; } }
+
+@media (min-width: 1200px) {
+  .ctn-1200, .ctn-900, .ctn-600, .ctn {
+    max-width: 1200px; } }
 
 @keyframes e-fade-in {
   from {
@@ -221,6 +234,7 @@
     z-index: 1;
     display: none;
     min-width: 10rem;
+    width: fit-content;
     margin: 0;
     padding: 0;
     border: 1px solid transparent;
@@ -299,28 +313,92 @@
   left: 100%; }
 
 .nv {
-  --nvlnk-font-size: 16px;
+  --nvlnk-font-size: 14px;
   --nvlnk-font-weight: 400;
   --nvlnk-cc: #fbfbfe;
   --nvlnk-cc-hover: #fbfbfe;
   --nvlnk-cc-disabled: #212529;
+  --nvlnk-active: #0360b9;
+  --nvtgl-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   overflow: hidden;
   padding: 0;
   margin: 0; }
 
-.nvlnk {
+.nvbtn {
   display: block;
   padding: 0.5rem 1rem;
   font-size: var(--nvlnk-font-size);
   font-weight: var(--nvlnk-font-weight);
   color: var(--nvlnk-cc);
   text-decoration: none;
+  user-select: none;
   transition: all .2s ease-in-out; }
-  .nvlnk:hover, .nvlnk:focus {
+  .nvbtn:hover, .nvbtn:focus {
     color: var(--nvlnk-cc-hover); }
-  .nvlnk.disabled {
+  .nvbtn:active, .nvbtn.active {
+    background: var(--nvlnk-active); }
+  .nvbtn.disabled {
     color: var(--nvlnk-cc-disabled);
     pointer-events: none;
     cursor: default; }
+
+.nvmnu {
+  overflow: hidden;
+  background: #212529; }
+  .nvmnu.b {
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap; }
+  .nvmnu.m a, .nvmnu.m button {
+    float: left;
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: var(--nvlnk-font-size);
+    font-weight: var(--nvlnk-font-weight);
+    color: var(--nvlnk-cc);
+    text-decoration: none;
+    user-select: none;
+    transition: all .2s ease-in-out; }
+    .nvmnu.m a:hover, .nvmnu.m a:focus, .nvmnu.m button:hover, .nvmnu.m button:focus {
+      color: var(--nvlnk-cc-hover); }
+    .nvmnu.m a:active, .nvmnu.m a.active, .nvmnu.m button:active, .nvmnu.m button.active {
+      background: var(--nvlnk-active); }
+    .nvmnu.m a.disabled, .nvmnu.m button.disabled {
+      color: var(--nvlnk-cc-disabled);
+      pointer-events: none;
+      cursor: default; }
+  .nvmnu.ctn, .nvmnu.ctn-f, .nvmnu.ctn-600, .nvmnu.ctn-900, .nvmnu.ctn-1200 {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between; }
+
+.nvtgl {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  padding: 0.25rem 0.75rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  background-image: var(--nvtgl-icon);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: box-shadow .2s ease-in-out; }
+  .nvtgl:hover {
+    text-decoration: none; }
+  .nvtgl:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: 0 0 0 var(0.25rem); }
 
 /*# sourceMappingURL=style.css.map */
