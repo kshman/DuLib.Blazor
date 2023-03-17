@@ -26,7 +26,7 @@ internal static class TypeSupp
 	internal static bool ShouldAwaitTask(this Task task) =>
 		task.Status is not TaskStatus.RanToCompletion and not TaskStatus.Canceled;
 
-	private static string ToCssName(this Variant v) => v switch
+	private static string ToCssDesc(this Variant v) => v switch
 	{
 		Variant.Normal => "nrm",
 		Variant.Splendid => "spn",
@@ -36,9 +36,46 @@ internal static class TypeSupp
 		_ => LogIf.ArgumentOutOfRange<string>(v, nameof(v))
 	};
 
-	internal static string ToCss(this Variant v) =>
-		$"var-{v.ToCssName()}";
+	internal static string ToCss(this Variant v, VrtLead lead = VrtLead.Set)
+	{
+		// s = 전체 세트
+		// d = 낮은색 (default)
+		// u = 밝은색 (active)
+		var l = lead switch
+		{
+			VrtLead.Set => 's',
+			VrtLead.Down => 'd',
+			VrtLead.Up => 'u',
+			_ => LogIf.ArgumentOutOfRange<char>(lead, nameof(lead))
+		};
+		return $"v{l}{v.ToCssDesc()}";
+	}
 
-	internal static string ToCss(this Variant v, string tail) =>
-		$"var-{v.ToCssName()}-{tail}";
+	internal static string ToCss(this LayoutExpand e) => e switch
+	{
+		LayoutExpand.Default => "lcn",
+		LayoutExpand.W600 => "lcn6",
+		LayoutExpand.W900 => "lcn9",
+		LayoutExpand.W1200 => "lcn12",
+		LayoutExpand.Full => "lcnf",
+		_ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
+	};
+}
+
+
+// 눌러 타입
+internal enum NuloType
+{
+	Link,
+	Action,
+	Button,
+	Submit,
+}
+
+// 바리언트 리드
+internal enum VrtLead
+{
+	Set,
+	Down,
+	Up,
 }

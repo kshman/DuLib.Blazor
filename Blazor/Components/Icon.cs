@@ -30,7 +30,7 @@ public class Icon : ComponentBase
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
-		builder.OpenElement(0, "i");
+		builder.OpenElement(0, "span");
 		builder.AddAttribute(1, "class", Cssc.Class(Class, _real_name));
 		builder.AddAttribute(2, "aria-hidden", "true");
 		builder.CloseElement();

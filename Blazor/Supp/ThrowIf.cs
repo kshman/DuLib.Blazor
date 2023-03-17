@@ -5,27 +5,14 @@ namespace Du.Blazor.Supp;
 internal static class ThrowIf
 {
 	// 컨테이너가 널이면 예외
-	internal static void ContainerIsNull<TContainer>(object item, [NotNull] TContainer? container)
+	internal static void ContainerIsNull<TThis, TContainer>([NotNull] TContainer? container) 
 	{
 		if (container is not null)
 			return;
 
 		throw new InvalidOperationException(Settings.UseLocaleMesg
-			? $"{item.GetType().Name}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{typeof(TContainer)}> 컨테이너 아래 있어야 해요."
-			: $"{item.GetType().Name}: No container found. This component must be contained within <{typeof(TContainer)}> container component.");
-	}
-
-	//
-	internal static void ContainerIsNull(object item, params object?[] containers)
-	{
-		if (containers.Any(c => c is not null))
-			return;
-
-		var names = from c in containers where c is not null select c.GetType().Name;
-		var join = string.Join(Settings.UseLocaleMesg ? "또는 " : " or ", names);
-		throw new InvalidOperationException(Settings.UseLocaleMesg
-			? $"{item.GetType().Name}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{join}> 컨테이너 아래 있어야 해요."
-			: $"{item.GetType().Name}: No container found. This component must be contained within <{join}> components");
+			? $"{typeof(TThis)}: 컨테이너가 없어요. 이 컴포넌트는 반드시 <{typeof(TContainer)}> 컨테이너 아래 있어야 해요."
+			: $"{typeof(TThis)}: No container found. This component must be contained within <{typeof(TContainer)}> container component.");
 	}
 
 	//
@@ -45,7 +32,7 @@ internal static class ThrowIf
 		if (component is TConv converted)
 			return converted;
 
-		var nameComponent = component is null ? nameof(component) : component.GetType().ToString();
+		var nameComponent = component is null ? nameof(component) : component.GetType().Name;
 		throw new InvalidOperationException(Settings.UseLocaleMesg
 			? $"{nameComponent}: 잘못된 컴포넌트 캐스팅이예요. 반드시 <{typeof(TConv)}> 이어야해요."
 			: $"{nameComponent}: Invalid component casting. Must be <{typeof(TConv)}>.");
@@ -86,7 +73,7 @@ internal static class ThrowIf
 
 	//
 	[DoesNotReturn]
-	internal static void ArgumentOutOfRange(string name, object value)
+	internal static void ArgumentOutOfRange(object value, string name)
 	{
 		throw new ArgumentOutOfRangeException(name, value, Settings.UseLocaleMesg
 			? "인수 값의 범위가 벗어났습니다."

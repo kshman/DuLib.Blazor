@@ -228,7 +228,7 @@ public abstract class ComponentSubset<TThis, TStorage> : ComponentContent,
 	/// <inheritdoc />
 	protected override Task OnInitializedAsync()
 	{
-		ThrowIf.ContainerIsNull(this, Storage);
+		ThrowIf.ContainerIsNull<TThis, TStorage>(Storage);
 
 		FillInternalId();
 

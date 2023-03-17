@@ -1,6 +1,6 @@
 ﻿// 정의
-$serif: "Malgun Gothic","Segoe UI","Apple SD Gothic Neo","Helvetica Neue","Noto Sans",Helvetica,Arial,sans-serif,"Segoe UI Emoji","Segoe UI Symbol","Apple Color Emoji","Noto Color Emoji";
-$monospace: Consolas, "Courier New", "Liberation Mono", SFMono-Regular, monospace;
+$serif: "Malgun Gothic","Segoe UI","Noto Sans","Apple SD Gothic Neo",sans-serif; 
+$monospace: Consolas, monospace;
 
 // 문서 기본
 $font-size: 14px;
@@ -17,35 +17,31 @@ $cc-dark: #212529;
 $cc-border: #838288;
 $cc-hover: #212529;
 $cc-focus: transparent;
-$cc-accent: #0360b9;
+$cc-accent: #16768C;
 
 // normal
 $normal-cc: $cc;
 $normal-bg: #2b2a33;
 $normal-hover: #3f3f43;
-$normal-focus: #3f3f43;
 $normal-active: #545459;
 
 // splendid
 $splend-cc: $cc;
 $splend-bg: #16424e;
 $splend-hover: #126072;
-$splend-focus: #126072;
 $splend-active: #16768C;
 
 // simple
 $simple-cc: $cc;
-$simple-cc-focus: #a0faea;
+$simple-cc-hover: #a0faea;
 $simple-bg: transparent;
-$simple-hover: #3f3f43;
-$simple-focus: transparent;
+$simple-hover: transparent;
 $simple-active: #4b4b4b;
 
 // primary (부트스트랩 비스므리)
 $primary-cc: $cc;
 $primary-bg: #023b8f;
 $primary-hover: #012e7f;
-$primary-focus: #012e7f;
 $primary-active: #0360b9;
 
 // outline
