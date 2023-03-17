@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using System.Diagnostics.SymbolStore;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace Du.Blazor.Components;
 
@@ -25,7 +26,8 @@ public class Btn : Nulo
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		InternalType = Link is not null ? NuloType.Link
+		InternalType = AgentHandler is not null || Link is not null
+			? Link.WhiteSpace() ? NuloType.Action : NuloType.Link
 			: EditContext is not null ? NuloType.Submit : NuloType.Button;
 
 		ComponentClass = GetNuloClassName();
@@ -34,39 +36,38 @@ public class Btn : Nulo
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
-		if (ListAgent?.Tag is not null)
-			builder.OpenElement(0, ListAgent.Tag); // wrap
-
-		if (InternalType == NuloType.Link)
+		if (InternalType is NuloType.Link or NuloType.Action)
 		{
-			builder.OpenElement(10, "a");
-			builder.AddAttribute(11, "class", ActualClass);
-			if (Link.TestHave(true))
-				builder.AddAttribute(12, "href", Link);
-			builder.AddAttribute(13, "target", Target);
+			builder.OpenElement(0, "a");
+			builder.AddAttribute(1, "class", ActualClass);
+			if (InternalType is NuloType.Action)
+				builder.AddAttribute(2, "role", "button");
+			else
+			{
+				builder.AddAttribute(3, "href", Link);
+				builder.AddAttribute(4, "target", Target);
+			}
 		}
 		else
 		{
-			builder.OpenElement(10, "button");
-			builder.AddAttribute(11, "type", InternalType == NuloType.Submit ? "submit" : "button");
-			builder.AddAttribute(12, "class", ActualClass);
-			builder.AddAttribute(13, "role", "button");
-			builder.AddAttribute(14, "formtarget", Target);
+			builder.OpenElement(0, "button");
+			builder.AddAttribute(1, "class", ActualClass);
+			builder.AddAttribute(2, "type", InternalType == NuloType.Submit ? "submit" : "button");
+			builder.AddAttribute(3, "formtarget", Target);
 		}
 
-		builder.AddAttribute(15, "id", Id);
-		builder.AddAttribute(16, "onclick", HandleOnClickAsync);
-		// 17, 버튼 속성
-		// 18, 버튼 속성
-		builder.AddMultipleAttributes(19, UserAttrs);
+		builder.AddAttribute(5, "id", Id);
+		builder.AddAttribute(6, "onclick", HandleOnClickAsync);
+		if (StopPropagation)
+			builder.AddEventStopPropagationAttribute(7, "onclick", true);
+		if (InternalType is NuloType.Action)
+			builder.AddEventPreventDefaultAttribute(8, "onclick", true);
+		builder.AddMultipleAttributes(9, UserAttrs);
 		if (ChildContent is null)
-			builder.AddContent(20, Text);
+			builder.AddContent(10, Text);
 		else
-			builder.AddContent(21, ChildContent);
+			builder.AddContent(11, ChildContent);
 		builder.CloseElement(); // a 또는 button
-
-		if (ListAgent?.Tag is not null)
-			builder.CloseElement(); // wrap
 	}
 
 	/// <inheritdoc />
@@ -117,10 +118,8 @@ public class Btn : Nulo
 /// </summary>
 public abstract class Nulo : ComponentContent
 {
-	/// <summary>리스트 에이전시</summary>
-	[CascadingParameter] public IComponentList? ListAgent { get; set; }
 	/// <summary>나브 처리기</summary>
-	[CascadingParameter] public IComponentNav? NavAgent { get; set; }
+	[CascadingParameter] public IComponentAgent? AgentHandler { get; set; }
 	/// <summary>반응 처리기</summary>
 	[CascadingParameter] public IComponentResponse? ResponseHandler { get; set; }
 
@@ -130,6 +129,8 @@ public abstract class Nulo : ComponentContent
 	[Parameter] public Variant? Variant { get; set; }
 	/// <summary>사용자 설정 정의(User setting pretend)</summary>
 	[Parameter] public bool Pseudo { get; set; }
+	/// <summary>이벤트 재전송 금지. 기본값은 참</summary>
+	[Parameter] public bool StopPropagation { get; set; } = true;
 
 	/// <summary>마우스 눌린 이벤트 지정.</summary>
 	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -141,13 +142,22 @@ public abstract class Nulo : ComponentContent
 	protected bool _handle_click;
 
 	//
-	protected string? GetNuloClassName(string? baseClass = "nulo", bool defVariant = true, string? additional = null)
+	protected string? GetNuloClassName(string? baseClass = "cbtn", string? additional = null, bool defVariant = true)
 	{
-		return Cssc.Class(
-			Pseudo.IfTrue("usp"), 
-			defVariant ? (Variant ?? Settings.Variant).ToCss() : Variant?.ToCss(), 
-			ListAgent?.Class ?? baseClass,
-			additional);
+		if (AgentHandler is null)
+			return Cssc.Class(
+				Pseudo.IfTrue("usp"),
+				defVariant
+					? (Variant ?? Settings.Variant).ToCss()
+					: Variant?.ToCss(),
+				baseClass,
+				additional);
+		else
+			return Cssc.Class(
+				Pseudo.IfTrue("usp"),
+				Variant?.ToCss(),
+				AgentHandler.AgentRefineBaseClass.IfFalse(baseClass),
+				additional);
 	}
 
 	// 마우스 핸들러
@@ -166,12 +176,4 @@ public abstract class Nulo : ComponentContent
 
 	//
 	protected virtual Task InvokeOnClickAsync(MouseEventArgs e) => OnClick.InvokeAsync(e);
-
-	//
-	internal enum NuloType
-	{
-		Link,
-		Button,
-		Submit,
-	}
 }

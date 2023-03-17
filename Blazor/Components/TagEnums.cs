@@ -13,6 +13,7 @@ public enum Variant
 // 익스팬드
 public enum LayoutExpand
 {
+	Default,
 	W600,
 	W900,
 	W1200,

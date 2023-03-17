@@ -3,11 +3,11 @@
 /// <summary>
 /// 드랍 다운
 /// </summary>
-public class DropBtn : Nulo, IComponentResponse
+public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 {
 	/// <summary>오른쪽으로 정렬</summary>
 	[Parameter] public bool Right { get; set; }
-	/// <summary></summary>
+	/// <summary>패널을 재정의 하고 싶나요</summary>
 	[Parameter] public string? PanelClass { get; set; }
 	/// <summary>선택한 아이템의 TEXT를 버튼 TEXT로 표시한다</summary>
 	[Parameter] public bool? SelectText { get; set; }
@@ -30,8 +30,8 @@ public class DropBtn : Nulo, IComponentResponse
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		SelectText ??= NavAgent is null;
-		SelfClose ??= NavAgent is null;
+		SelectText ??= AgentHandler is null;
+		SelfClose ??= AgentHandler is null;
 
 		ComponentClass = GetNuloClassName();
 	}
@@ -51,28 +51,27 @@ public class DropBtn : Nulo, IComponentResponse
 				</div>
 			</div>
 		 */
-		if (ListAgent?.Tag is not null)
-			builder.OpenElement(0, ListAgent.Tag); // wrap
-
-		builder.OpenElement(1, "div");
-		builder.AddAttribute(2, "class", Cssc.Class(
-			"dpd",
-			Border.IfTrue("dpd-border"),
-			Right.IfTrue("dpd-right")));
+		builder.OpenElement(0, "div");
+		builder.AddAttribute(1, "class", "cdrop");
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
 		builder.AddAttribute(12, "class", ActualClass);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
-		builder.AddEventStopPropagationAttribute(15, "onclick", true);
-		builder.AddMultipleAttributes(16, UserAttrs);
-		builder.AddContent(17, _actual_text);
+		if (StopPropagation)
+			builder.AddEventStopPropagationAttribute(15, "onclick", true);
+		builder.AddEventPreventDefaultAttribute(16, "onclick", true);
+		builder.AddMultipleAttributes(17, UserAttrs);
+		builder.AddContent(18, _actual_text);
 		builder.CloseElement(); // button
 
 		if (!_short_bye)
 		{
 			builder.OpenElement(20, "div");
-			builder.AddAttribute(21, "class", PanelClass);
+			builder.AddAttribute(21, "class", Cssc.Class(
+				Border.IfTrue("bdr"),
+				Right.IfTrue("rgt"),
+				PanelClass));
 
 			builder.OpenComponent<CascadingValue<DropBtn>>(22);
 			builder.AddAttribute(23, "Value", this);
@@ -85,9 +84,6 @@ public class DropBtn : Nulo, IComponentResponse
 		}
 
 		builder.CloseElement(); // div, 메인
-
-		if (ListAgent?.Tag is not null)
-			builder.CloseElement(); // wrap
 	}
 
 	#region IComponentResponse
@@ -148,5 +144,10 @@ public class DropBtn : Nulo, IComponentResponse
 			}
 		}
 	}
+	#endregion
+
+	#region IComponentAgent
+	/// <inheritdoc />
+	public bool AgentRefineBaseClass => true;
 	#endregion
 }

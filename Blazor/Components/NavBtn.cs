@@ -29,36 +29,31 @@ public class NavBtn : Nulo, IDisposable
 		_href = Link.Empty() ? null : NavMan.ToAbsoluteUri(Link).AbsoluteUri;
 		_isActive = ShouldMatch(NavMan.Uri);
 
-		ComponentClass = GetNuloClassName("nvlnk", false, _isActive.IfTrue("active"));
+		ComponentClass = GetNuloClassName("cnvbn", _isActive.IfTrue("active"), false);
 	}
 
 	//
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
-		if (ListAgent?.Tag is not null)
-			builder.OpenElement(0, ListAgent.Tag); // wrap
-
-		builder.OpenElement(10, "a");
-		builder.AddAttribute(11, "class", ActualClass);
-		builder.AddAttribute(12, "href", Link);
-		builder.AddMultipleAttributes(13, UserAttrs);
-		builder.AddContent(14, ChildContent);
+		builder.OpenElement(0, "a");
+		builder.AddAttribute(1, "class", ActualClass);
+		builder.AddAttribute(2, "href", Link);
+		builder.AddMultipleAttributes(3, UserAttrs);
+		builder.AddContent(4, Text);
+		builder.AddContent(5, ChildContent);
 		builder.CloseElement(); // a
-
-		if (ListAgent?.Tag is not null)
-			builder.CloseElement(); // wrap
 	}
 
 	//
 	private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
 	{
+		if (ResponseHandler is not null)
+			InvokeAsync(() => ResponseHandler.OnResponseAsync(this));
+
 		var active = ShouldMatch(e.Location);
 
 		if (active == _isActive)
 			return;
-
-		if (ResponseHandler is not null)
-			InvokeAsync(() => ResponseHandler.OnResponseAsync(this));
 
 		_isActive = active;
 		StateHasChanged();

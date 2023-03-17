@@ -1,8 +1,10 @@
 {
   "sourceMap": true,
-  "loadPaths": [],
+  "loadPaths": [
+    "./Scss"
+  ],
   "style": "Compressed",
-  "precision": 10,
+  "precision": 5,
   "lineFeed": "CrLf",
   "includeInProject": true
 }

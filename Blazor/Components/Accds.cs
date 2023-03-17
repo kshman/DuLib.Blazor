@@ -2,6 +2,8 @@
 
 public class Accd : ComponentSubset<Accd, Accds>
 {
+	[CascadingParameter] public Accds? Accds { get; set; }
+
 	[Parameter] public string? Text { get; set; }
 	[Parameter] public Variant? Variant { get; set; }
 	[Parameter] public bool Open { get; set; }
@@ -12,6 +14,8 @@ public class Accd : ComponentSubset<Accd, Accds>
 	/// <inheritdoc />
 	protected override Task OnInitializedAsync()
 	{
+		ThrowIf.ContainerIsNull<Accd, Accds>(Accds);
+
 		InternalOpened = Open;
 
 		return base.OnInitializedAsync();
@@ -31,12 +35,13 @@ public class Accd : ComponentSubset<Accd, Accds>
 			</div>
 		 */
 		var active = InternalOpened.IfTrue("active");
+		var variant = Variant ?? Accds?.Variant ?? Settings.Variant;
 
 		builder.OpenElement(0, "div");
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
-		builder.AddAttribute(12, "class", Cssc.Class(ActualClass, (Variant ?? Settings.Variant).ToCss(), active));
+		builder.AddAttribute(12, "class", Cssc.Class(ActualClass, variant.ToCss(), active));
 		builder.AddAttribute(13, "id", Id);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		builder.AddEventStopPropagationAttribute(15, "onclick", true);
@@ -65,6 +70,7 @@ public class Accd : ComponentSubset<Accd, Accds>
 public class Accds : ComponentContainer<Accd>
 {
 	[Parameter] public bool Separate { get; set; }
+	[Parameter] public Variant? Variant { get; set; }
 	[Parameter] public bool Border { get; set; }
 
 	[Parameter] public EventCallback<ExpandEventArgs> OnExpand { get; set; }
@@ -95,14 +101,14 @@ public class Accds : ComponentContainer<Accd>
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		/*
-			<div class="accd accd-border">
+			<div class="caccd bdr">
 				<CascadingValue Value="this" IsFixed="true">
 					ACCD 아이템
 				</CascadingValue>
 			</div>
 		 */
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", Cssc.Class("accd", Border.IfTrue("accd-border")));
+		builder.AddAttribute(1, "class", Cssc.Class("caccd", Border.IfTrue("bdr")));
 		builder.AddMultipleAttributes(2, UserAttrs);
 
 		builder.OpenComponent<CascadingValue<Accds>>(3);

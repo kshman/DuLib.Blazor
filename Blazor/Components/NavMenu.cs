@@ -6,19 +6,20 @@
 /// <remarks>
 /// ChildContent 없다
 /// </remarks>
-public class NavMenu : ComponentProp, IComponentNav, IComponentList
+public class NavMenu : ComponentProp, IComponentAgent
 {
 	[Parameter] public RenderFragment? Brand { get; set; }
 	[Parameter] public RenderFragment? Menu { get; set; }
 
 	[Parameter] public Variant? Variant { get; set; }
 	[Parameter] public LayoutExpand? Expanded { get; set; }
+	[Parameter] public string Home { get; set; } = "/";
 	[Parameter] public string? MenuIcon { get; set; }
 
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		ComponentClass = Cssc.Class(Variant?.ToCss("d"), "nvmnu");
+		ComponentClass = Cssc.Class(Variant?.ToCss(VrtLead.Down), "nvmnu");
 	}
 
 	/// <inheritdoc />
@@ -29,10 +30,10 @@ public class NavMenu : ComponentProp, IComponentNav, IComponentList
 				<div class="x">
 					<span class="닫기 아이콘"></span>
 				</div>
-				<div class="b"> <!--브랜드-->
+				<div class="nv-brd"> <!--브랜드-->
 					브랜드
 				</div>
-				<div class="m"><!-- 메뉴 -->
+				<div class="nv-mnu"><!-- 메뉴 -->
 					<a class="active" href="링크">링크 제목</a>
 				</div>
 			</nav>
@@ -43,21 +44,22 @@ public class NavMenu : ComponentProp, IComponentNav, IComponentList
 		builder.AddMultipleAttributes(2, UserAttrs);
 
 		builder.OpenElement(5, "div");
-		builder.AddAttribute(6, "class", Cssc.Class("nvtgl", MenuIcon));
+		builder.AddAttribute(6, "class", Cssc.Class("nv-tgl", MenuIcon));
 		builder.CloseElement();
 
 		if (Brand is not null)
 		{
-			builder.OpenElement(10, "div");
-			builder.AddAttribute(11, "class", "b");
-			builder.AddContent(12, Brand);
+			builder.OpenElement(10, "a");
+			builder.AddAttribute(11, "class", "nv-brd");
+			builder.AddAttribute(12, "href", Home);
+			builder.AddContent(13, Brand);
 			builder.CloseElement();
 		}
 
 		if (Menu is not null)
 		{
 			builder.OpenElement(20, "div");
-			builder.AddAttribute(21, "class", "m");
+			builder.AddAttribute(21, "class", "nv-mnu");
 
 			builder.OpenComponent<CascadingValue<NavMenu>>(22);
 			builder.AddAttribute(23, "Value", this);
@@ -72,16 +74,9 @@ public class NavMenu : ComponentProp, IComponentNav, IComponentList
 		builder.CloseElement();
 	}
 
-	#region IComponentNav
+	#region IComponentAgent
 	/// <inheritdoc />
-	public bool IsOpen => false;
-	#endregion
-
-	#region IComponentList
-	/// <inheritdoc />
-	string? IComponentList.Tag => null;
-	/// <inheritdoc />
-	string IComponentList.Class => string.Empty;
+	public bool AgentRefineBaseClass => true;
 	#endregion
 }
 

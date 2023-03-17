@@ -23,13 +23,13 @@ html {
 
 // 
 body {
-  margin: 0;
+  //margin: 0;
   background-color: #{$bg};
   color: #{$cc};
   font-family: #{$serif};
   font-size: #{$font-size};
-  font-weight: #{$font-weight};
-  line-height: #{$line-height};
+  //font-weight: #{$font-weight};
+  //line-height: #{$line-height};
 }
 
 //
@@ -115,10 +115,10 @@ pre, code, kbd, samp {
 
 //
 p {
-  font-family: inherit;
+  //font-family: inherit;
   font-size: #{$font-size};
-  font-weight: #{$font-weight};
-  line-height: #{$line-height};
+  //font-weight: #{$font-weight};
+  //line-height: #{$line-height};
   margin-top: 0;
   margin-bottom: 1rem;
 }

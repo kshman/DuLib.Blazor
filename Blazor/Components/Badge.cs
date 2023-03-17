@@ -6,11 +6,8 @@ public class Badge : ComponentContent
 	[Parameter] public bool Active { get; set; } = true;
 	[Parameter] public bool Round { get; set; }
 
-	[Parameter] public bool Outer { get; set; }
-	[Parameter] public bool Bottom { get; set; }
-
-	[Parameter] public string? Color { get; set; }
-	[Parameter] public string? Background { get; set; }
+	[Parameter] public int? Color { get; set; }
+	[Parameter] public int? Background { get; set; }
 	[Parameter] public string? Style { get; set; }
 
 	// Color랑 Background를 위한 스타일
@@ -19,41 +16,19 @@ public class Badge : ComponentContent
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		if (Outer is false)
-		{
-			// 안쪽 뱃지
-			ComponentClass = Cssc.Class(
-				"bdg bdg-i",
-				(Variant ?? Settings.Variant).ToCss(Active ? "a" : "d"),
-				Round.IfTrue("dgrm"));
-		}
-		else
-		{
-			// 바깥쪽 뱃지
-			ComponentClass = Cssc.Class(
-				"bdg",
-				(Variant ?? Settings.Variant).ToCss(Active ? "a" : "d"),
-				Round.IfTrue("dgrm"),
-				Bottom ? "brb" : "brt");
-		}
+		ComponentClass = Cssc.Class(
+			"cbdg",
+			(Variant ?? Settings.Variant).ToCss(Active ? VrtLead.Up : VrtLead.Down),
+			Round.IfTrue("dgrm"));
 
 		// 스타일
-		var sc = Color.TestHave() ? $"color:var(--bdg-cc-{Color})" : null;
-		var sb = Background.TestHave() ? $"background-color:var(--bdg-bg-{Background})" : null;
+		var sc = Color is not null ? $"color:#{Color:X}" : null;
+		var sb = Background is not null ? $"background-color:#{Background:X}" : null;
 		_style = Cssc.Style(sc, sb, Style);
 	}
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
-	{
-		if (Outer is false)
-			RenderInner(builder);
-		else
-			RenderOuter(builder);
-	}
-
-	// 안쪽
-	private void RenderInner(RenderTreeBuilder builder)
 	{
 		/*
 		 * <div class="@CssClass" @attributes="UserAttrs">
@@ -67,13 +42,5 @@ public class Badge : ComponentContent
 		builder.AddMultipleAttributes(3, UserAttrs);
 		builder.AddContent(4, ChildContent);
 		builder.CloseElement(); // div
-	}
-
-	// 바깥쪽
-	private void RenderOuter(RenderTreeBuilder builder)
-	{
-		// 어떻게 할까
-		ThrowIf.NotImplementedWithCondition<Badge>(false);
-		_ = builder;
 	}
 }

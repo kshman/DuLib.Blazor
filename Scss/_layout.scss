@@ -2,26 +2,26 @@
 
 // 바디
 .body {
-  margin: 0;
+  //margin: 0;
   background-color: #{$bg};
   color: #{$cc};
   font-family: #{$serif};
   font-size: #{$font-size};
-  font-weight: #{$font-weight};
-  line-height: #{$line-height};
+  //font-weight: #{$font-weight};
+  //line-height: #{$line-height};
 }
 
 // 예제용
 .dzex {
   padding: 1rem 1.5rem;
-  margin: 0.5rem 1rem;
+  margin: 0.5rem 0.5rem;
   border: thick double #a9f27d;
-
+  // 회색
   &.pri {
     border: 1px solid #838288;
     border-radius: 0.15rem;
   }
-
+  // 하늘색
   &.sec {
     border: 1px solid #00ddff;
     border-radius: 0.15rem;
@@ -29,7 +29,7 @@
 }
 
 // 보통
-.var-nrm {
+.vsnrm {
   border: 1px solid transparent;
   color: #{$normal-cc};
   background: #{$normal-bg};
@@ -42,19 +42,19 @@
     background: #{$normal-active};
   }
 }
-
-.var-nrm-d {
+// 낮은색
+.vdnrm {
   color: #{$normal-cc};
   background: #{$normal-bg};
 }
-
-.var-nrm-a {
+// 밝은색
+.vunrm {
   color: #{$normal-cc};
   background: #{$normal-active};
 }
 
 // 화사하게
-.var-spn {
+.vsspn {
   border: 1px solid transparent;
   color: #{$splend-cc};
   background: #{$splend-bg};
@@ -67,30 +67,26 @@
     background: #{$splend-active};
   }
 }
-
-.var-spn-d {
+// 낮은색
+.vdspn {
   color: #{$splend-cc};
   background: #{$splend-bg};
 }
-
-.var-spn-a {
+// 밝은색
+.vuspn {
   color: #{$splend-cc};
   background: #{$splend-active};
 }
 
 // 심플
-.var-sme {
+.vssme {
   border: 1px solid transparent;
   color: #{$simple-cc};
   background: #{$simple-bg};
   // 호버
-  &:hover {
+  &:hover, &:focus {
     background: #{$simple-hover};
-  }
-  // 포커스
-  &:focus {
-    background: #{$simple-focus};
-    color: #{$simple-cc-focus};
+    color: #{$simple-cc-hover};
   }
   // 액티브
   &:active, &.active {
@@ -98,19 +94,19 @@
     color: #{$simple-cc};
   }
 }
-
-.var-sme-d {
+// 낮은색
+.vdsme {
   color: #{$simple-cc};
   background: #{$simple-bg};
 }
-
-.var-sme-a {
+// 밝은색
+.vusme {
   color: #{$simple-cc};
   background: #{$simple-active};
 }
 
 // 아웃라인
-.var-oue {
+.vsoue {
   border: 1px solid #{$normal-bg};
   color: #{$cc};
   background: transparent;
@@ -124,20 +120,20 @@
     color: #{$cc-accent};
   }
 }
-
-.var-oue-d {
+// 낮은색
+.vdoue {
   border: 1px solid #{$normal-bg};
   color: #{$cc};
   background: transparent;
 }
-
-.var-oue-a {
+// 밝은색
+.vuoue {
   border: 1px solid #{$normal-active};
   color: #{$cc-accent};
 }
 
 // 프라이머리
-.var-pri {
+.vspri {
   border: 1px solid transparent;
   color: #{$primary-cc};
   background: #{$primary-bg};
@@ -150,44 +146,39 @@
     background: #{$primary-active};
   }
 }
-
-.var-pri-d {
+// 낮은색
+.vdpri {
   color: #{$primary-cc};
   background: #{$primary-bg};
 }
-
-.var-pri-a {
+// 밝은색
+.vupri {
   color: #{$primary-cc};
   background: #{$primary-active};
 }
 
-// 컨테이너
-.ctn, .ctn-f, .ctn-600, .ctn-900, .ctn-1200 {
-  //
-  --ctnr-gx: 1.5rem;
-  --ctnr-gy: 0;
-  //
+// 레이아웃 확장
+.lcn, .lcnf, .lcn6, .lcn9, .lcn12 {
   width: 100%;
-  padding-left: calc(var(--ctnr-gx) * 0.5);
-  padding-right: calc(var(--ctnr-gx) * 0.5);
+  padding: 0 .75rem;
   margin-left: auto;
   margin-right: auto;
 }
-
+// 600 이상
 @media (min-width: 600px) {
-  .ctn-600, .ctn {
+  .lcn6, .lcn {
     max-width: 600px;
   }
 }
-
+// 900 이상
 @media (min-width:900px) {
-  .ctn-900, .ctn-600, .ctn {
+  .lcn9, .lcn6, .lcn {
     max-width: 900px;
   }
 }
-
+// 1200 이상
 @media (min-width:1200px) {
-  .ctn-1200, .ctn-900, .ctn-600, .ctn {
+  .lcn12, .lcn9, .lcn6, .lcn {
     max-width: 1200px;
   }
 }
