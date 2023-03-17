@@ -10,14 +10,15 @@
   :root {
     scroll-behavior: smooth; } }
 
-html {
-  -webkit-text-size-adjust: 100%; }
-
-body {
-  background-color: #1c1b22;
-  color: #fbfbfe;
+html, body {
   font-family: Malgun Gothic, Segoe UI, Noto Sans, Apple SD Gothic Neo, sans-serif;
   font-size: 14px; }
+
+body {
+  padding: 0;
+  margin: 0;
+  color: #fbfbfe;
+  background-color: #1c1b22; }
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;

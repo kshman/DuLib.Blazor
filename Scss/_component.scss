@@ -134,7 +134,7 @@
   position: relative;
   display: inline-block;
   // 콘텐트
-  & > div {
+  & > nav {
     position: absolute;
     z-index: 1;
     display: none;
@@ -195,7 +195,7 @@
     }
   }
   // 호버
-  &:hover > div {
+  &:hover > nav {
     display: block;
   }
 }
@@ -254,34 +254,27 @@
 
 
 // 나브 메뉴
-.nvmnu {
-  //
-  --nvlnk-font-size: #{$font-size};
-  --nvlnk-font-weight: #{$font-weight};
-  --nvlnk-cc: #{$cc};
-  --nvlnk-cc-hover: #{$cc};
-  --nvlnk-cc-disabled: #{$cc-dark};
-  --nvlnk-active: #{$cc-accent};
-  --nvtgl-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+.cnvmn {
   // 속성
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  overflow: hidden;
-  background: #{$cc-dark};
-  // 닫기
-  & > .x {
+  justify-content: space-between;
+  padding: .25rem 0;
+  // 메뉴 표시 / 닫기
+  & > .tgm {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.25rem 0.75rem;
+    border: 0;
+    background: no-repeat center/100% url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    color: #{$cc-white};
+    font-size: 1.25rem;
   }
-  // 컨테이너
-  &.ctn, &.ctn-f, &.ctn-600, &.ctn-900, &.ctn-1200 {
-    display: flex;
-    flex-wrap: inherit;
-    align-items: center;
-    justify-content: space-between;
-  }
-  // 나브 브랜드
-  & .nv-brd {
-    display: block;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
+  // 브랜드
+  & > .brd {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
     margin-right: 1rem;
     font-size: 1.25rem;
     font-weight: 700;
@@ -290,85 +283,41 @@
     white-space: nowrap;
     cursor: pointer;
   }
-  // 나브 메뉴
-  & .nv-mnu {
-    //display: block;
-    // 눌러
-    & a, & button {
-      //display: block;
-      float: left;
-      padding: 0.45rem 1rem;
-      background: inherit;
-      border: 0;
-      font-size: var(--nvlnk-font-size);
-      font-weight: var(--nvlnk-font-weight);
-      color: var(--nvlnk-cc);
-      text-decoration: none;
+  // 목록
+  & > nav {
+    display: flex;
+    flex: 1 auto;
+    flex-direction: row;
+    // 전부
+    & > * {
+      position: static;
+      display: block;
+      padding: .5rem 1rem;
+      margin: 0 .1rem;
+      color: #{$cc};
       -webkit-user-select: none;
       user-select: none;
-      transition: all .15s ease-in-out;
-      // 호버
-      &:hover, &:focus {
-        isolation: isolate;
-        color: var(--nvlnk-cc-hover);
+      // 끔
+      &.disabled {
+        color: #{$cc-dark};
+        pointer-events: none;
+        cursor: default;
       }
-      //
+    }
+    // 링크
+    & > a {
+      border: 0;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out, box-shadow .15s ease-in-out;
+      // 호버 (포커스는 엄다)
       &:hover {
         box-shadow: inset 0 0 0 99rem rgba(#fff, .1);
       }
       // 액티브
       &:active, &.active {
-        background: var(--nvlnk-active);
+        background: #{$cc-accent};
       }
-      // 끔
-      &.disabled {
-        color: var(--nvlnk-cc-disabled);
-        pointer-events: none;
-        cursor: default;
-      }
-    }
-
-    & .dpd {
-      float: left;
-      overflow: hidden;
-      //display: block;
-
-      & > div {
-        //display: block;
-        & > * {
-          float: none;
-        }
-      }
-    }
-  }
-  // 나브 토클
-  & .nv-tgl {
-    //
-    display: flex;
-    width: 1.5rem;
-    height: 1.5rem;
-    vertical-align: middle;
-    padding: 0.25rem 0.75rem;
-    border: 0;
-    border-radius: 0.375rem;
-    background-color: transparent;
-    background-image: var(--nvtgl-icon);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-    color: #{$cc-white};
-    font-size: 1.25rem;
-    line-height: 1;
-    transition: box-shadow .15s ease-in-out;
-    // 호버
-    &:hover {
-      text-decoration: none;
-    }
-    // 포커스
-    &:focus {
-      text-decoration: none;
-      outline: 0;
-      box-shadow: 0 0 0 var(0.25rem);
     }
   }
 }

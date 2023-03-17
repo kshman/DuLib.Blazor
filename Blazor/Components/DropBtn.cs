@@ -30,8 +30,14 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		SelectText ??= AgentHandler is null;
-		SelfClose ??= AgentHandler is null;
+		if (AgentHandler is not null)
+			InternalType = NuloType.Action;
+		else
+		{
+			InternalType = NuloType.Button;
+			SelectText ??= true;
+			SelfClose ??= true;
+		}
 
 		ComponentClass = GetNuloClassName();
 	}
@@ -54,8 +60,16 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 		builder.OpenElement(0, "div");
 		builder.AddAttribute(1, "class", "cdrop");
 
-		builder.OpenElement(10, "button");
-		builder.AddAttribute(11, "type", "button");
+		if (InternalType == NuloType.Button)
+		{
+			builder.OpenElement(10, "button");
+			builder.AddAttribute(11, "type", "button");
+		}
+		else
+		{
+			builder.OpenElement(10, "a");
+			builder.AddAttribute(11, "role", "button");
+		}
 		builder.AddAttribute(12, "class", ActualClass);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		if (StopPropagation)
@@ -63,11 +77,11 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 		builder.AddEventPreventDefaultAttribute(16, "onclick", true);
 		builder.AddMultipleAttributes(17, UserAttrs);
 		builder.AddContent(18, _actual_text);
-		builder.CloseElement(); // button
+		builder.CloseElement(); // button 또는 a
 
 		if (!_short_bye)
 		{
-			builder.OpenElement(20, "div");
+			builder.OpenElement(20, "nav");
 			builder.AddAttribute(21, "class", Cssc.Class(
 				Border.IfTrue("bdr"),
 				Right.IfTrue("rgt"),
@@ -80,7 +94,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 				b.AddContent(7, ChildContent)));
 			builder.CloseComponent(); // CascadingValue<Accds>, 콘텐트
 
-			builder.CloseElement(); // div, 패널
+			builder.CloseElement(); // nav, 패널
 		}
 
 		builder.CloseElement(); // div, 메인
