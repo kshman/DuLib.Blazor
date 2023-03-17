@@ -6,7 +6,7 @@
 /// <remarks>
 /// ChildContent 없다
 /// </remarks>
-public class NavMenu : ComponentProp, IComponentAgent
+public class NavBar : ComponentProp, IComponentAgent
 {
 	[Parameter] public RenderFragment? Brand { get; set; }
 	[Parameter] public RenderFragment? Menu { get; set; }
@@ -21,7 +21,7 @@ public class NavMenu : ComponentProp, IComponentAgent
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		ComponentClass = Cssc.Class(Variant?.ToCss(VrtLead.Down), "cnvmn");
+		ComponentClass = Cssc.Class(Variant?.ToCss(VrtLead.Down), "cnvba");
 	}
 
 	/// <inheritdoc />
@@ -71,7 +71,7 @@ public class NavMenu : ComponentProp, IComponentAgent
 			builder.OpenElement(20, "nav"); // nav, 메뉴
 			builder.AddAttribute(21, "class", MenuClass);
 
-			builder.OpenComponent<CascadingValue<NavMenu>>(22);
+			builder.OpenComponent<CascadingValue<NavBar>>(22);
 			builder.AddAttribute(23, "Value", this);
 			builder.AddAttribute(24, "IsFixed", true);
 			builder.AddAttribute(25, "ChildContent", (RenderFragment)((b) =>
