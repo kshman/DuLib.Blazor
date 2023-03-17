@@ -63,7 +63,7 @@ public interface IComponentResponse
 /// <summary>
 /// 리스트 에이전트
 /// </summary>
-public interface IComponentListAgent
+public interface IComponentList
 {
 	/// <summary>
 	/// 감싸야할 태그 이름. 널이면 안감싸도록
@@ -73,6 +73,15 @@ public interface IComponentListAgent
 	/// 원래 태그(감싸는 태그가 아닌)의 CSS 클래스
 	/// </summary>
 	string? Class { get; }
+}
+
+
+/// <summary>
+/// 나브 컨테이너
+/// </summary>
+public interface IComponentNav
+{
+	bool IsOpen { get; }
 }
 
 

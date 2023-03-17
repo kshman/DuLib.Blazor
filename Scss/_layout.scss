@@ -34,12 +34,8 @@
   color: #{$normal-cc};
   background: #{$normal-bg};
   // 호버
-  &:hover {
+  &:hover, &:focus {
     background: #{$normal-hover};
-  }
-  // 포커스
-  &:focus {
-    background: #{$normal-focus};
   }
   // 액티브
   &:active, &.active {
@@ -63,12 +59,8 @@
   color: #{$splend-cc};
   background: #{$splend-bg};
   // 호버
-  &:hover {
+  &:hover, &:focus {
     background: #{$splend-hover};
-  }
-  // 포커스
-  &:focus {
-    background: #{$splend-focus};
   }
   // 액티브
   &:active, &.active {
@@ -123,12 +115,8 @@
   color: #{$cc};
   background: transparent;
   // 호버
-  &:hover {
+  &:hover, &:focus {
     border: 1px solid #{$normal-hover};
-  }
-  // 포커스
-  &:focus {
-    border: 1px solid #{$normal-focus};
   }
   // 액티브
   &:active, &.active {
@@ -154,12 +142,8 @@
   color: #{$primary-cc};
   background: #{$primary-bg};
   // 호버
-  &:hover {
+  &:hover, &:focus {
     background: #{$primary-hover};
-  }
-  // 포커스
-  &:focus {
-    background: #{$primary-focus};
   }
   // 액티브
   &:active, &.active {
@@ -175,4 +159,35 @@
 .var-pri-a {
   color: #{$primary-cc};
   background: #{$primary-active};
+}
+
+// 컨테이너
+.ctnr, .ctnr-f, .ctnr-600, .ctnr-900, .ctnr-1200 {
+  //
+  --ctnr-gx: 1.5rem;
+  --ctnr-gy: 0;
+  //
+  width: 100%;
+  padding-left: calc(var(--ctnr-gx) * 0.5);
+  padding-right: calc(var(--ctnr-gx) * 0.5);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 600px) {
+  .ctnr-600, .ctnr {
+    max-width: 600px;
+  }
+}
+
+@media (min-width:900px) {
+  .ctnr-900, .ctnr-600, .ctnr {
+    max-width: 900px;
+  }
+}
+
+@media (min-width:1200px) {
+  .ctnr-1200, .ctnr-900, .ctnr-600, .ctnr {
+    max-width: 1200px;
+  }
 }

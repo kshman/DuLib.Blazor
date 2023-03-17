@@ -213,9 +213,7 @@
   --dpd-drop: #212529;
   --dpd-hover: #3f3f43;
   --dpd-active: #545459;
-  --dpd-border: #838288; }
-
-.dpd {
+  --dpd-border: #838288;
   position: relative;
   display: inline-block; }
   .dpd > div {
@@ -300,4 +298,29 @@
   top: 100%;
   left: 100%; }
 
-/*# sourceMappingURL=content.css.map */
+.nv {
+  --nvlnk-font-size: 16px;
+  --nvlnk-font-weight: 400;
+  --nvlnk-cc: #fbfbfe;
+  --nvlnk-cc-hover: #fbfbfe;
+  --nvlnk-cc-disabled: #212529;
+  overflow: hidden;
+  padding: 0;
+  margin: 0; }
+
+.nvlnk {
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: var(--nvlnk-font-size);
+  font-weight: var(--nvlnk-font-weight);
+  color: var(--nvlnk-cc);
+  text-decoration: none;
+  transition: all .2s ease-in-out; }
+  .nvlnk:hover, .nvlnk:focus {
+    color: var(--nvlnk-cc-hover); }
+  .nvlnk.disabled {
+    color: var(--nvlnk-cc-disabled);
+    pointer-events: none;
+    cursor: default; }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,12 +1,12 @@
 [
   {
-    "outputFile": "wwwroot/content.css",
-    "inputFile": "Scss/content.scss",
+    "outputFile": "wwwroot/style.css",
+    "inputFile": "Scss/style.scss",
     "style": "Compressed"
   },
   {
-    "outputFile": "wwwroot/ref/content.nested.css",
-    "inputFile": "Scss/content.scss",
+    "outputFile": "wwwroot/ref/style.nested.css",
+    "inputFile": "Scss/style.scss",
     "style": "Nested"
   },
   {

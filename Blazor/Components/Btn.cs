@@ -7,12 +7,8 @@ namespace Du.Blazor.Components;
 /// </summary>
 public class Btn : Nulo
 {
-	/// <summary>리스트 에이전시</summary>
-	[CascadingParameter] public IComponentListAgent? ListAgent { get; set; }
 	/// <summary>콘텐트 핸들러</summary>
 	[CascadingParameter] public ITagContentHandler? ContentHandler { get; set; }
-	/// <summary>반응 처리기</summary>
-	[CascadingParameter] public IComponentResponse? ResponseHandler { get; set; }
 	/// <summary>에디트 컨텍스트</summary>
 	[CascadingParameter] public EditContext? EditContext { get; set; }
 
@@ -32,7 +28,7 @@ public class Btn : Nulo
 		InternalType = Link is not null ? NuloType.Link
 			: EditContext is not null ? NuloType.Submit : NuloType.Button;
 
-		ComponentClass = ListAgent is not null ? ListAgent.Class : GetNuloClassName();
+		ComponentClass = GetNuloClassName();
 	}
 
 	/// <inheritdoc />
@@ -121,6 +117,13 @@ public class Btn : Nulo
 /// </summary>
 public abstract class Nulo : ComponentContent
 {
+	/// <summary>리스트 에이전시</summary>
+	[CascadingParameter] public IComponentList? ListAgent { get; set; }
+	/// <summary>나브 처리기</summary>
+	[CascadingParameter] public IComponentNav? NavAgent { get; set; }
+	/// <summary>반응 처리기</summary>
+	[CascadingParameter] public IComponentResponse? ResponseHandler { get; set; }
+
 	/// <summary>텍스트</summary>
 	[Parameter] public string? Text { get; set; }
 	/// <summary>바리언트.</summary>
@@ -138,9 +141,13 @@ public abstract class Nulo : ComponentContent
 	protected bool _handle_click;
 
 	//
-	protected string? GetNuloClassName(string? baseClass = "nulo")
+	protected string? GetNuloClassName(string? baseClass = "nulo", bool defVariant = true, string? additional = null)
 	{
-		return Cssc.Class(Pseudo.IfTrue("usp"), (Variant ?? Settings.Variant).ToCss(), baseClass);
+		return Cssc.Class(
+			Pseudo.IfTrue("usp"), 
+			defVariant ? (Variant ?? Settings.Variant).ToCss() : Variant?.ToCss(), 
+			ListAgent?.Class ?? baseClass,
+			additional);
 	}
 
 	// 마우스 핸들러

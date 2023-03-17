@@ -9,3 +9,12 @@ public enum Variant
 	Outline,
 	Primary,
 }
+
+// 익스팬드
+public enum LayoutExpand
+{
+	W600,
+	W900,
+	W1200,
+	Full,
+}
