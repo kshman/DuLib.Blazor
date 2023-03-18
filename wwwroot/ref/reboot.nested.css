@@ -3,22 +3,18 @@
  * Normalize is licensed under MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) 
  * Bootstrap is licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-*, *::before, *::after {
-  box-sizing: border-box; }
-
-@media (prefers-reduced-motion: no-preference) {
-  :root {
-    scroll-behavior: smooth; } }
-
-html, body {
-  font-family: Malgun Gothic, Segoe UI, Noto Sans, Apple SD Gothic Neo, sans-serif;
-  font-size: 14px; }
+html {
+  line-height: 1.15; }
 
 body {
   padding: 0;
-  margin: 0;
+  margin: 0; }
+
+body {
   color: #fbfbfe;
-  background-color: #1c1b22; }
+  background-color: #1c1b22;
+  font-family: Malgun Gothic, Segoe UI, Noto Sans, Apple SD Gothic Neo, sans-serif;
+  font-size: 14px; }
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
