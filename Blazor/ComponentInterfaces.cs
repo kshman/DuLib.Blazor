@@ -65,7 +65,14 @@ public interface IComponentResponse
 /// </summary>
 public interface IComponentAgent
 {
-	bool AgentRefineBaseClass { get; }
+	/// <summary>
+	/// 베이스 클래스를 직접 설정하면 참
+	/// </summary>
+	bool RefineBaseClass { get; }
+	/// <summary>
+	/// 닫아야하는 액션을 직접 하면 참
+	/// </summary>
+	bool SelfClose { get; }
 }
 
 

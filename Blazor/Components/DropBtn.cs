@@ -31,12 +31,16 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 	protected override void OnParametersSet()
 	{
 		if (AgentHandler is not null)
+		{
 			InternalType = NuloType.Action;
+			SelfClose ??= !AgentHandler.SelfClose;
+			SelectText ??= false;
+		}
 		else
 		{
 			InternalType = NuloType.Button;
-			SelectText ??= true;
 			SelfClose ??= true;
+			SelectText ??= true;
 		}
 
 		ComponentClass = GetNuloClassName();
@@ -147,7 +151,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 		{
 			try
 			{
-				await Task.Delay(1);
+				await Task.Delay(100);
 
 				_short_bye = false;
 				StateHasChanged();
@@ -162,6 +166,8 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 
 	#region IComponentAgent
 	/// <inheritdoc />
-	public bool AgentRefineBaseClass => true;
+	bool IComponentAgent.RefineBaseClass => true;
+	/// <inheritdoc />
+	bool IComponentAgent.SelfClose => false;
 	#endregion
 }

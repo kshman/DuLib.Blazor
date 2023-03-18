@@ -156,9 +156,13 @@ public abstract class Nulo : ComponentContent
 			return Cssc.Class(
 				Pseudo.IfTrue("usp"),
 				Variant?.ToCss(),
-				AgentHandler.AgentRefineBaseClass.IfFalse(baseClass),
+				AgentHandler.RefineBaseClass.IfFalse(baseClass),
 				additional);
 	}
+
+	//
+	protected string? GetNuloClassName(string? baseClass, bool defVariant) =>
+		GetNuloClassName(baseClass, null, defVariant);
 
 	// 마우스 핸들러
 	protected virtual async Task HandleOnClickAsync(MouseEventArgs e)
