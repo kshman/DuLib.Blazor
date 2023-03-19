@@ -191,7 +191,7 @@ public class TagImage : TagProp
 		Text ??= "Image";
 
 		if (AutoSize)
-			ComponentClass = "pxf";
+			ComponentClass = "pxa";
 	}
 
 	/// <inheritdoc />

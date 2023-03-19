@@ -18,10 +18,13 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse
 	[Parameter] public string? BrandClass { get; set; }
 	[Parameter] public string? MenuClass { get; set; }
 
+	//
+    private bool _visible = false;
+
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		ComponentClass = Cssc.Class(Variant?.ToCss(VrtLead.Down), "cnvba");
+		ComponentClass = Cssc.Class(Variant?.ToCss(VrtLead.Down), "unv cnvba");
 	}
 
 	/// <inheritdoc />
@@ -47,43 +50,43 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse
 		builder.AddAttribute(1, "class", ComponentClass);
 		builder.AddMultipleAttributes(2, UserAttrs);
 
-		builder.OpenElement(10, "button"); // button, 아이콘
-		builder.AddAttribute(11, "type", "button");
-
-		if (Icon is not null)
-			builder.AddContent(18, Icon); // 아이콘 프래그먼트
-		else
-		{
-			builder.OpenElement(18, "span"); // span, 아이콘
-			builder.AddAttribute(19, "class", "mico");
-			builder.CloseElement();
-		}
-
-		builder.CloseElement();
-
 		if (Brand is not null)
 		{
 			if (Home.WhiteSpace())
 			{
-				builder.OpenElement(20, "div"); // div, 브랜드
-				builder.AddAttribute(21, "class", BrandClass);
-				builder.AddContent(22, Brand); // 브랜드 프래그먼트
+				builder.OpenElement(10, "div"); // div, 브랜드
+				builder.AddAttribute(11, "class", BrandClass);
+				builder.AddContent(12, Brand); // 브랜드 프래그먼트
 				builder.CloseElement();
 			}
 			else
 			{
-				builder.OpenElement(20, "a"); // a, 브랜드
-				builder.AddAttribute(21, "class", BrandClass);
-				builder.AddAttribute(22, "href", Home);
-				builder.AddContent(23, Brand); // 브랜드 프래그먼트
+				builder.OpenElement(10, "a"); // a, 브랜드
+				builder.AddAttribute(11, "class", BrandClass);
+				builder.AddAttribute(12, "href", Home);
+				builder.AddContent(13, Brand); // 브랜드 프래그먼트
 				builder.CloseElement();
 			}
 		}
 
+        builder.OpenElement(20, "button"); // button, 아이콘
+        builder.AddAttribute(21, "type", "button");
+		builder.AddAttribute(22, "onclick", HandleButtonOnClick);
+		builder.AddEventStopPropagationAttribute(23, "onclick", true);
+        if (Icon is not null)
+            builder.AddContent(28, Icon); // 아이콘 프래그먼트
+        else
+        {
+            builder.OpenElement(28, "span"); // span, 아이콘
+            builder.AddAttribute(29, "class", "mico");
+            builder.CloseElement();
+        }
+        builder.CloseElement();
+
 		if (Menu is not null)
 		{
 			builder.OpenElement(30, "nav"); // nav, 메뉴
-			builder.AddAttribute(31, "class", MenuClass);
+			builder.AddAttribute(31, "class", Cssc.Class(MenuClass, _visible.IfTrue("resp")));
 
 			builder.OpenComponent<CascadingValue<NavBar>>(32);
 			builder.AddAttribute(33, "Value", this);
@@ -97,6 +100,13 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse
 
 		builder.CloseElement();
 	}
+
+	//
+    private Task HandleButtonOnClick(MouseEventArgs e)
+    {
+        _visible = !_visible;
+		return Task.CompletedTask;	
+    }
 
 	#region IComponentAgent
 	/// <inheritdoc />

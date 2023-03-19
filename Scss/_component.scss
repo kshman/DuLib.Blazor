@@ -2,24 +2,29 @@
 
 // ACCD
 .caccd {
+  //
+  --accd-bdr: #{$cc-border};
+  --accd-ic-after: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   // 아이템
   & > div {
     // 눌러
     & > button {
-      width: 100%;
-      padding: .75rem .75rem;
       outline: none;
+      padding: .75rem .5rem;
       text-align: left;
-      transition: .15s;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out;
+      -webkit-user-select: none;
+      user-select: none;
+      width: 100%;
       // 애프터 (RIGHT ARROW)
       &:after {
+        background: no-repeat var(--accd-ic-after);
+        content: '';
         float: right;
-        width: 1rem;
         height: 1rem;
         margin-left: auto;
-        background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") no-repeat;
-        content: '';
         transition: transform .15s ease-in-out;
+        width: 1rem;
       }
       // 애프터 뒤집기
       &.active:after {
@@ -40,7 +45,7 @@
   // 모서리
   &.bdr {
     & > div {
-      border: 1px solid #{$cc-border};
+      border: 1px solid var(--accd-bdr);
       // 두번째 부터는 위에 없음
       &:not(:first-of-type) {
         border-top: 0;
@@ -52,15 +57,17 @@
 
 // 탭
 .ctab {
+  //
+  --tab-bdr: #{$cc-border};
   // 탭 목록
   & > div[role=tablist] {
     overflow: hidden;
     // 탭 눌러
     & > button {
       float: left;
-      padding: 0.5rem 1rem;
-      outline: none;
       font-size: 1rem;
+      outline: none;
+      padding: .5rem 1rem;
       transition: .15s;
     }
   }
@@ -78,7 +85,7 @@
   &.bdr {
     // 목록
     & > div[role=tablist] > button {
-      border: 1px solid #{$cc-border};
+      border: 1px solid var(--tab-bdr);
       // 두번째 부터는 왼쪽 없음
       &:not(:first-of-type) {
         border-left: 0;
@@ -86,7 +93,7 @@
     }
     // 패널
     & > div[role=tabpanel] {
-      border: 1px solid #{$cc-border};
+      border: 1px solid var(--tab-bdr);
     }
   }
 }
@@ -95,24 +102,24 @@
 // 버튼
 .cbtn {
   // 속성
+  border-radius: .375rem;
+  box-shadow: none;
   display: inline-block;
-  overflow: visible;
-  width: auto;
   height: auto;
-  padding: .5rem .75rem;
   margin: .3rem 0;
   outline: none;
-  border-radius: 4px;
-  box-shadow: none;
+  overflow: visible;
+  padding: .5rem .75rem;
   text-align: center;
   text-decoration: none;
   text-transform: none;
-  vertical-align: baseline;
+  transition-duration: .15s;
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-timing-function: ease-out;
   -webkit-user-select: none;
   user-select: none;
-  transition-property: color, background-color, border-color, box-shadow;
-  transition-duration: .15s;
-  transition-timing-function: ease-out;
+  vertical-align: baseline;
+  width: auto;
 }
 // 사용자 정의 버튼
 .usp.cbtn {
@@ -129,23 +136,31 @@
 
 // 드랍다운
 // - 누름 버튼은 cbtn
+// 본체
 .cdrop {
+  //
+  --drop-bdr: #{$cc-border};
+  --drop-bg: #{$cc-dark};
+  --drop-cc: #{$cc};
+  --drop-hr: #{$cc-border};
+  --drop-hover: #{$normal-hover};
+  --drop-active: #{$normal-active};
   // 속성
-  position: relative;
   display: inline-block;
+  position: relative;
   // 콘텐트
   & > nav {
-    position: absolute;
-    z-index: 1;
-    display: none;
-    min-width: 10rem;
-    width: fit-content;
-    margin: 0;
-    padding: 0;
+    background: var(--drop-bg);
     border: 1px solid transparent;
-    background: #{$cc-dark};
-    color: #{$cc};
     box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,.3);
+    color: var(--drop-cc);
+    display: none;
+    margin: 0;
+    min-width: 10rem;
+    padding: 0;
+    position: absolute;
+    width: fit-content;
+    z-index: 1;
     // 콘텐트 문장
     & > * {
       display: block;
@@ -153,37 +168,37 @@
     }
     // 콘텐트 가로줄
     & > hr {
-      overflow: hidden;
+      border-top: 1px solid var(--drop-hr);
       height: 0;
-      margin: 0.1rem 0;
-      padding: 0;
-      border-top: 1px solid #{$cc-border};
+      margin: .1rem 0;
       opacity: .5;
+      overflow: hidden;
+      padding: 0;
     }
     // 콘텐트 버튼
     & > a {
-      clear: both;
-      border: 0;
       background: inherit;
+      border: 0;
+      clear: both;
       color: inherit;
+      cursor: pointer;
       text-align: inherit;
       text-decoration: none;
-      white-space: nowrap;
       transition: background-color .15s ease-in-out;
-      cursor: pointer;
-      // 액티브
-      &:active, &.active {
-        background: #{$normal-active};
-      }
+      white-space: nowrap;
       // 호버 & 포커스
       &:hover, &:focus {
-        background: #{$normal-hover};
+        background: var(--drop-hover);
         text-decoration: none;
+      }
+      // 액티브
+      &:active, &.active {
+        background: var(--drop-active);
       }
     }
     // 모서리
     &.bdr {
-      border: 1px solid #{$cc-border};
+      border: 1px solid var(--drop-bdr);
     }
     // 오른쪽 정렬
     &.rgt {
@@ -200,14 +215,14 @@
 
 // 뱃지
 .cbdg {
+  border-radius: .375rem;
   display: inline-block;
-  padding: 0.3rem 0.65rem;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
+  font-size: .75rem;
   font-weight: 700;
   line-height: 1;
-  white-space: nowrap;
+  padding: .3rem .65rem;
   vertical-align: baseline;
+  white-space: nowrap;
   // 빈거
   &:empty {
     display: none;
@@ -224,28 +239,47 @@
 }
 
 
+// 나브 공통
+.unv {
+  --nv-cc: #{$normal-cc};
+  --nv-cc-hover: #{$cc-white};
+  --nv-cc-active: #{$normal-cc};
+  --nv-cc-disabled: #{$cc-dark};
+  --nv-cc-tgl: #{$cc-white};
+  --nv-cc-brd: #{$cc-white};
+  --nv-cc-lst: #{$cc};
+  --nv-bg-hover: inherit;
+  --nv-bg-active: #{$cc-accent};
+  --nv-bdr: #{$cc-border};
+  --nv-line-height: 1.25;
+  --nv-ic-m: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --nv-ic-x: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+}
+
+
 // 나브 버튼
 .cnvbn {
   // 속성
+  color: var(--nv-cc);
   display: block;
-  padding: 0.5rem 1rem;
-  color: #{$normal-cc};
+  padding: .5rem 1rem;
   text-decoration: none;
   transition: color .15s ease-in-out, background-color .15s ease-in-out;
   // 호버
   &:hover, &:focus {
-    color: #{$cc-white};
+    background: var(--nv-bg-hover);
+    color: var(--nv-cc-hover);
   }
   // 액티브
   &.active {
-    background: #{$cc-accent};
-    color: #{$normal-cc};
+    background: var(--nv-bg-active);
+    color: var(--nv-cc-active);
   }
   // 끔
   &.disabled {
-    color: #{$cc-dark};
-    pointer-events: none;
+    color: var(--nv-cc-disabled);
     cursor: default;
+    pointer-events: none;
   }
 }
 
@@ -253,20 +287,21 @@
 // 나브 바
 .cnvba {
   // 속성
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
   padding: .25rem 0;
   // 메뉴 표시 / 닫기
   & > button {
-    padding: 0.2rem 0.2rem;
+    display:none;
     background: transparent;
-    border: 0px solid #{$cc-border};
-    border-radius: 0.375rem;
+    border: 1px solid transparent;
+    border-radius: .375rem;
+    color: var(--nv-cc-tgl);
     font-size: 1.25rem;
     line-height: 1;
-    color: #{$cc-white};
+    padding: .25rem .2rem;
     transition: box-shadow .15s ease-in-out;
     // 호버
     &:hover {
@@ -274,36 +309,36 @@
     }
     // 메뉴 아이콘
     & > .mico {
+      background: no-repeat var(--nv-ic-m);
       display: inline-block;
-      width: 1.5rem;
       height: 1.5rem;
       vertical-align: middle;
-      background: no-repeat center/100% url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      width: 1.5rem;
     }
     // 닫기 아이콘
     & > .xico {
+      background: no-repeat var(--nv-ic-x);
       display: inline-block;
-      width: 1.5rem;
       height: 1.5rem;
       vertical-align: middle;
-      background: no-repeat center/100% url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+      width: 1.5rem;
     }
   }
   // 브랜드
   & > a, & > div {
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-    margin-left: .25rem;
-    margin-right: .5rem;
+    color: var(--nv-cc-brd);
     font-size: 1.25rem;
     font-weight: 700;
-    color: #{$cc-white};
+    margin-left: .25rem;
+    margin-right: .5rem;
+    padding-bottom: .25rem;
+    padding-top: .25rem;
     white-space: nowrap;
   }
   // 브랜드 - a
   & > a {
-    text-decoration: none;
     cursor: pointer;
+    text-decoration: none;
   }
   // 목록
   & > nav {
@@ -312,18 +347,20 @@
     flex-direction: row;
     // 전부
     & > * {
-      position: static;
+      color: var(--nv-cc-lst);
       display: block;
-      padding: .5rem 1rem;
       margin: 0 .1rem;
-      color: #{$cc};
+      padding: .5rem 1rem;
+      height: var(--nv-line-height);
+      line-height: var(--nv-line-height);
+      position: static;
       -webkit-user-select: none;
       user-select: none;
       // 끔
       &.disabled {
-        color: #{$cc-dark};
-        pointer-events: none;
+        color: var(--nv-cc-disabled);
         cursor: default;
+        pointer-events: none;
       }
     }
     // 링크
@@ -338,8 +375,23 @@
       }
       // 액티브
       &:active, &.active {
-        background: #{$cc-accent};
+        background: var(--nv-bg-active);
       }
+    }
+  }
+}
+
+@media screen and (max-width:900px)
+{
+  .cnvba > button {
+    display: block;
+  }
+  .cnvba > nav {
+    display: none;
+
+    &.resp {
+      position: relative;
+      display: flex;
     }
   }
 }

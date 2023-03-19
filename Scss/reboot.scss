@@ -25,25 +25,25 @@ html {
 
 //
 body {
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 //
 body {
-  color: #{$cc};
   background-color: #{$bg};
+  color: #{$cc};
   font-family: #{$serif};
   font-size: #{$font-size};
 }
 
 //
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
   font-family: inherit;
+  font-weight: 500;
   line-height: 1.2;
+  margin-bottom: .75rem;
+  margin-top: 0;
 }
 
 //
@@ -81,7 +81,7 @@ h3, .h3 {
 
 //
 h4, .h4 {
-  font-size: calc(1.275rem + 0.3vw);
+  font-size: calc(1.275rem + .3vw);
 }
 
 @media (min-width: 1200px) {
@@ -102,14 +102,14 @@ h6, .h6 {
 
 //
 hr {
-  box-sizing: content-box;
-  height: 0;
-  overflow: visible;
-  margin: 1rem 0;
-  color: inherit;
   border: 0;
   border-top: 1px solid;
-  opacity: 0.25;
+  box-sizing: content-box;
+  color: inherit;
+  height: 0;
+  margin: 1rem 0;
+  opacity: .25;
+  overflow: visible;
 }
 
 //
@@ -121,8 +121,8 @@ pre, code, kbd, samp {
 //
 p {
   font-size: #{$font-size};
-  margin-top: 0;
   margin-bottom: 1rem;
+  margin-top: 0;
 }
 
 //
@@ -132,16 +132,16 @@ a {
 
 //
 abbr[title] {
-  border-bottom: none;
-  text-decoration: underline dotted;
+  border-bottom-style: none;
   cursor: help;
+  text-decoration: underline dotted;
 }
 
 //
 address {
-  margin-bottom: 1rem;
   font-style: normal;
   line-height: inherit;
+  margin-bottom: 1rem;
 }
 
 //
@@ -151,8 +151,8 @@ ol, ul {
 
 //
 ol, ul, dl {
-  margin-top: 0;
   margin-bottom: 1rem;
+  margin-top: 0;
 }
 
 //
@@ -167,7 +167,7 @@ dt {
 
 //
 dd {
-  margin-bottom: 0.5rem;
+  margin-bottom: .5rem;
   margin-left: 0;
 }
 
@@ -178,25 +178,25 @@ b, strong {
 
 //
 small {
-  font-size: 0.875em;
+  font-size: .875em;
 }
 
 //
 sub, sup {
-  position: relative;
-  font-size: 0.75em;
+  font-size: .75em;
   line-height: 0;
+  position: relative;
   vertical-align: baseline;
 }
 
 //
 sub {
-  bottom: -0.25em;
+  bottom: -.25em;
 }
 
 //
 sup {
-  top: -0.5em;
+  top: -.5em;
 }
 
 figure {
@@ -220,11 +220,11 @@ button:focus:not(:focus-visible) {
 
 //
 button, input, optgroup, select, textarea {
-  margin: 0;
+  border: 1px solid black;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  border: 1px solid black;
+  margin: 0;
 }
 
 //
@@ -264,16 +264,16 @@ button:not(:disabled), [type=button]:not(:disabled), [type=reset]:not(:disabled)
 
 //
 ::-moz-focus-inner {
-  padding: 0;
   border-style: none;
+  padding: 0;
 }
 
 //
 fieldset {
+  border: 0;
+  margin: 0;
   min-width: 0;
   padding: 0;
-  margin: 0;
-  border: 0;
 }
 
 //
@@ -281,10 +281,10 @@ legend {
   box-sizing: border-box;
   color: inherit;
   display: table;
-  width: 100%;
+  line-height: inherit;
   padding: 0;
   white-space: normal;
-  line-height: inherit;
+  width: 100%;
 }
 
 //
@@ -334,8 +334,8 @@ textarea {
 
 //
 ::file-selector-button {
-  font: inherit;
   -webkit-appearance: button;
+  font: inherit;
 }
 
 //
@@ -355,8 +355,8 @@ details {
 
 //
 summary {
-  display: list-item;
   cursor: pointer;
+  display: list-item;
 }
 
 //

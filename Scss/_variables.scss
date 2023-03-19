@@ -1,5 +1,5 @@
 ﻿// 정의
-$serif: "Malgun Gothic","Segoe UI","Noto Sans","Apple SD Gothic Neo",sans-serif; 
+$serif: "Malgun Gothic", "Segoe UI", "Noto Sans", "Apple SD Gothic Neo", sans-serif; 
 $monospace: Consolas, monospace;
 
 // 문서 기본
@@ -17,7 +17,7 @@ $cc-dark: #212529;
 $cc-border: #838288;
 $cc-hover: #212529;
 $cc-focus: transparent;
-$cc-accent: #16768C;
+$cc-accent: #16768c;
 
 // normal
 $normal-cc: $cc;
@@ -29,7 +29,7 @@ $normal-active: #545459;
 $splend-cc: $cc;
 $splend-bg: #16424e;
 $splend-hover: #126072;
-$splend-active: #16768C;
+$splend-active: #16768c;
 
 // simple
 $simple-cc: $cc;
@@ -48,7 +48,7 @@ $primary-active: #0360b9;
 //..은 normal의 외곽선 버전
 
 // 크기 계산용
-$space-spacing: 0.5rem;
+$space-spacing: .5rem;
 
 @function strip($value) {
   @return $value / ($value * 0 + 1);
