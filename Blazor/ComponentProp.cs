@@ -14,10 +14,13 @@ public abstract class ComponentProp : ComponentBase
 	/// <summary>사용자가 설정한 속성 지정</summary>
 	[Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? UserAttrs { get; set; }
 
-	/// <summary>아래 컴포넌트가 미리 지정할 수 있는 CSS 클래스</summary>
+    /// <summary>컴포넌트 롤</summary>
+    internal ComponentRole ComponentRole { get; set; }
+
+    /// <summary>아래 컴포넌트가 미리 지정할 수 있는 CSS 클래스</summary>
 	protected string? ComponentClass { get; set; } = null;
 
-	// 실제 CSS 클래스
+    // 실제 CSS 클래스
 	internal string? ActualClass => Cssc.Class(ComponentClass, Class);
 
 	// 아토믹 인덱스
@@ -41,6 +44,12 @@ public abstract class ComponentContent : ComponentProp
 {
 	/// <summary>자식 콘텐트</summary>
 	[Parameter] public RenderFragment? ChildContent { get; set; }
+
+	//
+    protected ComponentContent(ComponentRole role = ComponentRole.Block)
+    {
+        ComponentRole = role;
+    }
 
 	// 태그로 자식 콘텐트를 감써서 그린다
 	internal void RenderTag(RenderTreeBuilder builder, string tag = "div")
@@ -83,4 +92,25 @@ public abstract class ComponentContent : ComponentProp
 
 		builder.CloseElement(); // tag
 	}
+}
+
+
+/// <summary>
+/// 컴포넌트 롤
+/// </summary>
+public enum ComponentRole
+{
+	// 기본
+	Block,
+	Text,
+	Image,
+	Link,
+
+	// 특수
+	Divide,
+
+	// 콘텐트 
+	Header,
+	Footer,
+	Content,
 }

@@ -1,20 +1,21 @@
-/*
- * Nomalize & Bootstrap 
+/*!
+ * Modified Normalize & Bootstrap reboot css 
  * Normalize is licensed under MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) 
  * Bootstrap is licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+*, *::before, *::after {
+  box-sizing: border-box; }
+
 html {
   line-height: 1.25; }
-
-body {
-  margin: 0;
-  padding: 0; }
 
 body {
   background-color: #1c1b22;
   color: #fbfbfe;
   font-family: Malgun Gothic, Segoe UI, Noto Sans, Apple SD Gothic Neo, sans-serif;
-  font-size: 14px; }
+  font-size: 14px;
+  margin: 0;
+  padding: 0; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: inherit;
@@ -30,13 +31,13 @@ h1, .h1 {
   h1, .h1 {
     font-size: 2.5rem; } }
 h2, .h2 {
-  font-size: calc(1.325rem + 0.9vw); }
+  font-size: calc(1.325rem + .9vw); }
 
 @media (min-width: 1200px) {
   h2, .h2 {
     font-size: 2rem; } }
 h3, .h3 {
-  font-size: calc(1.3rem + 0.6vw); }
+  font-size: calc(1.3rem + .6vw); }
 
 @media (min-width: 1200px) {
   h3, .h3 {
@@ -133,7 +134,7 @@ button:focus:not(:focus-visible) {
   outline: 0; }
 
 button, input, optgroup, select, textarea {
-  border: 1px solid black;
+  border: 1px solid #000;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -142,13 +143,11 @@ button, input, optgroup, select, textarea {
 input {
   overflow: visible; }
 
-select {
-  text-transform: none; }
-
 [role=button] {
   cursor: pointer; }
 
 select {
+  text-transform: none;
   word-wrap: normal; }
 
 select:disabled {

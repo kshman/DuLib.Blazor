@@ -29,7 +29,7 @@ public class NavBtn : Nulo, IDisposable
 		_href = Link.Empty() ? null : NavMan.ToAbsoluteUri(Link).AbsoluteUri;
 		_isActive = ShouldMatch(NavMan.Uri);
 
-		ComponentClass = GetNuloClassName("unv cnvbn", false);
+		ComponentClass = GetNuloClassName("cnvnr", false);
 	}
 
 	//

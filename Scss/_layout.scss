@@ -1,165 +1,50 @@
-﻿@import '_variables.scss';
+﻿@import "_variable.scss";
+@import "_mixin.scss";
 
 // 바디
 .body {
-  //margin: 0;
+  margin: 0;
   background-color: #{$bg};
   color: #{$cc};
   font-family: #{$serif};
   font-size: #{$font-size};
-  //font-weight: #{$font-weight};
-  //line-height: #{$line-height};
 }
 
 // 예제용
 .dzex {
-  --bdr: #a9f27d;
-  --cc-pri: #838288;
-  --cc-sec: #00ddff;
   //
-  border: thick double var(--bdr);
+  border: thick double #{$cc-border};
   margin: .25rem .5rem;
   padding: 1rem 1.5rem;
   // 색깔1
   &.pri {
-    border: 1px solid var(--cc-pri);
+    border: 1px solid #{$cc-ex-1};
     border-radius: .375rem;
   }
   // 색깔1
   &.sec {
-    border: 1px solid var(--cc-sec);
+    border: 1px solid #{$cc-ex-2};
     border-radius: .375rem;
+  }
+  // P
+  p {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
   }
 }
 
 // 보통
-.vsnrm {
-  background: #{$normal-bg};
-  border: 1px solid transparent;
-  color: #{$normal-cc};
-  // 호버
-  &:hover, &:focus {
-    background: #{$normal-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$normal-active};
-  }
-}
-// 낮은색
-.vdnrm {
-  background: #{$normal-bg};
-  color: #{$normal-cc};
-}
-// 밝은색
-.vunrm {
-  background: #{$normal-active};
-  color: #{$normal-cc};
-}
-
-// 화사하게
-.vsspn {
-  background: #{$splend-bg};
-  border: 1px solid transparent;
-  color: #{$splend-cc};
-  // 호버
-  &:hover, &:focus {
-    background: #{$splend-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$splend-active};
-  }
-}
-// 낮은색
-.vdspn {
-  background: #{$splend-bg};
-  color: #{$splend-cc};
-}
-// 밝은색
-.vuspn {
-  background: #{$splend-active};
-  color: #{$splend-cc};
-}
-
+@include variant-color(nrm, $normal-cc, $normal-bg, $normal-hover, $normal-active);
+// 화사하기
+@include variant-color(spn, $splend-cc, $splend-bg, $splend-hover, $splend-active);
 // 심플
-.vssme {
-  background: #{$simple-bg};
-  border: 1px solid transparent;
-  color: #{$simple-cc};
-  // 호버
-  &:hover, &:focus {
-    background: #{$simple-hover};
-    color: #{$simple-cc-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$simple-active};
-    color: #{$simple-cc};
-  }
-}
-// 낮은색
-.vdsme {
-  background: #{$simple-bg};
-  color: #{$simple-cc};
-}
-// 밝은색
-.vusme {
-  background: #{$simple-active};
-  color: #{$simple-cc};
-}
-
+@include variant-color(sme, $simple-cc, $simple-bg, $simple-hover, $simple-active);
 // 아웃라인
-.vsoue {
-  background: transparent;
-  border: 1px solid #{$normal-bg};
-  color: #{$cc};
-  // 호버
-  &:hover, &:focus {
-    border: 1px solid #{$normal-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    border: 1px solid #{$normal-active};
-    color: #{$cc-accent};
-  }
-}
-// 낮은색
-.vdoue {
-  background: transparent;
-  border: 1px solid #{$normal-bg};
-  color: #{$cc};
-}
-// 밝은색
-.vuoue {
-  border: 1px solid #{$normal-active};
-  color: #{$cc-accent};
-}
-
+@include variant-outline(oue, $cc, $normal-bg, $cc, $normal-hover, $cc-accent, $normal-active);
 // 프라이머리
-.vspri {
-  background: #{$primary-bg};
-  border: 1px solid transparent;
-  color: #{$primary-cc};
-  // 호버
-  &:hover, &:focus {
-    background: #{$primary-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$primary-active};
-  }
-}
-// 낮은색
-.vdpri {
-  background: #{$primary-bg};
-  color: #{$primary-cc};
-}
-// 밝은색
-.vupri {
-  background: #{$primary-active};
-  color: #{$primary-cc};
-}
+@include variant-color(pri, $primary-cc, $primary-bg, $primary-hover, $primary-active);
+// 디지틀
+@include variant-color(dgt, $digital-cc, $digital-bg, $digital-hover, $digital-active);
 
 // 레이아웃 확장
 .lcn, .lcnf, .lcn6, .lcn9, .lcn12 {
@@ -169,19 +54,19 @@
   width: 100%;
 }
 // 600 이상
-@media (min-width: 600px) {
+@include media-w6(min) {
   .lcn6, .lcn {
     max-width: 600px;
   }
 }
 // 900 이상
-@media (min-width:900px) {
+@include media-w9(min) {
   .lcn9, .lcn6, .lcn {
     max-width: 900px;
   }
 }
 // 1200 이상
-@media (min-width:1200px) {
+@include media-w12(min) {
   .lcn12, .lcn9, .lcn6, .lcn {
     max-width: 1200px;
   }
@@ -193,3 +78,4 @@
   max-width: 100%;
   width: auto;
 }
+

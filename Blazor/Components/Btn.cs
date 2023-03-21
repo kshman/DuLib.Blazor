@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.SymbolStore;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components.Forms;
 
 namespace Du.Blazor.Components;
 
@@ -142,6 +141,12 @@ public abstract class Nulo : ComponentContent
 	protected bool _handle_click;
 
 	//
+    protected Nulo(ComponentRole role = ComponentRole.Link)
+        : base(role)
+    {
+    }
+
+	//
 	protected string? GetNuloClassName(string? baseClass = "cbtn", string? additional = null, bool defVariant = true)
 	{
 		if (AgentHandler is null)
@@ -156,7 +161,7 @@ public abstract class Nulo : ComponentContent
 			return Cssc.Class(
 				Pseudo.IfTrue("usp"),
 				Variant?.ToCss(),
-				AgentHandler.RefineBaseClass.IfFalse(baseClass),
+				AgentHandler.GetRoleClass(ComponentRole),
 				additional);
 	}
 
