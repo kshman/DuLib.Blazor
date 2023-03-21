@@ -1,0 +1,129 @@
+﻿// 크기 계산용
+$space-spacing: .5rem;
+
+@function strip($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@function em($px, $size: $font-size) {
+  @return #{ strip($px) / strip($size) }em;
+}
+
+@function rem($px, $size: $font-size) {
+  @return #{ strip($px) / strip($size) }rem;
+}
+
+@function spacing($space) {
+  @return calc(#{ $space-spacing } * #{ $space });
+}
+
+// 트랜지션
+@function transition($duration, $animation, $names...) {
+  $v: ();
+
+  @each $n in $names {
+    $v: append($v, ($n $duration $animation), $separator: comma);
+  }
+
+  @return $v;
+}
+
+// 미디어 크기
+@mixin media-w6($mm) {
+  @media screen and (#{$mm}-width: #{$w6}) {
+    @content;
+  }
+}
+
+@mixin media-w9($mm) {
+  @media screen and (#{$mm}-width: #{$w9}) {
+    @content;
+  }
+}
+
+@mixin media-w12($mm) {
+  @media screen and (#{$mm}-width: #{$w12}) {
+    @content;
+  }
+}
+
+// 색깔 mixin
+@mixin variant-color($name, $cc, $bg, $hover, $active, $border: transparent) {
+  .vs#{$name} {
+    background: $bg;
+    border: 1px solid $border;
+    color: $cc;
+    // 호버
+    &:hover, &:focus {
+      background: $hover;
+    }
+    // 액티브
+    &:active, &.active {
+      background: $active;
+    }
+  }
+  // 낮은색
+  .vd#{$name} {
+    background: $bg;
+    color: $cc;
+  }
+  // 높은색
+  .vu#{$name} {
+    background: $active;
+    color: $cc;
+  }
+}
+
+// 아웃라인 mixin
+@mixin variant-outline($name, $cc, $bg, $hcc, $hbg, $acc, $abg) {
+  .vs#{$name} {
+    background: transparent;
+    border: 1px solid $bg;
+    color: $cc;
+    // 호버
+    &:hover, &:focus {
+      border-color: $hbg;
+      color: $hcc;
+    }
+    // 액티브
+    &:active, &.active {
+      border-color: $abg;
+      color: $acc;
+    }
+  }
+  // 낮은색
+  .vd#{$name} {
+    background: transparent;
+    border: 1px solid $bg;
+    color: $cc;
+  }
+  // 높은색
+  .vu#{$name} {
+    background: transparent;
+    border: 1px solid $abg;
+    color: $acc;
+  }
+}
+
+// 배경 / 글자(선택)
+@mixin mi-bgcc($bg, $cc: 0) {
+  background: $bg;
+
+  @if ($cc != 0) {
+    color: $cc;
+  }
+}
+
+// 믹스 아이콘
+@mixin mi-icon($icon, $float: 0, $size: 1rem) {
+  background: no-repeat $icon;
+  content: '';
+  width: $size;
+  height: $size;
+
+  @if ($float != 0) {
+    float: $float;
+  }
+
+  @content;
+}

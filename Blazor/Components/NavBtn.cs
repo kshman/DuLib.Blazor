@@ -29,14 +29,14 @@ public class NavBtn : Nulo, IDisposable
 		_href = Link.Empty() ? null : NavMan.ToAbsoluteUri(Link).AbsoluteUri;
 		_isActive = ShouldMatch(NavMan.Uri);
 
-		ComponentClass = GetNuloClassName("cnvbn", _isActive.IfTrue("active"), false);
+		ComponentClass = GetNuloClassName("cnvnr", false);
 	}
 
 	//
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		builder.OpenElement(0, "a");
-		builder.AddAttribute(1, "class", ActualClass);
+		builder.AddAttribute(1, "class", Cssc.Class(ActualClass, _isActive.IfTrue("active")));
 		builder.AddAttribute(2, "href", Link);
 		builder.AddMultipleAttributes(3, UserAttrs);
 		builder.AddContent(4, Text);

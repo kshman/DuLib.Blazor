@@ -26,14 +26,14 @@ public class Tabs : ComponentContainer<Tab>
 			<CascadingValue Value="this" IsFixed="true">
 				탭 처리
 			</CascadingValue>
-			<div class="tab">
-				<div role="tablist">
-					<button type="button" role="tab" aria-select="true" aria-controls="id" 
+			<div class="ctab ctabr">
+				<div class="ctabl">
+					<button type="button" class="ctabb" aria-select="true" aria-controls="id" 
 						 @onClick="" @onClick:StopPropagation="true">
 						 탭 제목
 					</button>
 				</div>
-				<div id="id" role="tablpanel">
+				<div class="ctabp" id="id">
 					탭 내용
 				</div>
 			</div>
@@ -49,11 +49,10 @@ public class Tabs : ComponentContainer<Tab>
 		// 탭 컨테이너
 		builder.OpenElement(10, "div");
 		builder.AddAttribute(11, "class", Cssc.Class("ctab", Border.IfTrue("bdr")));
-		builder.AddAttribute(12, "id", Id);
 
 		// 탭 리스트
 		builder.OpenElement(20, "div");
-		builder.AddAttribute(21, "class", ActualClass);
+		builder.AddAttribute(21, "class", Cssc.Class("ctabl", ActualClass));
 		builder.AddAttribute(22, "role", "tablist");
 		builder.AddMultipleAttributes(23, UserAttrs);
 
@@ -66,6 +65,7 @@ public class Tabs : ComponentContainer<Tab>
 			builder.AddAttribute(31, "type", "button");
 			builder.AddAttribute(32, "class", Cssc.Class(
 				(Variant ?? Settings.Variant).ToCss(),
+				"ctabb",
 				active.IfTrue("active"), 
 				item.ActualClass));
 			builder.AddAttribute(33, "role", "tab");
@@ -88,7 +88,7 @@ public class Tabs : ComponentContainer<Tab>
 				var active = item == SelectedItem;
 
 				builder.OpenElement(40, "div");
-				builder.AddAttribute(41, "class", active.IfTrue("active"));
+				builder.AddAttribute(41, "class", Cssc.Class("ctabp", active.IfTrue("active")));
 				builder.AddAttribute(42, "role", "tabpanel");
 				builder.AddAttribute(43, "id", item.Id);
 				builder.AddContent(44, item.ChildContent);

@@ -1,0 +1,117 @@
+﻿// 정의
+$serif: "Malgun Gothic", "Segoe UI", "Noto Sans", "Apple SD Gothic Neo", sans-serif;
+$monospace: Consolas, monospace;
+
+// 문서 기본
+$font-size: 14px;
+$font-weight: 400;
+$line-height: 1.5;
+$bg: #1c1b22;
+$cc: #fbfbfe;
+
+// 화면크기
+$w6: 600px;
+$w9: 900px;
+$w12: 1200px;
+
+// 기본 색깔
+$cc-white: #fff;
+$cc-light: #fbfbfe;
+$cc-black: #000;
+$cc-dark: #212529;
+$cc-border: #838288;
+$cc-hover: #212529;
+$cc-focus: transparent;
+$cc-accent: #16768c;
+$cc-ex-1: #a9f27d;
+$cc-ex-2: #00ddff;
+
+// normal
+$normal-cc: $cc;
+$normal-bg: #2b2a33;
+$normal-hover: #3f3f43;
+$normal-active: #545459;
+$normal-border: transparent;
+
+// splendid
+$splend-cc: $cc;
+$splend-bg: #16424e;
+$splend-hover: #126072;
+$splend-active: #16768c;
+$splend-border: transparent;
+
+// simple
+$simple-cc: $cc;
+$simple-cc-hover: #a0faea;
+$simple-bg: transparent;
+$simple-hover: transparent;
+$simple-active: #4b4b4b;
+$simple-border: transparent;
+
+// primary (부트스트랩 비스므리)
+$primary-cc: $cc;
+$primary-bg: #023b8f;
+$primary-hover: #012e7f;
+$primary-active: #0360b9;
+$primary-border: transparent;
+
+// outline
+//..은 normal의 외곽선 버전
+
+// digital
+$digital-cc: $cc;
+$digital-bg: #ff6a00;
+$digital-hover: #CA3E12;
+$digital-active: #FF4644;
+$digital-border: transparent;
+
+// ACCD
+$accd-border: $cc-border;
+$accd-ic-bs-after: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+$accd-ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="16" height="16" viewBox="0 0 8 8"%3E%3Cpath fill="currentColor" d="m0 2l4 4l4-4H0z"%2F%3E%3C%2Fsvg%3E');
+
+// TAB
+$tab-border: $cc-border;
+
+// BTN
+$btn-border-radius: .375rem;
+$btn-margin: .3rem 0;
+$btn-padding: .5rem .75rem;
+$usp-btn-bg-hover: rgba(#333,.2);
+$usp-btn-bg-active: rgba(#fff,.1);
+
+// DROP
+$drop-border: $cc-border;
+$drop-bg: $cc-dark;
+$drop-cc: $cc;
+$drop-hr: $cc-border;
+$drop-hover: $normal-hover;
+$drop-active: $normal-active;
+$drop-min-width: 10rem;
+$drop-padding: .5rem 1rem;
+$drop-bg-empty: rgba(0,0,0,.3);
+
+// BADGE
+$bdg-border-radius: .375rem;
+$bdg-font-size: .75rem;
+$bdg-font-weight: 700;
+$bdg-padding: .3rem .65rem;
+$bdg-dgrm-radius: 50rem;
+
+// NAV 공통
+$nv-cc: $normal-cc;
+$nv-cc-hover: $cc-white;
+$nv-cc-active: $normal-cc;
+$nv-cc-disabled: $cc-dark;
+$nv-cc-toggle: $cc-white;
+$nv-cc-brd: $cc-white;
+$nv-cc-item-list: $cc;
+$nv-bg-hover: inherit;
+$nv-bg-active: $cc-accent;
+$nv-border: $cc-border;
+$nv-ic-bs-m: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+$nv-ic-bs-x: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+$nv-ic-m: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="22" height="22" viewBox="0 0 8 8"%3E%3Cpath fill="%23fcfcfc" d="M0 1v1h8V1H0zm0 2.97v1h8v-1H0zm0 3v1h8v-1H0z"%2F%3E%3C%2Fsvg%3E');
+$nv-ic-x: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="22" height="22" viewBox="0 0 8 8"%3E%3Cpath fill="%23fcfcfc" d="M1.41 0L0 1.41l.72.72L2.5 3.94L.72 5.72L0 6.41l1.41 1.44l.72-.72l1.81-1.81l1.78 1.81l.69.72l1.44-1.44l-.72-.69l-1.81-1.78l1.81-1.81l.72-.72L6.41 0l-.69.72L3.94 2.5L2.13.72L1.41 0z"%2F%3E%3C%2Fsvg%3E');
+$nv-a-bg-hover: rgba(#fff, .1);
+

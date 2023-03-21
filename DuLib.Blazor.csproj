@@ -55,11 +55,6 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="sassconfig.json" />
-    <None Include="sassconfig.json" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Content Remove="wwwroot\ref\**" />
     <None Remove="wwwroot\ref\**" />

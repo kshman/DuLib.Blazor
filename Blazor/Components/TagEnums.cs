@@ -8,14 +8,15 @@ public enum Variant
 	Simple,
 	Outline,
 	Primary,
+	Digital,
 }
 
 // 익스팬드
 public enum LayoutExpand
 {
 	Default,
-	W600,
-	W900,
-	W1200,
+	W6,
+	W9,
+	W12,
 	Full,
 }

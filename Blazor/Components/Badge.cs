@@ -17,8 +17,8 @@ public class Badge : ComponentContent
 	protected override void OnParametersSet()
 	{
 		ComponentClass = Cssc.Class(
-			"cbdg",
 			(Variant ?? Settings.Variant).ToCss(Active ? VrtLead.Up : VrtLead.Down),
+			"cbdg",
 			Round.IfTrue("dgrm"));
 
 		// 스타일

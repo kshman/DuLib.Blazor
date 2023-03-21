@@ -31,12 +31,16 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 	protected override void OnParametersSet()
 	{
 		if (AgentHandler is not null)
+		{
 			InternalType = NuloType.Action;
+			SelfClose ??= !AgentHandler.SelfClose;
+			SelectText ??= false;
+		}
 		else
 		{
 			InternalType = NuloType.Button;
-			SelectText ??= true;
 			SelfClose ??= true;
+			SelectText ??= true;
 		}
 
 		ComponentClass = GetNuloClassName();
@@ -46,9 +50,9 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		/*
-			<div class="dpd">
-				<button type="button" class="nulo">버튼 제목</button>
-				<div>
+			<div class="cdrp">
+				<button type="button" class="cbtn">버튼 제목</button>
+				<div class="cdrpc>
 					<CascadingValue Value="this" IsFixed="true">
 						<a>아이템</a>
 						<a>아이템</a>
@@ -58,7 +62,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 			</div>
 		 */
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", "cdrop");
+		builder.AddAttribute(1, "class", "cdrp");
 
 		if (InternalType == NuloType.Button)
 		{
@@ -83,6 +87,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 		{
 			builder.OpenElement(20, "nav");
 			builder.AddAttribute(21, "class", Cssc.Class(
+				"cdrpc",
 				Border.IfTrue("bdr"),
 				Right.IfTrue("rgt"),
 				PanelClass));
@@ -147,7 +152,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 		{
 			try
 			{
-				await Task.Delay(1);
+				await Task.Delay(100);
 
 				_short_bye = false;
 				StateHasChanged();
@@ -162,6 +167,17 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 
 	#region IComponentAgent
 	/// <inheritdoc />
-	public bool AgentRefineBaseClass => true;
-	#endregion
+	bool IComponentAgent.SelfClose => false;
+
+    /// <inheritdoc />
+    string? IComponentAgent.GetRoleClass(ComponentRole role) => role switch
+    {
+        ComponentRole.Block or
+            ComponentRole.Text or
+            ComponentRole.Image => "cdrpm",
+        ComponentRole.Link => "cdrpb",
+        ComponentRole.Divide => "cdrpd",
+        _ => null,
+    };
+    #endregion
 }

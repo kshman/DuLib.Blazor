@@ -65,7 +65,16 @@ public interface IComponentResponse
 /// </summary>
 public interface IComponentAgent
 {
-	bool AgentRefineBaseClass { get; }
+	/// <summary>
+	/// 닫아야하는 액션을 직접 하면 참
+	/// </summary>
+	bool SelfClose { get; }
+	/// <summary>
+	/// 역할에 따른 클래스를 얻음
+	/// </summary>
+	/// <param name="role"></param>
+	/// <returns></returns>
+    string? GetRoleClass(ComponentRole role);
 }
 
 

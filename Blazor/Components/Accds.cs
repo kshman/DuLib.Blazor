@@ -25,23 +25,24 @@ public class Accd : ComponentSubset<Accd, Accds>
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		/*
-			<div>
-				<button type="button" class="active" id="" @onClick="" @onClick:StopPropagation="true">
+			<div class="cacdi">
+				<button type="button" class="cacdb active" id="" @onClick="" @onClick:StopPropagation="true">
 					제목
 				</button>
-				<div class="active">
+				<div class="cacdp active">
 					내용
 				</div>
 			</div>
 		 */
 		var active = InternalOpened.IfTrue("active");
-		var variant = Variant ?? Accds?.Variant ?? Settings.Variant;
+		var variant = (Variant ?? Accds?.Variant ?? Settings.Variant).ToCss();
 
 		builder.OpenElement(0, "div");
+		builder.AddAttribute(1, "class", "cacdi");
 
 		builder.OpenElement(10, "button");
 		builder.AddAttribute(11, "type", "button");
-		builder.AddAttribute(12, "class", Cssc.Class(ActualClass, variant.ToCss(), active));
+		builder.AddAttribute(12, "class", Cssc.Class(variant, "cacdb", active, ActualClass));
 		builder.AddAttribute(13, "id", Id);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		builder.AddEventStopPropagationAttribute(15, "onclick", true);
@@ -50,7 +51,7 @@ public class Accd : ComponentSubset<Accd, Accds>
 		builder.CloseElement(); // button
 
 		builder.OpenElement(20, "div");
-		builder.AddAttribute(21, "class", active);
+		builder.AddAttribute(21, "class", Cssc.Class("cacdp",active));
 		builder.AddContent(22, ChildContent);
 		builder.CloseElement(); // div
 
@@ -101,14 +102,14 @@ public class Accds : ComponentContainer<Accd>
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
 		/*
-			<div class="caccd bdr">
+			<div class="cacd cacdr">
 				<CascadingValue Value="this" IsFixed="true">
 					ACCD 아이템
 				</CascadingValue>
 			</div>
 		 */
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", Cssc.Class("caccd", Border.IfTrue("bdr")));
+		builder.AddAttribute(1, "class", Cssc.Class("cacd", Border.IfTrue("bdr")));
 		builder.AddMultipleAttributes(2, UserAttrs);
 
 		builder.OpenComponent<CascadingValue<Accds>>(3);

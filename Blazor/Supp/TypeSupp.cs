@@ -33,6 +33,7 @@ internal static class TypeSupp
 		Variant.Simple => "sme",
 		Variant.Outline => "oue",
 		Variant.Primary => "pri",
+		Variant.Digital => "dgt",
 		_ => LogIf.ArgumentOutOfRange<string>(v, nameof(v))
 	};
 
@@ -54,12 +55,20 @@ internal static class TypeSupp
 	internal static string ToCss(this LayoutExpand e) => e switch
 	{
 		LayoutExpand.Default => "lcn",
-		LayoutExpand.W600 => "lcn6",
-		LayoutExpand.W900 => "lcn9",
-		LayoutExpand.W1200 => "lcn12",
+		LayoutExpand.W6 => "lcn6",
+		LayoutExpand.W9 => "lcn9",
+		LayoutExpand.W12 => "lcn12",
 		LayoutExpand.Full => "lcnf",
 		_ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
 	};
+
+    internal static string ToCssNavBar(this LayoutExpand e) => e switch
+    {
+        LayoutExpand.W6 => "cnvb6",
+        LayoutExpand.W9 => "cnvb9",
+        LayoutExpand.W12 => "cnvb12",
+        _ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
+    };
 }
 
 

@@ -1,184 +1,81 @@
-﻿@import "_variables.scss";
+﻿@import "_variable.scss";
+@import "_mixin.scss";
 
 // 바디
 .body {
-  //margin: 0;
+  margin: 0;
   background-color: #{$bg};
   color: #{$cc};
   font-family: #{$serif};
   font-size: #{$font-size};
-  //font-weight: #{$font-weight};
-  //line-height: #{$line-height};
 }
 
 // 예제용
 .dzex {
+  //
+  border: thick double #{$cc-border};
+  margin: .25rem .5rem;
   padding: 1rem 1.5rem;
-  margin: 0.5rem 0.5rem;
-  border: thick double #a9f27d;
-  // 회색
+  // 색깔1
   &.pri {
-    border: 1px solid #838288;
-    border-radius: 0.15rem;
+    border: 1px solid #{$cc-ex-1};
+    border-radius: .375rem;
   }
-  // 하늘색
+  // 색깔1
   &.sec {
-    border: 1px solid #00ddff;
-    border-radius: 0.15rem;
+    border: 1px solid #{$cc-ex-2};
+    border-radius: .375rem;
+  }
+  // P
+  p {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
   }
 }
 
 // 보통
-.vsnrm {
-  border: 1px solid transparent;
-  color: #{$normal-cc};
-  background: #{$normal-bg};
-  // 호버
-  &:hover, &:focus {
-    background: #{$normal-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$normal-active};
-  }
-}
-// 낮은색
-.vdnrm {
-  color: #{$normal-cc};
-  background: #{$normal-bg};
-}
-// 밝은색
-.vunrm {
-  color: #{$normal-cc};
-  background: #{$normal-active};
-}
-
-// 화사하게
-.vsspn {
-  border: 1px solid transparent;
-  color: #{$splend-cc};
-  background: #{$splend-bg};
-  // 호버
-  &:hover, &:focus {
-    background: #{$splend-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$splend-active};
-  }
-}
-// 낮은색
-.vdspn {
-  color: #{$splend-cc};
-  background: #{$splend-bg};
-}
-// 밝은색
-.vuspn {
-  color: #{$splend-cc};
-  background: #{$splend-active};
-}
-
+@include variant-color(nrm, $normal-cc, $normal-bg, $normal-hover, $normal-active);
+// 화사하기
+@include variant-color(spn, $splend-cc, $splend-bg, $splend-hover, $splend-active);
 // 심플
-.vssme {
-  border: 1px solid transparent;
-  color: #{$simple-cc};
-  background: #{$simple-bg};
-  // 호버
-  &:hover, &:focus {
-    background: #{$simple-hover};
-    color: #{$simple-cc-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$simple-active};
-    color: #{$simple-cc};
-  }
-}
-// 낮은색
-.vdsme {
-  color: #{$simple-cc};
-  background: #{$simple-bg};
-}
-// 밝은색
-.vusme {
-  color: #{$simple-cc};
-  background: #{$simple-active};
-}
-
+@include variant-color(sme, $simple-cc, $simple-bg, $simple-hover, $simple-active);
 // 아웃라인
-.vsoue {
-  border: 1px solid #{$normal-bg};
-  color: #{$cc};
-  background: transparent;
-  // 호버
-  &:hover, &:focus {
-    border: 1px solid #{$normal-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    border: 1px solid #{$normal-active};
-    color: #{$cc-accent};
-  }
-}
-// 낮은색
-.vdoue {
-  border: 1px solid #{$normal-bg};
-  color: #{$cc};
-  background: transparent;
-}
-// 밝은색
-.vuoue {
-  border: 1px solid #{$normal-active};
-  color: #{$cc-accent};
-}
-
+@include variant-outline(oue, $cc, $normal-bg, $cc, $normal-hover, $cc-accent, $normal-active);
 // 프라이머리
-.vspri {
-  border: 1px solid transparent;
-  color: #{$primary-cc};
-  background: #{$primary-bg};
-  // 호버
-  &:hover, &:focus {
-    background: #{$primary-hover};
-  }
-  // 액티브
-  &:active, &.active {
-    background: #{$primary-active};
-  }
-}
-// 낮은색
-.vdpri {
-  color: #{$primary-cc};
-  background: #{$primary-bg};
-}
-// 밝은색
-.vupri {
-  color: #{$primary-cc};
-  background: #{$primary-active};
-}
+@include variant-color(pri, $primary-cc, $primary-bg, $primary-hover, $primary-active);
+// 디지틀
+@include variant-color(dgt, $digital-cc, $digital-bg, $digital-hover, $digital-active);
 
 // 레이아웃 확장
 .lcn, .lcnf, .lcn6, .lcn9, .lcn12 {
-  width: 100%;
-  padding: 0 .75rem;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 .75rem;
+  width: 100%;
 }
 // 600 이상
-@media (min-width: 600px) {
+@include media-w6(min) {
   .lcn6, .lcn {
     max-width: 600px;
   }
 }
 // 900 이상
-@media (min-width:900px) {
+@include media-w9(min) {
   .lcn9, .lcn6, .lcn {
     max-width: 900px;
   }
 }
 // 1200 이상
-@media (min-width:1200px) {
+@include media-w12(min) {
   .lcn12, .lcn9, .lcn6, .lcn {
     max-width: 1200px;
   }
 }
+
+// 자동 그림 크기
+.pxa {
+  height: auto;
+  max-width: 100%;
+  width: auto;
+}
+
