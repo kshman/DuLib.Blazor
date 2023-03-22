@@ -56,16 +56,23 @@ public class Btn : Nulo
 		}
 
 		builder.AddAttribute(5, "id", Id);
-		builder.AddAttribute(6, "onclick", HandleOnClickAsync);
+
+		if (Tooltip.TestHave(true))
+			builder.AddAttribute(6, "tooltip", Tooltip);
+
+		builder.AddAttribute(7, "onclick", HandleOnClickAsync);
 		if (StopPropagation)
-			builder.AddEventStopPropagationAttribute(7, "onclick", true);
+			builder.AddEventStopPropagationAttribute(8, "onclick", true);
 		if (InternalType is NuloType.Action)
-			builder.AddEventPreventDefaultAttribute(8, "onclick", true);
-		builder.AddMultipleAttributes(9, UserAttrs);
+			builder.AddEventPreventDefaultAttribute(9, "onclick", true);
+		
+		builder.AddMultipleAttributes(10, UserAttrs);
+		
 		if (ChildContent is null)
-			builder.AddContent(10, Text ?? "[BUTTON]");
+			builder.AddContent(11, Text ?? "[BUTTON]");
 		else
-			builder.AddContent(11, ChildContent);
+			builder.AddContent(12, ChildContent);
+
 		builder.CloseElement(); // a 또는 button
 	}
 
@@ -128,11 +135,13 @@ public abstract class Nulo : ComponentProp
 	[Parameter] public Variant? Variant { get; set; }
 	/// <summary>사용자 설정 정의(User setting pretend)</summary>
 	[Parameter] public bool Pseudo { get; set; }
-	/// <summary>이벤트 재전송 금지. 기본값은 참</summary>
-	[Parameter] public bool StopPropagation { get; set; } = true;
+	/// <summary>툴팁</summary>
+	[Parameter] public string? Tooltip { get; set; }
 
 	/// <summary>마우스 눌린 이벤트 지정.</summary>
 	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+	/// <summary>이벤트 재전송 금지. 기본값은 참</summary>
+	[Parameter] public bool StopPropagation { get; set; } = true;
 
 	//
 	internal NuloType InternalType { get; set; }

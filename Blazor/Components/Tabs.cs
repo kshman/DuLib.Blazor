@@ -3,7 +3,7 @@
 /// <summary>
 /// 탭
 /// </summary>
-public class Tabs : ComponentContainer<Item>
+public class Tabs : ComponentContainer<Subset>
 {
 	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public Variant? Variant { get; set; }
@@ -11,7 +11,7 @@ public class Tabs : ComponentContainer<Item>
 	[Parameter] public bool TabOnly { get; set; }
 	[Parameter] public bool TabStart { get; set; } // 첨에 탭만 보이고, 내용이 안보임. 즉 선택 ㄴㄴ
 
-	[Parameter] public EventCallback<Item> OnChange { get; set; }
+	[Parameter] public EventCallback<Subset> OnChange { get; set; }
 
 	/// <inheritdoc />
 	protected override bool SelectFirst => !TabStart;
@@ -94,7 +94,7 @@ public class Tabs : ComponentContainer<Item>
 	}
 
 	/// <inheritdoc />
-	protected override async Task<bool> OnItemSelectedAsync(Item? item, Item? previous)
+	protected override async Task<bool> OnItemSelectedAsync(Subset? item, Subset? previous)
 	{
 		if (item is not null)
 			await InvokeOnChange(item);
@@ -103,11 +103,11 @@ public class Tabs : ComponentContainer<Item>
 	}
 
 	//
-	private Task HandleTabClick(Item item) =>
+	private Task HandleTabClick(Subset item) =>
 		SelectItemAsync(item, true);
 
 	//
-	private Task InvokeOnChange(Item item) =>
+	private Task InvokeOnChange(Subset item) =>
 		OnChange.HasDelegate is false
 			? Task.CompletedTask
 			: OnChange.InvokeAsync(item);

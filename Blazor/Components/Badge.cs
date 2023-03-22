@@ -20,6 +20,8 @@ public class Badge : ComponentBlock
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
+		Variant ??= Settings.Variant;
+
 		// 스타일
 		var sc = Color is not null ? $"color:#{Color:X}" : null;
 		var sb = Background is not null ? $"background-color:#{Background:X}" : null;

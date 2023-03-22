@@ -8,7 +8,7 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, ICompo
 	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public Variant? Variant { get; set; }
 	[Parameter] public VarLead? Lead { get; set; }
-	[Parameter] public Responsive? Expand { get; set; }
+	[Parameter] public Responsive? Response { get; set; }
 	[Parameter] public string Home { get; set; } = "/";
 
 	//
@@ -20,7 +20,7 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, ICompo
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		LogIf.ArgumentRequired(Logger, Expand, nameof(Expand));
+		LogIf.ArgumentRequired(Logger, Response, nameof(Response));
 	}
 
 	/// <inheritdoc />
@@ -45,18 +45,20 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, ICompo
 		var css = Cssc.Class(
 			Variant?.ToCss(Lead ?? VarLead.Down),
 			"cnvb",
-			Expand?.ToCssNavBar());
+			Response?.ToCssNavBar(),
+			Class);
 
-		builder.OpenElement(0, "div"); // div, 시작
+		builder.OpenElement(0, "nav"); // nav, 시작
 		builder.AddAttribute(1, "class", css);
 		builder.AddMultipleAttributes(2, UserAttrs);
 
-		builder.OpenComponent<CascadingValue<NavBar>>(3);
+		// 렌더러만 잡히도록 함
+		builder.OpenComponent<CascadingValue<IComponentRenderer>>(3);
 		builder.AddAttribute(4, "Value", this);
 		builder.AddAttribute(5, "IsFixed", true);
 		builder.AddAttribute(6, "ChildContent", (RenderFragment)((b) =>
 			b.AddContent(7, ChildContent)));
-		builder.CloseComponent(); // CascadingValue<NavBar>
+		builder.CloseComponent(); // CascadingValue<IComponentRenderer>
 
 		builder.CloseElement();
 	}
@@ -164,7 +166,15 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, ICompo
 		// 메뉴
 		builder.OpenElement(10, "nav"); // nav, 메뉴
 		builder.AddAttribute(11, "class", Cssc.Class("cnvbn", _visible.IfTrue("rsp"), menu.Class));
-		builder.AddContent(12, menu.ChildContent);
+
+		// 렌더러는 의미 없음
+		builder.OpenComponent<CascadingValue<NavBar>>(13);
+		builder.AddAttribute(14, "Value", this);
+		builder.AddAttribute(15, "IsFixed", true);
+		builder.AddAttribute(16, "ChildContent", (RenderFragment)((b) =>
+			b.AddContent(17, menu.ChildContent)));
+		builder.CloseComponent(); // CascadingValue<NavBar>
+
 		builder.CloseElement();
 
 		return true;

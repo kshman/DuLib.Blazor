@@ -14,42 +14,35 @@
 .dzex {
   //
   border: thick double #{$cc-border};
+  border-radius: .375rem;
   margin: .5rem .5rem;
-  padding: .25rem .25rem;
+  padding: .5rem .5rem;
   // 색깔1
   & .pri {
-    padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: .5rem 1rem;
+    margin-bottom: .5rem;
     border: 1px solid #{$cc-border};
     border-left: 5px solid #{$cc-ex-1};
+    //border-radius: 0;
   }
   // 색깔1
   & .sec {
-    padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: .5rem 1rem;
+    margin-bottom: .5rem;
     border: 1px solid #{$cc-border};
     border-left: 5px solid #{$cc-ex-2};
+    //border-radius: 0;
   }
   // h4
-  & h4 {
-    margin-top: .5rem;
+  & h5 {
+    position: relative;
+    margin-top: 1.5rem;
     margin-bottom: 0.25rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
 
-    &::before, &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-    }
-
-    &::before {
-      border-bottom: 2px solid #{$cc-accent};
-    }
-
-    &::after {
-      border-bottom: 2px solid #{$cc-border};
+    &:first-child {
+      margin-top: .5rem;
     }
   }
   // P
@@ -67,6 +60,7 @@
   speak: none;
   line-height: 1;
 }
+
 .dzi-bolt {
   background: #{$ic-bolt} no-repeat center center / contain;
 }
@@ -117,3 +111,67 @@
   width: auto;
 }
 
+// 툴팁
+[tooltip] {
+  position: relative;
+
+  &:after, &:before {
+    user-select: none;
+    position: absolute;
+    z-index: 10;
+    top: calc(100% - 6px);
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    height: 0;
+    margin-top: 12px;
+    padding: 0;
+    border-width: 0;
+    transition: transition(.6s, ease, opacity, height);
+  }
+
+  &:after {
+    content: attr(tooltip);
+    display: inline-block;
+    width: auto;
+    background: #{$digital-bg};
+    border: 0;
+    border-radius: .2rem;
+    font-size: .8rem;
+    line-height: 1;
+    color: #{$cc-white};
+    text-align: center;
+    letter-spacing: inherit;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  &:before {
+    content: '';
+    left: 10px;
+    width: 0;
+    height: 0;
+    margin-top: 0;
+    border-width: 0;
+    border-style: solid;
+    border-color: transparent transparent #{$digital-bg};
+  }
+
+  &:hover:after, &:hover:before {
+    opacity: 1;
+    height: auto;
+    border-width: 6px;
+  }
+
+  &:hover:after {
+    padding: .45rem .9rem;
+  }
+}
+
+
+// 반응
+@for $i from 1 through 12 {
+  .ld#{$i} > * {
+    width: (100% / $i);
+  }
+}

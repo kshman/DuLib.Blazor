@@ -93,6 +93,87 @@
 }
 
 
+// 피벗탭
+.cpvt {
+  position: relative;
+  overflow: hidden;
+  // 라디오
+  &ir {
+    display: none;
+  }
+  // 라벨
+  &lb {
+    width: auto;
+    outline: none;
+    padding: .5rem 1rem;
+    transition: transition(.15s, ease-in-out, all);
+    user-select: none;
+  }
+  // 줄
+  &r {
+    width: calc(100% + 2 * .6rem);
+    display: table;
+    table-layout: fixed;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border-spacing: 0;
+    transition: transition(.2s, ease, all);
+    //
+    &.i1 {
+      margin-left: 100%;
+    }
+    //
+    &.i2 {
+      margin-left: 200%;
+    }
+    //
+    &.i3 {
+      margin-left: 300%;
+    }
+    //
+    &.i4 {
+      margin-left: 400%;
+    }
+    //
+    &.i5 {
+      margin-left: 500%;
+    }
+  }
+  // 2개
+  &.ld2 .cpvtr {
+    width: 200%;
+    left: -100%;
+  }
+  // 3개
+  &.ld3 .cpvtr {
+    width: 300%;
+    left: -200%;
+  }
+  // 4개
+  &.ld4 .cpvtr {
+    width: 400%;
+    left: -300%;
+  }
+  // 5개
+  &.ld5 .cpvtr {
+    width: 500%;
+    left: -400%;
+  }
+  // 6개
+  &.ld6 .cpvtr {
+    width: 600%;
+    left: -500%;
+  }
+  // 패널
+  &p {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+  }
+}
+
+
 // 버튼
 .cbtn {
   // 속성
@@ -292,13 +373,13 @@
   }
   // 브랜드
   &d {
-    display:flex;
+    display: flex;
     padding: .25rem .5rem .25rem 0;
     font-size: 1.25rem;
     font-weight: 700;
     color: #{$nv-cc-brd};
     text-decoration: none; // a용;
-    align-items:center;
+    align-items: center;
     white-space: nowrap;
   }
   // 목록
@@ -338,8 +419,8 @@
   // 드랍 -> 안에 있는 버튼이 cnvbb를 받기 때문에 직접 건드리지 않아도 된다
   .cdrp {
     //
-    display:block;
-    position:static;
+    display: block;
+    position: static;
   }
   // 한줄정렬
   &j {
@@ -379,5 +460,3 @@
 @include cnvb-w(9, $w9);
 // 1200
 @include cnvb-w(12, $w12);
-
-

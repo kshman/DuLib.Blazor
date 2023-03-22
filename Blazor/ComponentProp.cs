@@ -43,6 +43,8 @@ public abstract class ComponentBlock : ComponentProp
 	[Parameter] public Variant? Variant { get; set; }
 	/// <summary></summary>
 	[Parameter] public VarLead? Lead { get; set; }
+	/// <summary>툴팁</summary>
+	[Parameter] public string? Tooltip { get; set; }
 
 	/// <summary>클릭</summary>
 	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -94,17 +96,19 @@ public abstract class ComponentBlock : ComponentProp
 		builder.OpenElement(0, TagName);
 		builder.AddAttribute(1, "class", css);
 		builder.AddAttribute(2, "id", Id);
+		if (Tooltip.TestHave(true))
+			builder.AddAttribute(3, "tooltip", Tooltip);
 
 		if (OnClick.HasDelegate)
 		{
-			builder.AddAttribute(3, "role", "button");
-			builder.AddAttribute(4, "onclick", HandleOnClick);
-			builder.AddEventStopPropagationAttribute(5, "onclick", true);
+			builder.AddAttribute(4, "role", "button");
+			builder.AddAttribute(5, "onclick", HandleOnClick);
+			builder.AddEventStopPropagationAttribute(6, "onclick", true);
 		}
 
-		builder.AddMultipleAttributes(6, UserAttrs);
+		builder.AddMultipleAttributes(7, UserAttrs);
 		if (content is not null)
-			builder.AddContent(7, content);
+			builder.AddContent(8, content);
 		builder.CloseElement(); // tag
 	}
 

@@ -1,15 +1,15 @@
 ﻿// 개별 구성 요소를 한데 묶은 파일
 // (ComponentBlock)
-//   Block
+//   Block - Item
 //     TextBlock
 //     Paragraph
-//   Divide
+//   Divider
 //   Pix
-//   Text - Menu
+//   Content - Menu
 //     Lead
 //     Tail
-// (ContainerItem)
-//   Item
+// (ContainerEntry)
+//   Subset
 namespace Du.Blazor.Components;
 
 /// <summary>
@@ -42,6 +42,14 @@ public class Block : ComponentBlock
 
 
 /// <summary>
+/// 블럭의 별칭...인데 아직 쓸지 안쓸지 안정함
+/// </summary>
+public class Item : Block
+{
+}
+
+
+/// <summary>
 /// 텍스트 블럭 -> SPAN
 /// </summary>
 public class TextBlock : Block
@@ -66,9 +74,9 @@ public class Paragraph : Block
 /// <summary>
 /// 분리 줄
 /// </summary>
-public class Divide : ComponentBlock
+public class Divider : ComponentBlock
 {
-	public Divide()
+	public Divider()
 		: base(ComponentRole.Divide, "hr")
 	{
 	}
@@ -132,6 +140,7 @@ public class Pix : ComponentBlock
 
 		if (OnClick.HasDelegate)
 		{
+			builder.AddAttribute(6, "role", "button");
 			builder.AddAttribute(7, "onclick", HandleOnClick);
 			builder.AddEventStopPropagationAttribute(8, "onclick", true);
 		}
@@ -215,9 +224,9 @@ public class Menu : Content
 
 
 /// <summary>
-/// 아이템
+/// 서브셋
 /// </summary>
-public class Item : ComponentItem<Item, ComponentContainer<Item>>
+public class Subset : ComponentSubset<Subset, ComponentContainer<Subset>>
 {
 	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public string? Text { get; set; }
@@ -230,6 +239,8 @@ public class Item : ComponentItem<Item, ComponentContainer<Item>>
 	/// <inheritdoc />
 	protected override Task OnInitializedAsync()
 	{
+		FillInternalId();
+
 		InternalActive = Active;
 
 		return base.OnInitializedAsync();

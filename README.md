@@ -10,7 +10,7 @@
 ## 구조
 * ComponentProp
   - ComponentBlock
-    + Block
+    + Block (→ Item)
       - TextBlock
       - Paragraph
     + Divide
@@ -23,8 +23,8 @@
     + ContainerContainer
       - Tabs
       - FoldTabs
-  - ContainerItem
-    + Item
+  - ContainerEntry
+    + Entry
   - Icon
   - Nulo
     + Btn

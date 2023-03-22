@@ -39,11 +39,13 @@ public class NavBtn : Nulo, IDisposable
 		builder.OpenElement(0, "a");
 		builder.AddAttribute(1, "class", css);
 		builder.AddAttribute(2, "href", Link);
-		builder.AddMultipleAttributes(3, UserAttrs);
+		if (Tooltip.TestHave(true))
+			builder.AddAttribute(3, "tooltip", Tooltip);
+		builder.AddMultipleAttributes(4, UserAttrs);
 		if (ChildContent is null)
-			builder.AddContent(4, Text ?? "[NAVBUTTON]");
+			builder.AddContent(5, Text ?? "[NAVBUTTON]");
 		else
-			builder.AddContent(5, ChildContent);
+			builder.AddContent(6, ChildContent);
 		builder.CloseElement(); // a
 	}
 

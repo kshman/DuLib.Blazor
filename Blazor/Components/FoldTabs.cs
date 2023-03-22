@@ -3,7 +3,7 @@
 /// <summary>
 /// 접는탭
 /// </summary>
-public class FoldTabs : ComponentContainer<Item>
+public class FoldTabs : ComponentContainer<Subset>
 {
 	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public Variant? Variant { get; set; }
@@ -97,7 +97,7 @@ public class FoldTabs : ComponentContainer<Item>
 	}
 
 	//
-	private async Task HandleItemOnClickAsync(Item item)
+	private async Task HandleItemOnClickAsync(Subset item)
 	{
 		item.InternalActive = !item.InternalActive;
 
@@ -120,7 +120,7 @@ public class FoldTabs : ComponentContainer<Item>
 	}
 
 	//
-	private Task InvokeOpenClose(Item item) =>
+	private Task InvokeOpenClose(Subset item) =>
 		OnActive.HasDelegate is false
 			? Task.CompletedTask
 			: OnActive.InvokeAsync(new ActiveEventArgs(item, item.InternalActive));

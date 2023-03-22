@@ -214,11 +214,11 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 
 
 /// <summary>
-/// 스토리지 또는 컨테이너에서 사용하는 아이템
+/// 스토리지 또는 컨테이너에서 사용하는 항목
 /// </summary>
 /// <typeparam name="TItem"></typeparam>
 /// <typeparam name="TStorage"></typeparam>
-public abstract class ComponentItem<TItem, TStorage> : ComponentProp,
+public abstract class ComponentSubset<TItem, TStorage> : ComponentProp,
 	IAsyncDisposable
 	where TItem : ComponentProp
 	where TStorage : ComponentStorage<TItem>
