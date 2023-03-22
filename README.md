@@ -10,10 +10,10 @@
 ## 구조
 * ComponentProp
   - ComponentBlock
-    + Block (→ Item)
+    + Block ~~(→ Item)~~
       - TextBlock
       - Paragraph
-    + Divide
+    + Divider
     + Pix
     + Content (→ Menu)
       - Lead (→ Brand)
@@ -23,6 +23,7 @@
     + ContainerContainer
       - Tabs
       - FoldTabs
+      - PvTabs
   - ContainerEntry
     + Entry
   - Icon
@@ -31,3 +32,6 @@
     + DropBtn
     + NavBtn
   - NavBar (← Brand / Menu)
+  - Grid
+    + GLine
+    + GBlock

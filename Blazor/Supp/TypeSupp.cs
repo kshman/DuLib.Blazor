@@ -54,11 +54,12 @@ internal static class TypeSupp
 
 	internal static string ToCss(this Responsive e) => e switch
 	{
-		Responsive.Default => "lcn",
-		Responsive.W6 => "lcn6",
-		Responsive.W9 => "lcn9",
-		Responsive.W12 => "lcn12",
-		Responsive.Full => "lcnf",
+		Responsive.Default => "lsp",
+		Responsive.W6 => "lsp6",
+		Responsive.W9 => "lsp9",
+		Responsive.W12 => "lsp12",
+		Responsive.W15 => "lsp15",
+		Responsive.Full => "lspf",
 		_ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
 	};
 
@@ -67,6 +68,7 @@ internal static class TypeSupp
         Responsive.W6 => "cnvb6",
         Responsive.W9 => "cnvb9",
         Responsive.W12 => "cnvb12",
+		Responsive.W15 => "cnvb15",
         _ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
     };
 }

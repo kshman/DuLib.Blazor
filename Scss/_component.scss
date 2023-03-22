@@ -116,7 +116,7 @@
     table-layout: fixed;
     position: relative;
     padding: 0;
-    margin: 0;
+    margin: -1px 0 0 0;
     border-spacing: 0;
     transition: transition(.2s, ease, all);
     //
@@ -170,6 +170,21 @@
     display: table-cell;
     vertical-align: top;
     width: 100%;
+  }
+  // 모서리
+  &.bdr {
+    // 버튼 모서리
+    .cpvtlb {
+      border: 1px solid #{$tab-border};
+      // 첫번째가 아니면 왼쪽 없앰
+      &:not(:first-of-type) {
+        border-left: 0;
+      }
+    }
+    // 패널 모서리
+    .cpvtp {
+      border: 1px solid #{$tab-border};
+    }
   }
 }
 
@@ -433,9 +448,11 @@
   }
 }
 // 나브바 크기에 따른 그것
-@mixin cnvb-w($name, $width) {
-  @media screen and (max-width: $width) {
-    .cnvb#{$name} {
+@each $w in $wname {
+  $size: ($w * 100);
+  //
+  @media (max-width: quote($size + 'px')){
+    .cnvb#{$w} {
       // 토글 버튼
       .cnvbt {
         display: block;
@@ -445,6 +462,16 @@
         display: none;
         // 반응
         &.rsp {
+          display: block;
+          flex-basis: 100%;
+          // 드랍
+          .cdrpc {
+            position: relative;
+            width: 100%;
+          }
+        }
+        // 반응인데 레이아웃 그대로
+        &.rspe {
           align-items: center;
           display: flex;
           flex-basis: 100%;
@@ -454,9 +481,3 @@
     }
   }
 }
-// 600
-@include cnvb-w(6, $w6);
-// 900
-@include cnvb-w(9, $w9);
-// 1200
-@include cnvb-w(12, $w12);

@@ -1,0 +1,59 @@
+﻿@import "_variable.scss";
+@import "_mixin.scss";
+
+// 툴팁
+[tooltip] {
+  position: relative;
+  //
+  &:after, &:before {
+    user-select: none;
+    position: absolute;
+    z-index: 10;
+    top: calc(100% - 6px);
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    height: 0;
+    margin-top: 12px;
+    padding: 0;
+    border-width: 0;
+    transition: transition(.6s, ease, opacity, height);
+  }
+  //
+  &:after {
+    content: attr(tooltip);
+    display: inline-block;
+    width: auto;
+    background: #{$digital-bg};
+    border: 0;
+    border-radius: .2rem;
+    font-size: .8rem;
+    line-height: 1;
+    color: #{$cc-white};
+    text-align: center;
+    letter-spacing: inherit;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  //
+  &:before {
+    content: '';
+    left: 10px;
+    width: 0;
+    height: 0;
+    margin-top: 0;
+    border-width: 0;
+    border-style: solid;
+    border-color: transparent transparent #{$digital-bg};
+  }
+  //
+  &:hover:after, &:hover:before {
+    opacity: 1;
+    height: auto;
+    border-width: 6px;
+  }
+  //
+  &:hover:after {
+    padding: .45rem .9rem;
+  }
+}

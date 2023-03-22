@@ -1,9 +1,13 @@
 ﻿namespace Du.Blazor.Components;
 
+/// <summary>
+/// 피벗탭
+/// </summary>
 public class PvTabs : ComponentContainer<Subset>
 {
 	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public Variant? Variant { get; set; }
+	[Parameter] public bool Border { get; set; }
 
 	[Parameter] public EventCallback<Subset> OnChange { get; set; }
 
@@ -31,7 +35,7 @@ public class PvTabs : ComponentContainer<Subset>
 
 		// 탭 컨테이너
 		builder.OpenElement(10, "div");
-		builder.AddAttribute(11, "class", Cssc.Class("cpvt", $"ld{count}"));
+		builder.AddAttribute(11, "class", Cssc.Class("cpvt", $"ld{count}", Border.IfTrue("bdr")));
 
 		// 탭 눌러
 		for (var i = 0; i < count; i++)
