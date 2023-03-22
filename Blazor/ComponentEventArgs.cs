@@ -1,15 +1,15 @@
 ﻿namespace Du.Blazor;
 
-/// <summary>펼침 이벤트</summary>
-public class ExpandEventArgs : EventArgs
+/// <summary>액티브 이벤트</summary>
+public class ActiveEventArgs : EventArgs
 {
-	public ComponentContent Component { get; init; }
-	public bool Expand { get; init; }
+	public ComponentProp Component { get; }
+	public bool Active { get; }
 
-	public ExpandEventArgs(ComponentContent component, bool expand)
+	public ActiveEventArgs(ComponentProp component, bool active)
 	{
 		Component = component;
-		Expand = expand;
+		Active = active;
 	}
 }
 

@@ -55,9 +55,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Content Remove="wwwroot\ref\**" />
-    <None Remove="wwwroot\ref\**" />
-  </ItemGroup>
-
 </Project>

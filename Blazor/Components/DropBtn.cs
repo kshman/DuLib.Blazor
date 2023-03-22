@@ -5,6 +5,8 @@
 /// </summary>
 public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 {
+	/// <summary>자식 콘텐트</summary>
+	[Parameter] public RenderFragment? ChildContent { get; set; }
 	/// <summary>오른쪽으로 정렬</summary>
 	[Parameter] public bool Right { get; set; }
 	/// <summary>패널을 재정의 하고 싶나요</summary>
@@ -24,8 +26,10 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 	private bool _short_bye;
 
 	/// <inheritdoc />
-	protected override void OnInitialized() =>
-		_actual_text = Text;
+	protected override void OnInitialized()
+	{
+		_actual_text = Text ?? "[DROPBUTTON]";
+	}
 
 	/// <inheritdoc />
 	protected override void OnParametersSet()
@@ -42,8 +46,6 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 			SelfClose ??= true;
 			SelectText ??= true;
 		}
-
-		ComponentClass = GetNuloClassName();
 	}
 
 	/// <inheritdoc />
@@ -61,6 +63,9 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 				</div>
 			</div>
 		 */
+
+		var css = GetNuloCssClass();
+
 		builder.OpenElement(0, "div");
 		builder.AddAttribute(1, "class", "cdrp");
 
@@ -74,7 +79,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 			builder.OpenElement(10, "a");
 			builder.AddAttribute(11, "role", "button");
 		}
-		builder.AddAttribute(12, "class", ActualClass);
+		builder.AddAttribute(12, "class", css);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		if (StopPropagation)
 			builder.AddEventStopPropagationAttribute(15, "onclick", true);

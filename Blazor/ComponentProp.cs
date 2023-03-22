@@ -7,21 +7,13 @@ public abstract class ComponentProp : ComponentBase
 {
 	/// <summary>클래스 지정</summary>
 	[Parameter] public string? Class { get; set; }
-
 	/// <summary>컴포넌트 아이디</summary>
 	[Parameter] public string? Id { get; set; }
-
 	/// <summary>사용자가 설정한 속성 지정</summary>
 	[Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? UserAttrs { get; set; }
 
-    /// <summary>컴포넌트 롤</summary>
-    internal ComponentRole ComponentRole { get; set; }
-
-    /// <summary>아래 컴포넌트가 미리 지정할 수 있는 CSS 클래스</summary>
-	protected string? ComponentClass { get; set; } = null;
-
-    // 실제 CSS 클래스
-	internal string? ActualClass => Cssc.Class(ComponentClass, Class);
+	/// <summary>컴포넌트 롤</summary>
+	protected ComponentRole TagRole { get; init; }
 
 	// 아토믹 인덱스
 	private static uint _id_atomic_index = 1;
@@ -38,79 +30,84 @@ public abstract class ComponentProp : ComponentBase
 
 
 /// <summary>
-/// 콘텐트를 가지는 컴포넌트
+/// 블럭 컴포넌트
 /// </summary>
-public abstract class ComponentContent : ComponentProp
+public abstract class ComponentBlock : ComponentProp
 {
-	/// <summary>자식 콘텐트</summary>
-	[Parameter] public RenderFragment? ChildContent { get; set; }
+	/// <summary>컴포넌트 에이전트</summary>
+	[CascadingParameter] public IComponentAgent? AgentHandler { get; set; }
+	/// <summary>컴포넌트 렌더러</summary>
+	[CascadingParameter] public IComponentRenderer? Renderer { get; set; }
+
+	/// <summary></summary>
+	[Parameter] public Variant? Variant { get; set; }
+	/// <summary></summary>
+	[Parameter] public VarLead? Lead { get; set; }
+
+	/// <summary>클릭</summary>
+	[Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
 	//
-    protected ComponentContent(ComponentRole role = ComponentRole.Block)
-    {
-        ComponentRole = role;
-    }
+	protected string TagName { get; }
 
-	// 태그로 자식 콘텐트를 감써서 그린다
-	internal void RenderTag(RenderTreeBuilder builder, string tag = "div")
+	//
+	protected ComponentBlock(ComponentRole role, string? tag = null)
+	{
+		TagRole = role;
+		TagName = tag ?? "div";
+	}
+
+	/// <summary>
+	/// 기본 css 클래스를 만들어 줌
+	/// </summary>
+	/// <param name="tagClass"></param>
+	/// <param name="param1"></param>
+	/// <param name="param2"></param>
+	/// <returns></returns>
+	protected string? GetCssClass(string? tagClass = null, string? param1 = null, string? param2 = null)
+	{
+		return Cssc.Class(
+			Variant?.ToCss(Lead ?? VarLead.Down),
+			AgentHandler?.GetRoleClass(TagRole) ?? tagClass,
+			param1, param2, Class);
+	}
+
+	/// <summary>
+	/// 렌더러가 그렸으면 true
+	/// </summary>
+	/// <param name="builder"></param>
+	/// <returns></returns>
+	protected bool RendererCheck(RenderTreeBuilder builder)
+	{
+		return Renderer is not null && Renderer.OnRender(TagRole, this, builder);
+	}
+
+	//
+	internal void RenderBlock(RenderTreeBuilder builder, string? css, RenderFragment? content)
 	{
 		/*
-		 * <tag class="@CssClass" id="@Id" @attributes="UserAttrs">
-		 *    @ChildContent
+		 * <tag class="@ActualClass" id="@Id" @attributes="@UserAttrs">
+		 *     @ChildContent
 		 * </tag>
 		 */
 
-		builder.OpenElement(0, tag);
-		builder.AddAttribute(1, "class", ActualClass);
+		builder.OpenElement(0, TagName);
+		builder.AddAttribute(1, "class", css);
 		builder.AddAttribute(2, "id", Id);
-		builder.AddMultipleAttributes(3, UserAttrs);
-		builder.AddContent(4, ChildContent);
+
+		if (OnClick.HasDelegate)
+		{
+			builder.AddAttribute(3, "role", "button");
+			builder.AddAttribute(4, "onclick", HandleOnClick);
+			builder.AddEventStopPropagationAttribute(5, "onclick", true);
+		}
+
+		builder.AddMultipleAttributes(6, UserAttrs);
+		if (content is not null)
+			builder.AddContent(7, content);
 		builder.CloseElement(); // tag
 	}
 
-	// 태그로 자식 콘텐츠를 캐스캐이딩해서 그린다
-	internal void RenderCascadingTag<TComponent>(RenderTreeBuilder builder, string tag = "div")
-	{
-		/*
-		 * <tag class="@CssClass" id="@Id" @attributes="@UserAttrs">
-		 *     <CascadingValue Value="this" IsFixed="true>
-		 *         @ChildContent
-		 *     </CascadingValue>
-		 * </tag>
-		 */
-		builder.OpenElement(0, tag);
-		builder.AddAttribute(1, "class", ActualClass);
-		builder.AddAttribute(2, "id", Id);
-		builder.AddMultipleAttributes(3, UserAttrs);
-
-		builder.OpenComponent<CascadingValue<TComponent>>(4);
-		builder.AddAttribute(5, "Value", this);
-		builder.AddAttribute(6, "IsFixed", true);
-		builder.AddAttribute(7, "ChildContent", (RenderFragment)((b) =>
-			b.AddContent(8, ChildContent)));
-		builder.CloseComponent(); // CascadingValue<TType>
-
-		builder.CloseElement(); // tag
-	}
-}
-
-
-/// <summary>
-/// 컴포넌트 롤
-/// </summary>
-public enum ComponentRole
-{
-	// 기본
-	Block,
-	Text,
-	Image,
-	Link,
-
-	// 특수
-	Divide,
-
-	// 콘텐트 
-	Header,
-	Footer,
-	Content,
+	//
+	protected virtual Task HandleOnClick(MouseEventArgs e) => OnClick.InvokeAsync(e);
 }

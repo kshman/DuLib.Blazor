@@ -7,6 +7,7 @@ namespace Du.Blazor.Components;
 /// </summary>
 public class NavBtn : Nulo, IDisposable
 {
+	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public NavLinkMatch Match { get; set; }
 	[Parameter] public string? Link { get; set; }
 
@@ -28,19 +29,21 @@ public class NavBtn : Nulo, IDisposable
 	{
 		_href = Link.Empty() ? null : NavMan.ToAbsoluteUri(Link).AbsoluteUri;
 		_isActive = ShouldMatch(NavMan.Uri);
-
-		ComponentClass = GetNuloClassName("cnvnr", false);
 	}
 
 	//
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
+		var css = GetNuloCssClass("cnvnr", false, _isActive.IfTrue("active"));
+
 		builder.OpenElement(0, "a");
-		builder.AddAttribute(1, "class", Cssc.Class(ActualClass, _isActive.IfTrue("active")));
+		builder.AddAttribute(1, "class", css);
 		builder.AddAttribute(2, "href", Link);
 		builder.AddMultipleAttributes(3, UserAttrs);
-		builder.AddContent(4, Text);
-		builder.AddContent(5, ChildContent);
+		if (ChildContent is null)
+			builder.AddContent(4, Text ?? "[NAVBUTTON]");
+		else
+			builder.AddContent(5, ChildContent);
 		builder.CloseElement(); // a
 	}
 

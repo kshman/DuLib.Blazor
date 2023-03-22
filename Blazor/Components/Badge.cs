@@ -1,9 +1,8 @@
 ﻿namespace Du.Blazor.Components;
 
-public class Badge : ComponentContent
+public class Badge : ComponentBlock
 {
-	[Parameter] public Variant? Variant { get; set; }
-	[Parameter] public bool Active { get; set; } = true;
+	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public bool Round { get; set; }
 
 	[Parameter] public int? Color { get; set; }
@@ -13,14 +12,14 @@ public class Badge : ComponentContent
 	// Color랑 Background를 위한 스타일
 	private string? _style;
 
+	//
+	public Badge()
+		:base(ComponentRole.Badge)
+	{}
+
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
-		ComponentClass = Cssc.Class(
-			(Variant ?? Settings.Variant).ToCss(Active ? VrtLead.Up : VrtLead.Down),
-			"cbdg",
-			Round.IfTrue("dgrm"));
-
 		// 스타일
 		var sc = Color is not null ? $"color:#{Color:X}" : null;
 		var sb = Background is not null ? $"background-color:#{Background:X}" : null;
@@ -37,7 +36,7 @@ public class Badge : ComponentContent
 		 */
 
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", ActualClass);
+		builder.AddAttribute(1, "class", GetCssClass("cbdg", Round.IfTrue("dgrm")));
 		builder.AddAttribute(2, "style", _style);
 		builder.AddMultipleAttributes(3, UserAttrs);
 		builder.AddContent(4, ChildContent);

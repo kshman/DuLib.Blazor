@@ -7,11 +7,11 @@ namespace Du.Blazor.Components;
 /// </summary>
 public class Btn : Nulo
 {
-	/// <summary>콘텐트 핸들러</summary>
-	[CascadingParameter] public ITagContentHandler? ContentHandler { get; set; }
 	/// <summary>에디트 컨텍스트</summary>
 	[CascadingParameter] public EditContext? EditContext { get; set; }
 
+	/// <summary>자식 콘텐트</summary>
+	[Parameter] public RenderFragment? ChildContent { get; set; }
 	/// <summary>URL 링크 지정.</summary>
 	[Parameter] public string? Link { get; set; }
 	/// <summary>타겟 지정.</summary>
@@ -28,17 +28,17 @@ public class Btn : Nulo
 		InternalType = AgentHandler is not null || Link is not null
 			? Link.WhiteSpace() ? NuloType.Action : NuloType.Link
 			: EditContext is not null ? NuloType.Submit : NuloType.Button;
-
-		ComponentClass = GetNuloClassName();
 	}
 
 	/// <inheritdoc />
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
+		var css = GetNuloCssClass();
+
 		if (InternalType is NuloType.Link or NuloType.Action)
 		{
 			builder.OpenElement(0, "a");
-			builder.AddAttribute(1, "class", ActualClass);
+			builder.AddAttribute(1, "class", css);
 			if (InternalType is NuloType.Action)
 				builder.AddAttribute(2, "role", "button");
 			else
@@ -50,7 +50,7 @@ public class Btn : Nulo
 		else
 		{
 			builder.OpenElement(0, "button");
-			builder.AddAttribute(1, "class", ActualClass);
+			builder.AddAttribute(1, "class", css);
 			builder.AddAttribute(2, "type", InternalType == NuloType.Submit ? "submit" : "button");
 			builder.AddAttribute(3, "formtarget", Target);
 		}
@@ -63,7 +63,7 @@ public class Btn : Nulo
 			builder.AddEventPreventDefaultAttribute(8, "onclick", true);
 		builder.AddMultipleAttributes(9, UserAttrs);
 		if (ChildContent is null)
-			builder.AddContent(10, Text);
+			builder.AddContent(10, Text ?? "[BUTTON]");
 		else
 			builder.AddContent(11, ChildContent);
 		builder.CloseElement(); // a 또는 button
@@ -84,7 +84,7 @@ public class Btn : Nulo
 			else if (OnClick.HasDelegate)
 			{
 				// 클릭이 있으면 거기서 일해
-				await InvokeOnClickAsync(e);
+				await OnClick.InvokeAsync(e);
 			}
 			else if (EditContext != null && InternalType == NuloType.Submit)
 			{
@@ -113,9 +113,9 @@ public class Btn : Nulo
 
 
 /// <summary>
-/// 눌러 -> 버튼 밑단
+/// 눌러
 /// </summary>
-public abstract class Nulo : ComponentContent
+public abstract class Nulo : ComponentProp
 {
 	/// <summary>나브 처리기</summary>
 	[CascadingParameter] public IComponentAgent? AgentHandler { get; set; }
@@ -141,14 +141,16 @@ public abstract class Nulo : ComponentContent
 	protected bool _handle_click;
 
 	//
-    protected Nulo(ComponentRole role = ComponentRole.Link)
-        : base(role)
-    {
-    }
+	protected Nulo(ComponentRole role = ComponentRole.Link)
+	{
+		TagRole = role;
+	}
 
 	//
-	protected string? GetNuloClassName(string? baseClass = "cbtn", string? additional = null, bool defVariant = true)
+	protected string? GetNuloCssClass(string? baseClass = "cbtn",
+		bool defVariant = true, string? param1 = null, string? param2 = null)
 	{
+#if false
 		if (AgentHandler is null)
 			return Cssc.Class(
 				Pseudo.IfTrue("usp"),
@@ -161,13 +163,18 @@ public abstract class Nulo : ComponentContent
 			return Cssc.Class(
 				Pseudo.IfTrue("usp"),
 				Variant?.ToCss(),
-				AgentHandler.GetRoleClass(ComponentRole),
+				AgentHandler.GetRoleClass(TagRole) ?? baseClass,
 				additional);
+#else
+		return Cssc.Class(
+			Pseudo.IfTrue("usp"),
+			defVariant
+				? (Variant ?? Settings.Variant).ToCss()
+				: Variant?.ToCss(),
+			AgentHandler?.GetRoleClass(TagRole) ?? baseClass,
+			param1, param2, Class);
+#endif
 	}
-
-	//
-	protected string? GetNuloClassName(string? baseClass, bool defVariant) =>
-		GetNuloClassName(baseClass, null, defVariant);
 
 	// 마우스 핸들러
 	protected virtual async Task HandleOnClickAsync(MouseEventArgs e)
@@ -177,12 +184,9 @@ public abstract class Nulo : ComponentContent
 			_handle_click = true;
 
 			if (OnClick.HasDelegate)
-				await InvokeOnClickAsync(e);
+				await OnClick.InvokeAsync(e);
 
 			_handle_click = false;
 		}
 	}
-
-	//
-	protected virtual Task InvokeOnClickAsync(MouseEventArgs e) => OnClick.InvokeAsync(e);
 }
