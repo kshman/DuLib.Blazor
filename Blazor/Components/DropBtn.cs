@@ -5,10 +5,10 @@
 /// </summary>
 public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 {
+	/// <summary>자식 콘텐트</summary>
+	[Parameter] public RenderFragment? ChildContent { get; set; }
 	/// <summary>오른쪽으로 정렬</summary>
 	[Parameter] public bool Right { get; set; }
-	/// <summary>패널을 재정의 하고 싶나요</summary>
-	[Parameter] public string? PanelClass { get; set; }
 	/// <summary>선택한 아이템의 TEXT를 버튼 TEXT로 표시한다</summary>
 	[Parameter] public bool? SelectText { get; set; }
 	/// <summary>선택하면 닫힌다</summary>
@@ -24,8 +24,10 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 	private bool _short_bye;
 
 	/// <inheritdoc />
-	protected override void OnInitialized() =>
-		_actual_text = Text;
+	protected override void OnInitialized()
+	{
+		_actual_text = Text ?? "[DROPBUTTON]";
+	}
 
 	/// <inheritdoc />
 	protected override void OnParametersSet()
@@ -42,8 +44,6 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 			SelfClose ??= true;
 			SelectText ??= true;
 		}
-
-		ComponentClass = GetNuloClassName();
 	}
 
 	/// <inheritdoc />
@@ -61,6 +61,9 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 				</div>
 			</div>
 		 */
+
+		var css = GetNuloCssClass();
+
 		builder.OpenElement(0, "div");
 		builder.AddAttribute(1, "class", "cdrp");
 
@@ -74,7 +77,9 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 			builder.OpenElement(10, "a");
 			builder.AddAttribute(11, "role", "button");
 		}
-		builder.AddAttribute(12, "class", ActualClass);
+		builder.AddAttribute(12, "class", css);
+		if (Tooltip.TestHave(true))
+			builder.AddAttribute(13, "tooltip", Tooltip);
 		builder.AddAttribute(14, "onclick", HandleOnClickAsync);
 		if (StopPropagation)
 			builder.AddEventStopPropagationAttribute(15, "onclick", true);
@@ -90,7 +95,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 				"cdrpc",
 				Border.IfTrue("bdr"),
 				Right.IfTrue("rgt"),
-				PanelClass));
+				Class));
 
 			builder.OpenComponent<CascadingValue<DropBtn>>(22);
 			builder.AddAttribute(23, "Value", this);

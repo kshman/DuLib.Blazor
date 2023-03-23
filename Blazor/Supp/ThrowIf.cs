@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Du.Blazor.Supp;
 
@@ -78,5 +79,15 @@ internal static class ThrowIf
 		throw new ArgumentOutOfRangeException(name, value, Settings.UseLocaleMesg
 			? "인수 값의 범위가 벗어났습니다."
 			: "Aruguemt out of range.");
+	}
+
+	// 
+	[DoesNotReturn]
+	internal static void InvalidArgument(string name)
+	{
+		throw new ArgumentException(Settings.UseLocaleMesg 
+			? "잘못된 인수입니다." 
+			: "Invalid argument.", 
+			name);
 	}
 }

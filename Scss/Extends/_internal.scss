@@ -1,0 +1,66 @@
+﻿@import "../_variable";
+@import "../_mixin";
+
+// 바디
+.dzbody {
+  margin: 0;
+  background-color: #{$bg};
+  color: #{$cc};
+  font-family: #{$serif};
+  font-size: #{$font-size};
+}
+
+// 예제용
+.dzex {
+  //
+  border: thick double #{$cc-border};
+  border-radius: .375rem;
+  margin: .5rem .5rem;
+  padding: .5rem .5rem;
+  // 색깔1
+  & .pri {
+    padding: .5rem 1rem;
+    margin-bottom: .5rem;
+    border: 1px solid #{$cc-border};
+    border-left: 5px solid #{$cc-ex-1};
+    //border-radius: 0;
+  }
+  // 색깔1
+  & .sec {
+    padding: .5rem 1rem;
+    margin-bottom: .5rem;
+    border: 1px solid #{$cc-border};
+    border-left: 5px solid #{$cc-ex-2};
+    //border-radius: 0;
+  }
+  // h4
+  & h5 {
+    position: relative;
+    margin-top: 1.5rem;
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    &:first-child {
+      margin-top: .5rem;
+    }
+  }
+  // P
+  & p {
+    margin-top: .5rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+// 아이콘
+.dzi {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  speak: none;
+  line-height: 1;
+}
+
+.dzi-bolt {
+  background: #{$ic-bolt} no-repeat center center / contain;
+}

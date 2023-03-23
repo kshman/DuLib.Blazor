@@ -1,0 +1,34 @@
+﻿@import "../_variable";
+@import "../_mixin";
+
+// 레이아웃 확장
+.lsp, .lspf, .lsp6, .lsp9, .lsp12, .lsp15 {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 .75rem;
+  width: 100%;
+}
+// 600 이상
+@include resmedia(min, 600) {
+  .lsp6, .lsp {
+    max-width: 600px;
+  }
+}
+// 900 이상
+@include resmedia(min, 900) {
+  .lsp9, .lsp6, .lsp {
+    max-width: 900px;
+  }
+}
+// 1200 이상
+@include resmedia(min, 1200) {
+  .lsp12, .lsp9, .lsp6, .lsp {
+    max-width: 1200px;
+  }
+}
+// 1500 이상
+@include resmedia(min, 1500) {
+  .lsp15, .lsp12, .lsp9, .lsp6, .lsp {
+    max-width: 1500px;
+  }
+}

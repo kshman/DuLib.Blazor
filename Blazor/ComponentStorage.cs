@@ -3,8 +3,8 @@
 /// <summary>아이템 컴포넌트 스토리지</summary>
 /// <remarks>컨테이너와 다른 점은, 스토리지는 그냥 아이템만 보관하고 관리</remarks>
 /// <typeparam name="TItem"><see cref="ComponentProp"/>를 상속한 아이템 컴포넌트</typeparam>
-public abstract class ComponentStorage<TItem> : ComponentContent,
-	IComponentStrage<TItem>, IAsyncDisposable
+public abstract class ComponentStorage<TItem> : ComponentProp,
+	IComponentStorage<TItem>, IAsyncDisposable
 	where TItem : ComponentProp
 {
 	//
@@ -214,25 +214,25 @@ public abstract class ComponentContainer<TItem> : ComponentStorage<TItem>, IComp
 
 
 /// <summary>
-/// 스토리지 또는 컨테이너에서 사용하는 서브셋
+/// 스토리지 또는 컨테이너에서 사용하는 항목
 /// </summary>
-/// <typeparam name="TThis"></typeparam>
+/// <typeparam name="TItem"></typeparam>
 /// <typeparam name="TStorage"></typeparam>
-public abstract class ComponentSubset<TThis, TStorage> : ComponentContent,
+public abstract class ComponentSubset<TItem, TStorage> : ComponentProp,
 	IAsyncDisposable
-	where TThis : ComponentContent
-	where TStorage : ComponentStorage<TThis>
+	where TItem : ComponentProp
+	where TStorage : ComponentStorage<TItem>
 {
 	[CascadingParameter] public TStorage? Storage { get; set; }
 
 	/// <inheritdoc />
 	protected override Task OnInitializedAsync()
 	{
-		ThrowIf.ContainerIsNull<TThis, TStorage>(Storage);
+		ThrowIf.ContainerIsNull<TItem, TStorage>(Storage);
 
 		FillInternalId();
 
-		return Storage.AddItemAsync(this.CastFail<TThis>());
+		return Storage.AddItemAsync(this.CastFail<TItem>());
 	}
 
 	//
@@ -240,7 +240,7 @@ public abstract class ComponentSubset<TThis, TStorage> : ComponentContent,
 	{
 		if (Storage is not null)
 		{
-			await Storage.RemoveItemAsync(this.CastFail<TThis>());
+			await Storage.RemoveItemAsync(this.CastFail<TItem>());
 			Storage = null;
 		}
 

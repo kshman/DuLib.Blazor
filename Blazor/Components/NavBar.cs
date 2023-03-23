@@ -3,48 +3,30 @@
 /// <summary>
 /// 나브 메뉴
 /// </summary>
-/// <remarks>
-/// ChildContent 없다
-/// </remarks>
-public class NavBar : ComponentProp, IComponentAgent, IComponentResponse
+public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, IComponentRenderer
 {
-    [Parameter] public RenderFragment? Toggle { get; set; }
-    [Parameter] public RenderFragment? Brand { get; set; }
-    [Parameter] public RenderFragment? Menu { get; set; }
+	[Parameter] public RenderFragment? ChildContent { get; set; }
+	[Parameter] public Variant? Variant { get; set; }
+	[Parameter] public VarLead? Lead { get; set; }
+	[Parameter] public Responsive? Response { get; set; }
+	[Parameter] public string Home { get; set; } = "/";
 
-    [Parameter] public Variant? Variant { get; set; }
-    [Parameter] public LayoutExpand? Expand { get; set; }
-    [Parameter] public string Home { get; set; } = "/";
-    [Parameter] public string? BrandClass { get; set; }
-    [Parameter] public string? MenuClass { get; set; }
+	//
+	[Inject] private ILogger<NavBar> Logger { get; set; } = default!;
 
-    //
-    [Inject] private ILogger<NavBar> Logger { get; set; } = default!;
+	//
+	private bool _visible;
 
-    //
-    private bool _visible = false;
+	/// <inheritdoc />
+	protected override void OnParametersSet()
+	{
+		LogIf.ArgumentRequired(Logger, Response, nameof(Response));
+	}
 
-    ///// <inheritdoc />
-    //protected override void OnInitialized()
-    //{
-    //    FillInternalId();
-    //}
-
-    /// <inheritdoc />
-    protected override void OnParametersSet()
-    {
-        LogIf.ArgumentRequired(Logger, Expand, nameof(Expand));
-
-        ComponentClass = Cssc.Class(
-            Variant?.ToCss(VrtLead.Down), 
-            "cnvb",
-            Expand?.ToCssNavBar());
-    }
-
-    /// <inheritdoc />
-    protected override void BuildRenderTree(RenderTreeBuilder builder)
-    {
-        /*
+	/// <inheritdoc />
+	protected override void BuildRenderTree(RenderTreeBuilder builder)
+	{
+		/*
 			<div class="cnvb">
 				<a class="cnvbd">
 					브랜드
@@ -60,99 +42,142 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse
 			</div>
 		 */
 
-        builder.OpenElement(0, "div"); // div, 시작
-        builder.AddAttribute(1, "class", ComponentClass);
-        builder.AddMultipleAttributes(2, UserAttrs);
+		var css = Cssc.Class(
+			Variant?.ToCss(Lead ?? VarLead.Down),
+			"cnvb",
+			Response?.ToCssNavBar(),
+			Class);
 
-        if (Brand is not null)
-        {
-            if (Home.WhiteSpace())
-            {
-                builder.OpenElement(10, "div"); // div, 브랜드
-                builder.AddAttribute(11, "class", Cssc.Class("cnvbd", BrandClass));
-                builder.AddContent(12, Brand); // 브랜드 프래그먼트
-                builder.CloseElement();
-            }
-            else
-            {
-                builder.OpenElement(10, "a"); // a, 브랜드
-                builder.AddAttribute(11, "class", Cssc.Class("cnvbd", BrandClass));
-                builder.AddAttribute(12, "href", Home);
-                builder.AddContent(13, Brand); // 브랜드 프래그먼트
-                builder.CloseElement();
-            }
-        }
+		builder.OpenElement(0, "nav"); // nav, 시작
+		builder.AddAttribute(1, "class", css);
+		builder.AddMultipleAttributes(2, UserAttrs);
 
-        builder.OpenElement(20, "button"); // button, 토글
-        builder.AddAttribute(21, "class", "cnvbt");
-        builder.AddAttribute(22, "type", "button");
-        builder.AddAttribute(23, "aria-expanded", _visible.ToHtml());
-        builder.AddAttribute(24, "aria-label", "Navbar toggle");
-        builder.AddAttribute(25, "onclick", HandleButtonOnClick);
-        builder.AddEventStopPropagationAttribute(26, "onclick", true);
-        if (Toggle is not null)
-            builder.AddContent(28, Toggle); // 토글 프래그먼트
-        else
-        {
-            builder.OpenElement(28, "span"); // span, 아이콘
-            builder.AddAttribute(29, "class", _visible ? "ic-x" : "ic-m");
-            builder.CloseElement();
-        }
-        builder.CloseElement();
+		// 렌더러만 잡히도록 함
+		builder.OpenComponent<CascadingValue<IComponentRenderer>>(3);
+		builder.AddAttribute(4, "Value", this);
+		builder.AddAttribute(5, "IsFixed", true);
+		builder.AddAttribute(6, "ChildContent", (RenderFragment)((b) =>
+			b.AddContent(7, ChildContent)));
+		builder.CloseComponent(); // CascadingValue<IComponentRenderer>
 
-        if (Menu is not null)
-        {
-            builder.OpenElement(30, "nav"); // nav, 메뉴
-            builder.AddAttribute(31, "class", Cssc.Class("cnvbn", _visible.IfTrue("rsp"), MenuClass));
+		builder.CloseElement();
+	}
 
-            builder.OpenComponent<CascadingValue<NavBar>>(32);
-            builder.AddAttribute(33, "Value", this);
-            builder.AddAttribute(34, "IsFixed", true);
-            builder.AddAttribute(35, "ChildContent", (RenderFragment)((b) =>
-                b.AddContent(36, Menu))); // 메뉴 프래그먼트
-            builder.CloseComponent(); // CascadingValue<NavMenu>, 콘텐트
+	//
+	private Task HandleButtonOnClick(MouseEventArgs e)
+	{
+		_visible = !_visible;
+		return Task.CompletedTask;
+	}
 
-            builder.CloseElement();
-        }
+	#region IComponentAgent
+	/// <inheritdoc />
+	bool IComponentAgent.SelfClose => false;
 
-        builder.CloseElement();
-    }
+	/// <inheritdoc />
+	string? IComponentAgent.GetRoleClass(ComponentRole role) => role switch
+	{
+		ComponentRole.Block or
+			ComponentRole.Text or
+			ComponentRole.Image => "cnvbm",
+		ComponentRole.Link => "cnvbb",
+		_ => null,
+	};
+	#endregion
 
-    //
-    private Task HandleButtonOnClick(MouseEventArgs e)
-    {
-        _visible = !_visible;
-        return Task.CompletedTask;
-    }
+	#region IComponentResponse
+	/// <inheritdoc />
+	Task IComponentResponse.OnResponseAsync(ComponentProp component)
+	{
+		if (_visible)
+		{
+			_visible = false;
+			StateHasChanged();
+		}
 
-    #region IComponentAgent
-    /// <inheritdoc />
-    bool IComponentAgent.SelfClose => false;
+		return Task.CompletedTask;
+	}
+	#endregion
 
-    /// <inheritdoc />
-    string? IComponentAgent.GetRoleClass(ComponentRole role) => role switch
-    {
-        ComponentRole.Block or
-            ComponentRole.Text or
-            ComponentRole.Image => "cnvbm",
-        ComponentRole.Link =>"cnvbb",
-        _ => null,
-    };
-    #endregion
+	#region IComponentRenderer
+	/// <inheritdoc />
+	bool IComponentRenderer.OnRender(ComponentRole role, ComponentBlock component, RenderTreeBuilder builder) => role switch
+	{
+		ComponentRole.Lead => RenderBrand((Content)component, builder),
+		ComponentRole.Menu => RenderMenu((Content)component, builder),
+		_ => false
+	};
 
-    #region IComponentResponse
-    /// <inheritdoc />
-    Task IComponentResponse.OnResponseAsync(ComponentProp component)
-    {
-        if (_visible)
-        {
-            _visible = false;
-            StateHasChanged();
-        }
+	// 브랜드
+	private bool RenderBrand(Content brand, RenderTreeBuilder builder)
+	{
+		/*
+			<a class="cnvbd">
+				브랜드
+			</a>
+		 */
 
-        return Task.CompletedTask;
-    }
-    #endregion
+		if (Home.WhiteSpace())
+			builder.OpenElement(0, "div");
+		else
+		{
+			builder.OpenElement(0, "a");
+			builder.AddAttribute(1, "href", Home);
+		}
+
+		builder.AddAttribute(2, "class", Cssc.Class("cnvbd", brand.Class));
+		builder.AddContent(3, brand.ChildContent);
+		builder.CloseElement();
+
+		return true;
+	}
+
+	// 메뉴, 메뉴 버튼도 여기서 그림
+	private bool RenderMenu(Content menu, RenderTreeBuilder builder)
+	{
+		/*
+			<button class="cnvbt">
+				아이콘: ic-m / ic-x
+			</button>
+			<nav class="cnvbn">
+				<div class=cnvbm">메뉴</div>
+				<a class="cnvbb">메뉴1</a>
+				<a class="cnvbb active">메뉴 활성</a>
+			</nav>
+		 */
+
+		// 토글 먼저
+		builder.OpenElement(0, "button");
+		builder.AddAttribute(1, "class", "cnvbt");
+		builder.AddAttribute(2, "type", "button");
+		builder.AddAttribute(3, "aria-expanded", _visible.ToHtml());
+		builder.AddAttribute(4, "aria-label", "Navbar toggle");
+		builder.AddAttribute(5, "onclick", HandleButtonOnClick);
+		builder.AddEventStopPropagationAttribute(6, "onclick", true);
+		// 토글 프래그먼트를 추가한다면... 넣고 지금은 그냥 기본 사양으로
+
+		// 토글 아이콘
+		builder.OpenElement(7, "span"); // span, 아이콘
+		builder.AddAttribute(8, "class", _visible ? "ic-x" : "ic-m");
+		builder.CloseElement();
+
+		builder.CloseElement(); // button, 토글
+
+		// 메뉴
+		builder.OpenElement(10, "nav"); // nav, 메뉴
+		builder.AddAttribute(11, "class", Cssc.Class("cnvbn", _visible.IfTrue("rsp"), menu.Class));
+
+		// 렌더러는 의미 없음
+		builder.OpenComponent<CascadingValue<NavBar>>(13);
+		builder.AddAttribute(14, "Value", this);
+		builder.AddAttribute(15, "IsFixed", true);
+		builder.AddAttribute(16, "ChildContent", (RenderFragment)((b) =>
+			b.AddContent(17, menu.ChildContent)));
+		builder.CloseComponent(); // CascadingValue<NavBar>
+
+		builder.CloseElement();
+
+		return true;
+	}
+	#endregion
 }
-
-

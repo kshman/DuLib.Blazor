@@ -37,38 +37,51 @@ internal static class TypeSupp
 		_ => LogIf.ArgumentOutOfRange<string>(v, nameof(v))
 	};
 
-	internal static string ToCss(this Variant v, VrtLead lead = VrtLead.Set)
+	internal static string ToCss(this Variant v, VarLead lead = VarLead.Set)
 	{
 		// s = 전체 세트
 		// d = 낮은색 (default)
 		// u = 밝은색 (active)
 		var l = lead switch
 		{
-			VrtLead.Set => 's',
-			VrtLead.Down => 'd',
-			VrtLead.Up => 'u',
+			VarLead.Set => 's',
+			VarLead.Down => 'd',
+			VarLead.Up => 'u',
 			_ => LogIf.ArgumentOutOfRange<char>(lead, nameof(lead))
 		};
 		return $"v{l}{v.ToCssDesc()}";
 	}
 
-	internal static string ToCss(this LayoutExpand e) => e switch
+	internal static string ToCss(this Responsive e) => e switch
 	{
-		LayoutExpand.Default => "lcn",
-		LayoutExpand.W6 => "lcn6",
-		LayoutExpand.W9 => "lcn9",
-		LayoutExpand.W12 => "lcn12",
-		LayoutExpand.Full => "lcnf",
+		Responsive.Default => "lsp",
+		Responsive.W6 => "lsp6",
+		Responsive.W9 => "lsp9",
+		Responsive.W12 => "lsp12",
+		Responsive.W15 => "lsp15",
+		Responsive.Full => "lspf",
 		_ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
 	};
 
-    internal static string ToCssNavBar(this LayoutExpand e) => e switch
+    internal static string ToCssNavBar(this Responsive e) => e switch
     {
-        LayoutExpand.W6 => "cnvb6",
-        LayoutExpand.W9 => "cnvb9",
-        LayoutExpand.W12 => "cnvb12",
+        Responsive.W6 => "cnvb6",
+        Responsive.W9 => "cnvb9",
+        Responsive.W12 => "cnvb12",
+		Responsive.W15 => "cnvb15",
         _ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
     };
+
+	internal static string ToCss(this Justify j) => j switch
+	{
+		Justify.Start => "sjfcs",
+		Justify.End => "sjfce",
+		Justify.Center => "sjfcc",
+		Justify.SpaceBetween => "sjfceb",
+		Justify.SpaceAround => "sjfcea",
+		Justify.SpaceEvenly => "sjfcee",
+		_ => LogIf.ArgumentOutOfRange<string>(j, nameof(j))
+	};
 }
 
 
@@ -79,12 +92,4 @@ internal enum NuloType
 	Action,
 	Button,
 	Submit,
-}
-
-// 바리언트 리드
-internal enum VrtLead
-{
-	Set,
-	Down,
-	Up,
 }

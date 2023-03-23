@@ -1,4 +1,6 @@
-﻿// 크기 계산용
+﻿@import '_variable';
+
+// 크기 계산용
 $space-spacing: .5rem;
 
 @function strip($value) {
@@ -28,31 +30,13 @@ $space-spacing: .5rem;
   @return $v;
 }
 
-// 미디어 크기
-@mixin media-w6($mm) {
-  @media screen and (#{$mm}-width: #{$w6}) {
-    @content;
-  }
-}
-
-@mixin media-w9($mm) {
-  @media screen and (#{$mm}-width: #{$w9}) {
-    @content;
-  }
-}
-
-@mixin media-w12($mm) {
-  @media screen and (#{$mm}-width: #{$w12}) {
-    @content;
-  }
-}
-
 // 색깔 mixin
 @mixin variant-color($name, $cc, $bg, $hover, $active, $border: transparent) {
   .vs#{$name} {
     background: $bg;
     border: 1px solid $border;
     color: $cc;
+    @content;
     // 호버
     &:hover, &:focus {
       background: $hover;
@@ -80,6 +64,7 @@ $space-spacing: .5rem;
     background: transparent;
     border: 1px solid $bg;
     color: $cc;
+    @content;
     // 호버
     &:hover, &:focus {
       border-color: $hbg;
@@ -126,4 +111,11 @@ $space-spacing: .5rem;
   }
 
   @content;
+}
+
+// 미디어 크기
+@mixin resmedia($mm, $size) {
+  @media (#{$mm}-width: quote($size+'px')) {
+    @content;
+  }
 }
