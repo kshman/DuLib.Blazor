@@ -1,0 +1,190 @@
+﻿@import "../_variable.scss";
+@import "../_mixin.scss";
+
+// 폴드탭 (일명 아코디언)
+.cacd {
+  // 아이템
+  &i {
+    //background: inherit;
+    //color: inherit;
+  }
+  // 눌러
+  &b {
+    outline: none;
+    user-select: none;
+    width: 100%;
+    padding: .75rem .5rem;
+    transition: transition(.15s, ease-in-out, color, background-color, box-shadow);
+    text-align: left;
+    // 애프터 (화살표)
+    &::after {
+      @include mi-icon(#{$accd-ic-after}, right) {
+        margin-left: auto;
+        transition: transition(.15s, ease-in-out, transform);
+      }
+    }
+    // 애프터 뒤집기
+    &.active::after {
+      transform: rotate(-180deg);
+    }
+  }
+  // 패널
+  &p {
+    display: none;
+    overflow: hidden;
+    padding: 0 1.1rem;
+    // 액티브
+    &.active {
+      display: block;
+    }
+  }
+  // 모서리
+  &.bdr {
+    .cacdi {
+      border: 1px solid #{$accd-border};
+      // 첫번째 제외 항목
+      &:not(:first-of-type) {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+
+// 피벗탭
+.cpvt {
+  position: relative;
+  overflow: hidden;
+  // 라디오
+  &ir {
+    display: none;
+  }
+  // 라벨
+  &lb {
+    width: auto;
+    outline: none;
+    padding: .5rem 1rem;
+    transition: transition(.15s, ease-in-out, all);
+    user-select: none;
+  }
+  // 줄
+  &r {
+    width: calc(100% + 2 * .6rem);
+    display: table;
+    table-layout: fixed;
+    position: relative;
+    padding: 0;
+    margin: -1px 0 0 0;
+    border-spacing: 0;
+    transition: transition(.2s, ease, all);
+    //
+    &.i1 {
+      margin-left: 100%;
+    }
+    //
+    &.i2 {
+      margin-left: 200%;
+    }
+    //
+    &.i3 {
+      margin-left: 300%;
+    }
+    //
+    &.i4 {
+      margin-left: 400%;
+    }
+    //
+    &.i5 {
+      margin-left: 500%;
+    }
+  }
+  // 2개
+  &.ld2 .cpvtr {
+    width: 200%;
+    left: -100%;
+  }
+  // 3개
+  &.ld3 .cpvtr {
+    width: 300%;
+    left: -200%;
+  }
+  // 4개
+  &.ld4 .cpvtr {
+    width: 400%;
+    left: -300%;
+  }
+  // 5개
+  &.ld5 .cpvtr {
+    width: 500%;
+    left: -400%;
+  }
+  // 6개
+  &.ld6 .cpvtr {
+    width: 600%;
+    left: -500%;
+  }
+  // 패널
+  &p {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+  }
+  // 모서리
+  &.bdr {
+    // 버튼 모서리
+    .cpvtlb {
+      border: 1px solid #{$tab-border};
+      // 첫번째가 아니면 왼쪽 없앰
+      &:not(:first-of-type) {
+        border-left: 0;
+      }
+    }
+    // 패널 모서리
+    .cpvtp {
+      border: 1px solid #{$tab-border};
+    }
+  }
+}
+
+
+// 탭
+.ctab {
+  // 목록
+  &l {
+    overflow: hidden;
+  }
+  // 눌러
+  &b {
+    float: left;
+    outline: none;
+    padding: .5rem 1rem;
+    transition: transition(.15s, ease-in-out, all);
+    user-select: none;
+  }
+  // 패널
+  &p {
+    display: none;
+    margin-top: -1px;
+    padding: .1rem 1rem;
+    // 액티브
+    &.active {
+      display: block;
+    }
+  }
+  // 모서리
+  &.bdr {
+    // 버튼 모서리
+    .ctabb {
+      border: 1px solid #{$tab-border};
+      // 첫번째가 아니면 왼쪽 없앰
+      &:not(:first-of-type) {
+        border-left: 0;
+      }
+    }
+    // 패널 모서리
+    .ctabp {
+      border: 1px solid #{$tab-border};
+    }
+  }
+}
+

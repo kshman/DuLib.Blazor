@@ -128,7 +128,7 @@ public class Pix : ComponentBlock
 
 		var css = Cssc.Class(
 			AgentHandler?.GetRoleClass(TagRole),
-			AutoSize.IfTrue("pxa"),
+			AutoSize.IfTrue("cpxa"),
 			Class);
 
 		builder.OpenElement(0, TagName);

@@ -1,9 +1,21 @@
 ﻿/*!
  * DuLib.Blazor cascading style sheet, by ksh 2023
  */
-@import '_layout';
-//@import '_effect';
-@import '_attribute';
-@import '_grid';
-@import '_component';
 
+// 어트리뷰트
+@import 'Attributes/_tooltip';
+
+// 확장
+@import 'Extends/_internal';
+@import 'Extends/_refine';
+@import 'Extends/_container';
+@import 'Extends/_layout';
+@import 'Extends/_effect';
+
+// 컴포넌트
+@import 'Components/_common';
+@import 'Components/_variant';
+@import 'Components/_btn';
+@import 'Components/_badge';
+@import 'Components/_tabs';
+@import 'Components/_nav';

@@ -73,7 +73,9 @@ public enum Rdm
 	W15,
 }
 
-// 그리드 열
+/// <summary>
+/// 그리드 열
+/// </summary>
 public enum Rdc
 {
 	None, // 0
@@ -92,4 +94,17 @@ public enum Rdc
 	FourFifth, // 5분의 4 -> 80
 	// 5분의 5는 Full
 	OneSixth, // 6분의 1 -> 16
+}
+
+/// <summary>
+/// 저스티파이
+/// </summary>
+public enum Justify
+{
+	Start,
+	End,
+	Center,
+	SpaceBetween,
+	SpaceAround,
+	SpaceEvenly,
 }

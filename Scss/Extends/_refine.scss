@@ -1,0 +1,29 @@
+﻿//@import "_variable.scss";
+//@import "_mixin.scss";
+
+// 저스티파이
+.sjfc {
+  &s {
+    justify-content: start;
+  }
+
+  &e {
+    justify-content: end;
+  }
+
+  &c {
+    justify-content: center
+  }
+
+  &eb {
+    justify-content: space-between;
+  }
+
+  &ea {
+    justify-content: space-around;
+  }
+
+  &ee {
+    justify-content: space-evenly;
+  }
+}

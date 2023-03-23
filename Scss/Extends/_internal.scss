@@ -1,8 +1,8 @@
-﻿@import "_variable.scss";
-@import "_mixin.scss";
+﻿@import "../_variable";
+@import "../_mixin";
 
 // 바디
-.body {
+.dzbody {
   margin: 0;
   background-color: #{$bg};
   color: #{$cc};
@@ -63,24 +63,4 @@
 
 .dzi-bolt {
   background: #{$ic-bolt} no-repeat center center / contain;
-}
-
-// 보통
-@include variant-color(nrm, $normal-cc, $normal-bg, $normal-hover, $normal-active);
-// 화사하기
-@include variant-color(spn, $splend-cc, $splend-bg, $splend-hover, $splend-active);
-// 심플
-@include variant-color(sme, $simple-cc, $simple-bg, $simple-hover, $simple-active);
-// 아웃라인
-@include variant-outline(oue, $cc, $normal-bg, $cc, $normal-hover, $cc-accent, $normal-active);
-// 프라이머리
-@include variant-color(pri, $primary-cc, $primary-bg, $primary-hover, $primary-active);
-// 디지틀
-@include variant-color(dgt, $digital-cc, $digital-bg, $digital-hover, $digital-active);
-
-// 자동 그림 크기
-.pxa {
-  height: auto;
-  max-width: 100%;
-  width: auto;
 }

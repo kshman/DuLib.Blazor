@@ -1,51 +1,23 @@
-﻿@import "_variable.scss";
-@import "_mixin.scss";
+﻿@import "../_variable";
+@import "../_mixin";
 
-$rsp-names: $wname;
+$rsp-names: $wrsps;
 $grid-count: 12;
 
 $part-names: f 50 33 66 25 75 20 40 60 80 16;
 $part-sizes: ( f: 100%, 50: 50%, 33: 33.33333%, 66: 66.6666%, 25: 25%, 75: 75%, 20: 20%, 40: 50%, 60: 60%, 80: 80%, 16: 16.16666%, );
 
-// 레이아웃 확장
-.lsp, .lspf, .lsp6, .lsp9, .lsp12, .lsp15 {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 .75rem;
-  width: 100%;
-}
-// 600 이상
-@include resmedia(min, 600) {
-  .lsp6, .lsp {
-    max-width: 600px;
-  }
-}
-// 900 이상
-@include resmedia(min, 900) {
-  .lsp9, .lsp6, .lsp {
-    max-width: 900px;
-  }
-}
-// 1200 이상
-@include resmedia(min, 1200) {
-  .lsp12, .lsp9, .lsp6, .lsp {
-    max-width: 1200px;
-  }
-}
-// 1500 이상
-@include resmedia(min, 1500) {
-  .lsp15, .lsp12, .lsp9, .lsp6, .lsp {
-    max-width: 1500px;
-  }
-}
 
-// 줄 
+// 줄
 .lr {
   display: flex;
   width: 100%;
+  //width: calc(100% + .6rem);
+  //margin-left: -.6rem;
   flex-wrap: wrap;
   transition: transition(.3s, ease, all);
 }
+
 // 줄 당 열 갯수
 @for $i from 1 through $grid-count {
   .lr#{$i} > * {
@@ -67,11 +39,12 @@ $part-sizes: ( f: 100%, 50: 50%, 33: 33.33333%, 66: 66.6666%, 25: 25%, 75: 75%, 
 
 // 열
 .lc {
-  flex-grow: 0;
+  //box-sizing: border-box;
+  flex: 0 1 auto;
 }
 // 늘어나는 열
 .lcg {
-  flex-grow: 1;
+  flex: 1 1 auto;
 }
 // 센터 열
 .lcj {

@@ -36,6 +36,7 @@ $space-spacing: .5rem;
     background: $bg;
     border: 1px solid $border;
     color: $cc;
+    @content;
     // 호버
     &:hover, &:focus {
       background: $hover;
@@ -63,6 +64,7 @@ $space-spacing: .5rem;
     background: transparent;
     border: 1px solid $bg;
     color: $cc;
+    @content;
     // 호버
     &:hover, &:focus {
       border-color: $hbg;

@@ -71,6 +71,17 @@ internal static class TypeSupp
 		Responsive.W15 => "cnvb15",
         _ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
     };
+
+	internal static string ToCss(this Justify j) => j switch
+	{
+		Justify.Start => "sjfcs",
+		Justify.End => "sjfce",
+		Justify.Center => "sjfcc",
+		Justify.SpaceBetween => "sjfceb",
+		Justify.SpaceAround => "sjfcea",
+		Justify.SpaceEvenly => "sjfcee",
+		_ => LogIf.ArgumentOutOfRange<string>(j, nameof(j))
+	};
 }
 
 

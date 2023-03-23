@@ -42,7 +42,7 @@ public abstract class Grid : ComponentProp
 /// </summary>
 public class GLine : Grid
 {
-	[Parameter] public int Base { get; set; }
+	[Parameter] public int Base { get; set; } = 1;
 	[Parameter] public int? W6 { get; set; }
 	[Parameter] public int? W9 { get; set; }
 	[Parameter] public int? W12 { get; set; }
@@ -54,11 +54,11 @@ public class GLine : Grid
 		_grid_css = Cssc.Class(
 			VariantString,
 			"lr",
-			$"lr{Base}",
-			W6 is null ? null : $"l6r{W6}",
-			W9 is null ? null : $"l9r{W9}",
-			W12 is null ? null : $"l12r{W12}",
-			W15 is null ? null : $"l15r{W15}");
+			$"lr{Math.Clamp(Base, 1, 12)}",
+			W6 is null ? null : $"l6r{Math.Clamp(W6.Value, 1, 12)}",
+			W9 is null ? null : $"l9r{Math.Clamp(W9.Value, 1, 12)}",
+			W12 is null ? null : $"l12r{Math.Clamp(W12.Value, 1, 12)}",
+			W15 is null ? null : $"l15r{Math.Clamp(W15.Value, 1, 12)}");
 	}
 }
 
@@ -68,20 +68,21 @@ public class GLine : Grid
 public class GBlock : Grid
 {
 	[Parameter] public string? Base { get; set; }
+	[Parameter] public bool Grow { get; set; }
+	[Parameter] public Justify? Justify { get; set; }
+
 	[Parameter] public string? W6 { get; set; }
 	[Parameter] public string? W9 { get; set; }
 	[Parameter] public string? W12 { get; set; }
 	[Parameter] public string? W15 { get; set; }
-	[Parameter] public bool Grow { get; set; }
-	[Parameter] public bool Center { get; set; }
 
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
 		_grid_css = Cssc.Class(
 			VariantString,
-			Grow? "lcg": "lc",
-			Center.IfTrue("lcj"),
+			Grow ? "lcg" : "lc",
+			Justify?.ToCss(),
 			ConvertResponseClass(Rdm.None, Base),
 			ConvertResponseClass(Rdm.W6, W6),
 			ConvertResponseClass(Rdm.W9, W9),
