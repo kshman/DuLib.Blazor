@@ -55,8 +55,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Scss\Components\" />
-  </ItemGroup>
-
 </Project>

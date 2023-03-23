@@ -1,19 +1,16 @@
 ﻿@import "../_variable";
 @import "../_mixin";
 
-$rsp-names: $wrsps;
-$grid-count: 12;
+$grid-rsps: $wrsps;
+$grid-count: 10;
 
-$part-names: f 50 33 66 25 75 20 40 60 80 16;
-$part-sizes: ( f: 100%, 50: 50%, 33: 33.33333%, 66: 66.6666%, 25: 25%, 75: 75%, 20: 20%, 40: 50%, 60: 60%, 80: 80%, 16: 16.16666%, );
-
+$grid-cell-name: 33 66 25 75 16;
+$grid-cell-data: (33: 33.33333%, 66: 66.66666%, 25: 25%, 75: 75%, 16: 16.66666%);
 
 // 줄
 .lr {
   display: flex;
   width: 100%;
-  //width: calc(100% + .6rem);
-  //margin-left: -.6rem;
   flex-wrap: wrap;
   transition: transition(.3s, ease, all);
 }
@@ -25,7 +22,7 @@ $part-sizes: ( f: 100%, 50: 50%, 33: 33.33333%, 66: 66.6666%, 25: 25%, 75: 75%, 
   }
 }
 // 크기별 줄 당 열 갯수
-@each $r in $rsp-names {
+@each $r in $grid-rsps {
   $size: ($r * 100);
   //
   @media (min-width: unquote($size + 'px')) {
@@ -39,7 +36,6 @@ $part-sizes: ( f: 100%, 50: 50%, 33: 33.33333%, 66: 66.6666%, 25: 25%, 75: 75%, 
 
 // 열
 .lc {
-  //box-sizing: border-box;
   flex: 0 1 auto;
 }
 // 늘어나는 열
@@ -51,28 +47,42 @@ $part-sizes: ( f: 100%, 50: 50%, 33: 33.33333%, 66: 66.6666%, 25: 25%, 75: 75%, 
   justify-content: center;
 }
 // 열 크기
-@each $p in $part-names {
+@for $i from 1 through $grid-count {
+  .lc#{$i} {
+    width: (($i / $grid-count) * 100%);
+  }
+}
+// 추가 열 크기
+@each $p in $grid-cell-name {
   .lc#{$p} {
-    width: map-get($part-sizes, $p);
+    width: map-get($grid-cell-data, $p);
   }
 }
 // 열 감춤
-.lcn {
+.lc0 {
   display: none;
 }
 // 크기별 열
-@each $r in $rsp-names {
+
+@each $r in $grid-rsps {
   $size: ($r * 100);
   //
   @media (min-width: unquote($size + 'px')) {
-    @each $p in $part-names {
-      .l#{$r}c#{$p} {
-        width: map-get($part-sizes, $p);
-        display: block;
+    @for $i from 1 through $grid-count {
+      .l#{$r}c#{$i} {
+        width: (($i / $grid-count) * 100%);
+        //display: block;
       }
     }
     //
-    .l#{$r}cn {
+    @each $p in $grid-cell-name {
+      .l#{$r}c#{$p} {
+        width: map-get($grid-cell-data, $p);
+        //display: block;
+      }
+    }
+    //
+    .l#{$r}c0 {
       display: none;
     }
   }

@@ -74,29 +74,6 @@ public enum Rdm
 }
 
 /// <summary>
-/// 그리드 열
-/// </summary>
-public enum Rdc
-{
-	None, // 0
-	Full, // 100
-	Half, // 50
-	OneThird, // 3분의 1 -> 33
-	TwoThird, // 3분의 2 -> 66
-	// 3분의 3은 Full
-	OneFourth, // 4분의 1 -> 25
-	// 4분의 2는 Half
-	ThreeFourth, // 4분의 3 -> 75
-	// 4분의 4는 Full
-	OneFifth, // 5분의 1 -> 20
-	TwoFifth, // 5분의 2 -> 40
-	ThreeFifth, // 5분의 3 -> 60
-	FourFifth, // 5분의 4 -> 80
-	// 5분의 5는 Full
-	OneSixth, // 6분의 1 -> 16
-}
-
-/// <summary>
 /// 저스티파이
 /// </summary>
 public enum Justify

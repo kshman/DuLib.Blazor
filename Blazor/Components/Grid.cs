@@ -6,9 +6,9 @@
 public abstract class Grid : ComponentProp
 {
 	[Parameter] public RenderFragment? ChildContent { get; set; }
-	/// <summary></summary>
+	/// <summary>바리언트</summary>
 	[Parameter] public Variant? Variant { get; set; }
-	/// <summary></summary>
+	/// <summary>바리언트 지정값</summary>
 	[Parameter] public VarLead? Lead { get; set; }
 	/// <summary>툴팁</summary>
 	[Parameter] public string? Tooltip { get; set; }
@@ -40,12 +40,81 @@ public abstract class Grid : ComponentProp
 /// <summary>
 /// 그리드 줄
 /// </summary>
+/// /// <remarks>
+/// <see cref="Base"/>, <see cref="W6"/>, <see cref="W9"/>, <see cref="W12"/>, <see cref="W15"/>의
+/// 값은 1~10으로,<br/>
+/// 1칸부터 10칸을 의미함
+/// </remarks>
 public class GLine : Grid
 {
+	/// <summary>기본 크기 (1~10)</summary>
 	[Parameter] public int Base { get; set; } = 1;
+	/// <summary>600해상도 크기 (1~10)</summary>
 	[Parameter] public int? W6 { get; set; }
+	/// <summary>900해상도 크기 (1~10)</summary>
 	[Parameter] public int? W9 { get; set; }
+	/// <summary>1200해상도 크기 (1~10)</summary>
 	[Parameter] public int? W12 { get; set; }
+	/// <summary>1500해상도 크기 (1~10)</summary>
+	[Parameter] public int? W15 { get; set; }
+
+	/// <summary>정렬 방식</summary>
+	[Parameter] public Justify? Justify { get; set; }
+
+	/// <inheritdoc />
+	protected override void OnParametersSet()
+	{
+		_grid_css = Cssc.Class(
+			VariantString,
+			Justify?.ToCss(),
+			"lr",
+			ConvertPerLineCount(Base, "lr"),
+			ConvertPerLineCount(W6, "l6r"),
+			ConvertPerLineCount(W9, "l9r"),
+			ConvertPerLineCount(W12, "l12r"),
+			ConvertPerLineCount(W15, "l15r"));
+	}
+
+	//
+	private static string? ConvertPerLineCount(int? count, string header)
+	{
+		if (count is null)
+			return null;
+
+		var correction = Math.Clamp(count.Value, 1, 10);
+
+		return $"{header}{correction}";
+	}
+}
+
+/// <summary>
+/// 그리드 열(블럭)
+/// </summary>
+/// <remarks>
+/// <see cref="Base"/>, <see cref="W6"/>, <see cref="W9"/>, <see cref="W12"/>, <see cref="W15"/>의
+/// 값은 다음을 참고:
+/// <list type="table">
+/// <listheader><term>값</term><description>설명</description></listheader>
+/// <item><term>1~10</term><description>10%부터 100%</description></item>
+/// <item><term>33/66</term><description>삼분의일(33%)와 삼분의이(66%)</description></item>
+/// <item><term>25/75</term><description>사분의일(25%)와 사분의삼(75%) 사분의이는 5를 쓰면됨</description></item>
+/// <item><term>16</term><description>육분의일(16%)</description></item>
+/// </list>
+/// </remarks>
+public class GBlock : Grid
+{
+	/// <summary>기본 크기 (1~10, 33/66, 25/75, 16)</summary>
+	[Parameter] public int? Base { get; set; }
+	/// <summary>자동으로 늘어나나</summary>
+	[Parameter] public bool Grow { get; set; }
+
+	/// <summary>600해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
+	[Parameter] public int? W6 { get; set; }
+	/// <summary>900해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
+	[Parameter] public int? W9 { get; set; }
+	/// <summary>1200해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
+	[Parameter] public int? W12 { get; set; }
+	/// <summary>1500해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
 	[Parameter] public int? W15 { get; set; }
 
 	/// <inheritdoc />
@@ -53,102 +122,17 @@ public class GLine : Grid
 	{
 		_grid_css = Cssc.Class(
 			VariantString,
-			"lr",
-			$"lr{Math.Clamp(Base, 1, 12)}",
-			W6 is null ? null : $"l6r{Math.Clamp(W6.Value, 1, 12)}",
-			W9 is null ? null : $"l9r{Math.Clamp(W9.Value, 1, 12)}",
-			W12 is null ? null : $"l12r{Math.Clamp(W12.Value, 1, 12)}",
-			W15 is null ? null : $"l15r{Math.Clamp(W15.Value, 1, 12)}");
-	}
-}
-
-/// <summary>
-/// 그리드 열(블럭)
-/// </summary>
-public class GBlock : Grid
-{
-	[Parameter] public string? Base { get; set; }
-	[Parameter] public bool Grow { get; set; }
-	[Parameter] public Justify? Justify { get; set; }
-
-	[Parameter] public string? W6 { get; set; }
-	[Parameter] public string? W9 { get; set; }
-	[Parameter] public string? W12 { get; set; }
-	[Parameter] public string? W15 { get; set; }
-
-	/// <inheritdoc />
-	protected override void OnParametersSet()
-	{
-		_grid_css = Cssc.Class(
-			VariantString,
 			Grow ? "lcg" : "lc",
-			Justify?.ToCss(),
-			ConvertResponseClass(Rdm.None, Base),
-			ConvertResponseClass(Rdm.W6, W6),
-			ConvertResponseClass(Rdm.W9, W9),
-			ConvertResponseClass(Rdm.W12, W12),
-			ConvertResponseClass(Rdm.W15, W15));
+			ConvertGridWidth(Base, "lc"),
+			ConvertGridWidth(W6, "l6c"),
+			ConvertGridWidth(W9, "l9c"),
+			ConvertGridWidth(W12, "l12c"),
+			ConvertGridWidth(W15, "l15c"));
 	}
 
-	// 숫자를 열 크기로
-	private static string ConvertResponseClass(Rdm rdm, int n)
+	//
+	private static string? ConvertGridWidth(int? count, string header)
 	{
-		var s = n switch
-		{
-			0 => "n",
-			100 => "f",
-			_ => n.ToString()
-		};
-		var r = rdm switch
-		{
-			Rdm.None => "lc",
-			Rdm.W6 => "l6c",
-			Rdm.W9 => "l9c",
-			Rdm.W12 => "l12c",
-			Rdm.W15 => "l15c",
-			_ => LogIf.ArgumentOutOfRange<string>(rdm, nameof(rdm))
-		};
-		return $"{r}{s}";
-	}
-
-	// 문자열을 열 크기로
-	private static string? ConvertResponseClass(Rdm rdm, string? rsp)
-	{
-		if (rsp is null)
-			return null;
-
-		if (int.TryParse(rsp, out var n))
-		{
-			// ㅇㅋ 숫자에서 변환
-			return ConvertResponseClass(rdm, n);
-		}
-
-		if (Enum.TryParse<Rdc>(rsp, true, out var rdc))
-		{
-			// ㅇㅋ 문자열에서 변환
-			n = rdc switch
-			{
-				Rdc.None => 0,
-				Rdc.Full => 100,
-				Rdc.Half => 50,
-				Rdc.OneThird => 33,
-				Rdc.TwoThird => 66,
-				Rdc.OneFourth => 25,
-				Rdc.ThreeFourth => 75,
-				Rdc.OneFifth => 20,
-				Rdc.TwoFifth => 40,
-				Rdc.ThreeFifth => 60,
-				Rdc.FourFifth => 80,
-				Rdc.OneSixth => 16,
-				_ => 0
-			};
-
-			return ConvertResponseClass(rdm, n);
-		}
-
-		// 이건 변환 못한다 
-		ThrowIf.InvalidArgument(nameof(rsp));
-
-		return null;
+		return count is null ? null : $"{header}{count}";
 	}
 }
