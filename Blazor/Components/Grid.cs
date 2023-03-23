@@ -22,17 +22,6 @@ public abstract class Grid : ComponentProp
 		TagRole = ComponentRole.Block;
 	}
 
-	//
-	/// <inheritdoc />
-	protected override void BuildRenderTree(RenderTreeBuilder builder)
-	{
-		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", Cssc.Class(_grid_css, Class));
-		builder.AddMultipleAttributes(2, UserAttrs);
-		builder.AddContent(3, ChildContent);
-		builder.CloseElement();
-	}
-
 	// 바리언트 변환
 	protected string? VariantString => Variant?.ToCss(Lead ?? VarLead.Down);
 }
@@ -48,7 +37,7 @@ public abstract class Grid : ComponentProp
 public class GLine : Grid
 {
 	/// <summary>기본 크기 (1~10)</summary>
-	[Parameter] public int Base { get; set; } = 1;
+	[Parameter] public int? Base { get; set; }
 	/// <summary>600해상도 크기 (1~10)</summary>
 	[Parameter] public int? W6 { get; set; }
 	/// <summary>900해상도 크기 (1~10)</summary>
@@ -60,30 +49,57 @@ public class GLine : Grid
 
 	/// <summary>정렬 방식</summary>
 	[Parameter] public Justify? Justify { get; set; }
+	/// <summary>자동으로 늘어나나</summary>
+	[Parameter] public bool Grow { get; set; }
+
+	//
+	private bool _have_responsive;
+	internal bool HaveToGrow => Grow || !_have_responsive;
 
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
 		_grid_css = Cssc.Class(
 			VariantString,
-			Justify?.ToCss(),
 			"lr",
 			ConvertPerLineCount(Base, "lr"),
 			ConvertPerLineCount(W6, "l6r"),
 			ConvertPerLineCount(W9, "l9r"),
 			ConvertPerLineCount(W12, "l12r"),
-			ConvertPerLineCount(W15, "l15r"));
+			ConvertPerLineCount(W15, "l15r"),
+			Justify?.ToCss());
 	}
 
 	//
-	private static string? ConvertPerLineCount(int? count, string header)
+	/// <inheritdoc />
+	protected override void BuildRenderTree(RenderTreeBuilder builder)
+	{
+		builder.OpenElement(0, "div");
+		builder.AddAttribute(1, "class", Cssc.Class(_grid_css, Class));
+		builder.AddMultipleAttributes(2, UserAttrs);
+
+		if (ChildContent is not null)
+		{
+			builder.OpenComponent<CascadingValue<GLine>>(4);
+			builder.AddAttribute(5, "Value", this);
+			builder.AddAttribute(6, "IsFixed", true);
+			builder.AddAttribute(7, "ChildContent", (RenderFragment)((b) =>
+				b.AddContent(8, ChildContent)));
+			builder.CloseComponent();
+		}
+
+		builder.CloseElement();
+	}
+
+	//
+	private string? ConvertPerLineCount(int? count, string header)
 	{
 		if (count is null)
 			return null;
 
-		var correction = Math.Clamp(count.Value, 1, 10);
+		_have_responsive = true;
 
-		return $"{header}{correction}";
+		return $"{header}{Math.Clamp(count.Value, 1, 10)}";
 	}
 }
 
@@ -103,10 +119,10 @@ public class GLine : Grid
 /// </remarks>
 public class GBlock : Grid
 {
+	[CascadingParameter] public GLine? Line { get; set; }
+
 	/// <summary>기본 크기 (1~10, 33/66, 25/75, 16)</summary>
 	[Parameter] public int? Base { get; set; }
-	/// <summary>자동으로 늘어나나</summary>
-	[Parameter] public bool Grow { get; set; }
 
 	/// <summary>600해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
 	[Parameter] public int? W6 { get; set; }
@@ -117,17 +133,36 @@ public class GBlock : Grid
 	/// <summary>1500해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
 	[Parameter] public int? W15 { get; set; }
 
+	[Inject] private ILogger<GBlock> Logger { get; set; } = default!;
+
+	/// <inheritdoc />
+	protected override void OnInitialized()
+	{
+		LogIf.ContainerIsNull(Logger, this, Line);
+	}
+
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
 		_grid_css = Cssc.Class(
 			VariantString,
-			Grow ? "lcg" : "lc",
+			(Line?.HaveToGrow ?? false) ? "lcg" : "lc",
 			ConvertGridWidth(Base, "lc"),
 			ConvertGridWidth(W6, "l6c"),
 			ConvertGridWidth(W9, "l9c"),
 			ConvertGridWidth(W12, "l12c"),
 			ConvertGridWidth(W15, "l15c"));
+	}
+
+	//
+	/// <inheritdoc />
+	protected override void BuildRenderTree(RenderTreeBuilder builder)
+	{
+		builder.OpenElement(0, "div");
+		builder.AddAttribute(1, "class", Cssc.Class(_grid_css, Class));
+		builder.AddMultipleAttributes(2, UserAttrs);
+		builder.AddContent(3, ChildContent);
+		builder.CloseElement();
 	}
 
 	//

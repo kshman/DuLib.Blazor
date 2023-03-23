@@ -14,7 +14,6 @@ $grid-cell-data: (33: 33.33333%, 66: 66.66666%, 25: 25%, 75: 75%, 16: 16.66666%)
   flex-wrap: wrap;
   transition: transition(.3s, ease, all);
 }
-
 // 줄 당 열 갯수
 @for $i from 1 through $grid-count {
   .lr#{$i} > * {
@@ -41,10 +40,6 @@ $grid-cell-data: (33: 33.33333%, 66: 66.66666%, 25: 25%, 75: 75%, 16: 16.66666%)
 // 늘어나는 열
 .lcg {
   flex: 1 1 auto;
-}
-// 센터 열
-.lcj {
-  justify-content: center;
 }
 // 열 크기
 @for $i from 1 through $grid-count {
