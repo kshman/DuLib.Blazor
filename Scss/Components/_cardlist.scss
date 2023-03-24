@@ -1,0 +1,89 @@
+﻿@import "../_variable.scss";
+@import "../_mixin.scss";
+
+//  카드
+.ccd {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  border-radius: .2rem;
+  border: 1px solid #{$cc-border};
+  box-shadow: 0 3.5rem 1.75rem 0 rgba(0, 0, 0, .2);
+  transition: transition(.3s, ease, box-shadow);
+  // 호버
+  &:hover {
+    box-shadow: 0 .5rem 1rem 0 rgba(0, 0, 0, .2);
+  }
+  // 이미지
+  &i {
+    width: 100%;
+    // 위 이미지
+    &t {
+      border-radius: .2rem .2rem 0 0;
+    }
+    // 아래 이미지
+    &b {
+      border-radius: 0 0 .2rem .2rem;
+    }
+    // 왼쪽 이미지
+    &l {
+      border-radius: .2rem 0 0 .2rem;
+    }
+    // 오른쪽 이미지
+    &r {
+      border-radius: 0 .2rem .2rem 0;
+    }
+  }
+  // 헤더
+  &h {
+    padding: .5rem .5rem;
+    margin-bottom: 0;
+    background: #{$cc-accent};
+    border-bottom: 1px solid #{$cc-border};
+    &:first-child {
+      border-radius: .2rem .2rem 0 0;
+    }
+  }
+  // 푸터
+  &f {
+    padding: .5rem .5rem;
+    background: #{$cc-accent};
+    border-top: 1px solid #{$cc-dark};
+    &:last-child {
+      border-radius: 0 0 .2rem .2rem;
+    }
+  }
+  // 콘텐트
+  &c {
+    flex: 1 1 auto;
+    padding: .5rem .5rem;
+  }
+  // 타이틀
+  &t {
+    margin-bottom: 1rem;
+  }
+  // 서브 타이틀
+  &s {
+    margin-top: -.25rem;
+    margin-bottom: .5rem;
+  }
+  // 아이템
+  &m {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  // 오버레이
+  &o {
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    padding: .5rem;
+    border-radius: .2rem;
+  }
+}

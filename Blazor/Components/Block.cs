@@ -190,7 +190,7 @@ public class Content : ComponentBlock
 /// </summary>
 public class Lead : Content
 {
-	public Lead()
+	protected Lead()
 		: base(ComponentRole.Lead)
 	{ }
 }

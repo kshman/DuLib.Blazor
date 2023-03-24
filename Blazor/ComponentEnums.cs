@@ -85,3 +85,15 @@ public enum Justify
 	SpaceAround,
 	SpaceEvenly,
 }
+
+/// <summary>
+/// 놓는 위치
+/// </summary>
+public enum Placement
+{
+	Top,
+	Bottom,
+	Start, // left
+	End, // right
+	Overlay,
+}

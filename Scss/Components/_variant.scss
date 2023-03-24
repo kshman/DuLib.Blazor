@@ -18,3 +18,29 @@
 
 // 디지틀
 @include variant-color(dgt, $digital-cc, $digital-bg, $digital-hover, $digital-active);
+
+
+// 뱃지
+.cbdg {
+  display: inline-block;
+  padding: #{$bdg-padding};
+  border-radius: #{$bdg-border-radius};
+  font-size: #{$bdg-font-size};
+  font-weight: #{$bdg-font-weight};
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+  // 빈거
+  &:empty {
+    display: none;
+  }
+  // 동글
+  &.dgrm {
+    border-radius: #{$bdg-dgrm-radius};
+  }
+  // 눌러 안 뺏지
+  .cbtn & {
+    position: relative;
+    top: -1px;
+  }
+}

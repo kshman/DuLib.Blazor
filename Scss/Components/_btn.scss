@@ -20,6 +20,7 @@
   text-transform: none;
   vertical-align: baseline;
 }
+
 // 사용자 정의 버튼
 .usp.cbtn {
   // 호버&포커스
@@ -81,7 +82,7 @@
     margin: .1rem 0;
     opacity: .5;
     overflow: hidden;
-    padding: 0;
+    //padding: 0;
   }
   // 버튼
   &b {

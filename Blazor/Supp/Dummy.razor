@@ -1,0 +1,18 @@
+﻿@using Du.Blazor.Components
+
+<h3>더미. 경고 없애기 위함</h3>
+
+@_mesg;
+<FoldTabs OnActive="Tabs_OnActive"></FoldTabs>
+
+<Lead>제거</Lead>
+
+@code {
+	private string? _mesg;
+
+	private Task Tabs_OnActive(ActiveEventArgs e)
+	{
+		_mesg = $"{e.Component.Id}/{e.Active}";
+		return Task.CompletedTask;
+	}
+}
