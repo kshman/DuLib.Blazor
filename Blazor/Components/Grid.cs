@@ -30,22 +30,22 @@ public abstract class Grid : ComponentProp
 /// 그리드 줄
 /// </summary>
 /// /// <remarks>
-/// <see cref="Base"/>, <see cref="W6"/>, <see cref="W9"/>, <see cref="W12"/>, <see cref="W15"/>의
+/// <see cref="Base"/>, <see cref="C6"/>, <see cref="C9"/>, <see cref="C12"/>, <see cref="C15"/>의
 /// 값은 1~10으로,<br/>
 /// 1칸부터 10칸을 의미함
 /// </remarks>
 public class GLine : Grid
 {
 	/// <summary>기본 크기 (1~10)</summary>
-	[Parameter] public int? Base { get; set; }
+	[Parameter] public GridCount? Base { get; set; }
 	/// <summary>600해상도 크기 (1~10)</summary>
-	[Parameter] public int? W6 { get; set; }
+	[Parameter] public GridCount? C6 { get; set; }
 	/// <summary>900해상도 크기 (1~10)</summary>
-	[Parameter] public int? W9 { get; set; }
+	[Parameter] public GridCount? C9 { get; set; }
 	/// <summary>1200해상도 크기 (1~10)</summary>
-	[Parameter] public int? W12 { get; set; }
+	[Parameter] public GridCount? C12 { get; set; }
 	/// <summary>1500해상도 크기 (1~10)</summary>
-	[Parameter] public int? W15 { get; set; }
+	[Parameter] public GridCount? C15 { get; set; }
 
 	/// <summary>정렬 방식</summary>
 	[Parameter] public Justify? Justify { get; set; }
@@ -63,10 +63,10 @@ public class GLine : Grid
 			VariantString,
 			"lr",
 			ConvertPerLineCount(Base, "lr"),
-			ConvertPerLineCount(W6, "l6r"),
-			ConvertPerLineCount(W9, "l9r"),
-			ConvertPerLineCount(W12, "l12r"),
-			ConvertPerLineCount(W15, "l15r"),
+			ConvertPerLineCount(C6, "l6r"),
+			ConvertPerLineCount(C9, "l9r"),
+			ConvertPerLineCount(C12, "l12r"),
+			ConvertPerLineCount(C15, "l15r"),
 			Justify?.ToCss());
 	}
 
@@ -92,14 +92,14 @@ public class GLine : Grid
 	}
 
 	//
-	private string? ConvertPerLineCount(int? count, string header)
+	private string? ConvertPerLineCount(GridCount? count, string header)
 	{
 		if (count is null)
 			return null;
 
 		_have_responsive = true;
 
-		return $"{header}{Math.Clamp(count.Value, 1, 10)}";
+		return $"{header}{Math.Clamp((int)count, 1, 10)}";
 	}
 }
 
@@ -122,16 +122,16 @@ public class GBlock : Grid
 	[CascadingParameter] public GLine? Line { get; set; }
 
 	/// <summary>기본 크기 (1~10, 33/66, 25/75, 16)</summary>
-	[Parameter] public int? Base { get; set; }
+	[Parameter] public GridWidth? Base { get; set; }
 
 	/// <summary>600해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
-	[Parameter] public int? W6 { get; set; }
+	[Parameter] public GridWidth? W6 { get; set; }
 	/// <summary>900해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
-	[Parameter] public int? W9 { get; set; }
+	[Parameter] public GridWidth? W9 { get; set; }
 	/// <summary>1200해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
-	[Parameter] public int? W12 { get; set; }
+	[Parameter] public GridWidth? W12 { get; set; }
 	/// <summary>1500해상도 크기 (1~10, 33/66, 25/75, 16)</summary>
-	[Parameter] public int? W15 { get; set; }
+	[Parameter] public GridWidth? W15 { get; set; }
 
 	[Inject] private ILogger<GBlock> Logger { get; set; } = default!;
 
@@ -166,8 +166,8 @@ public class GBlock : Grid
 	}
 
 	//
-	private static string? ConvertGridWidth(int? count, string header)
+	private static string? ConvertGridWidth(GridWidth? count, string header)
 	{
-		return count is null ? null : $"{header}{count}";
+		return count is null ? null : $"{header}{(int)count}";
 	}
 }
