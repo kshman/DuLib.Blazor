@@ -7,83 +7,114 @@
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  border-radius: .375rem;
-  //border: 1px solid #{$card-border};
-  //box-shadow: 0 2px 4px 0 rgba(#fff, .2);
+  border: 1px solid #{$card-border};
   transition: transition(.3s, ease, box-shadow);
   // 호버
   &:hover {
-    box-shadow: 0 4px 8px 0 rgba(#fff, .2);
+    box-shadow: 0 4px 8px 0 #{$card-cc-shadow};
   }
   // 이미지
   &i {
     width: 100%;
-    // 위 이미지
-    &t {
-      border-radius: .375rem .375rem 0 0;
-    }
-    // 아래 이미지
-    &b {
-      border-radius: 0 0 .375rem .375rem;
-    }
-    // 왼쪽 이미지
-    &l {
-      border-radius: .375rem 0 0 .375rem;
-    }
-    // 오른쪽 이미지
-    &r {
-      border-radius: 0 .375rem .375rem 0;
-    }
   }
   // 헤더
   &h {
-    padding: .5rem .5rem;
+    padding: .5rem;
     margin-bottom: 0;
     background: #{$card-bg-lead};
-    //border-bottom: 1px solid #{$card-border};
-    &:first-child {
-      border-radius: .375rem .375rem 0 0;
-    }
   }
   // 푸터
   &f {
-    padding: .5rem .5rem;
+    padding: .5rem;
     background: #{$card-bg-tail};
-    //border-top: 1px solid #{$card-border};
-    &:last-child {
-      border-radius: 0 0 .375rem .375rem;
-    }
   }
   // 콘텐트
   &c {
     flex: 1 1 auto;
-    padding: .5rem .5rem;
+    padding: .5rem;
+    // 아이템
+    & > * {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      // 마지막꺼는 없앰
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
   // 타이틀
-  &t {
+  &tm {
     margin-bottom: 1rem;
+    color: #{$card-cc-title};
   }
   // 서브 타이틀
-  &s {
-    margin-top: -.25rem;
-    margin-bottom: .5rem;
+  &ts {
+    margin-top: -.75rem;
+    margin-bottom: 1rem;
+    color: #{$card-cc-subtitle};
   }
   // 아이템
-  &m {
+  /*&m {
     margin-top: 0;
     margin-bottom: 1rem;
+
     &:last-child {
       margin-bottom: 0;
     }
-  }
+  }*/
   // 오버레이
   &o {
     position: absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     padding: .5rem;
-    border-radius: .375rem;
+  }
+  // 모서리
+  &.bdr {
+    // 헤더
+    & .ccdh {
+      border-bottom: 1px solid #{$card-border};
+    }
+    // 푸터
+    & .ccdf {
+      border-top: 1px solid #{$card-border};
+    }
+  }
+}
+
+// 스택
+.cstk {
+  //display: flex;
+  //flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  // 아이템
+  & > * {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border-radius: 0;
+    border-bottom: 1px solid #{$stack-border};
+    // 마지막꺼 보더 안 넣음
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+  // 번호
+  &.nmd {
+    counter-reset: cscs;
+    // 붙이기
+    & > *::before {
+      content: counters(cscs, ".") ". ";
+      counter-increment: cscs;
+    }
+  }
+  // 모서리
+  &.bdr {
+    border: 1px solid #{$stack-border};
   }
 }

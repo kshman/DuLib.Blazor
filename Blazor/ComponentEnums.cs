@@ -91,6 +91,7 @@ public enum Justify
 /// </summary>
 public enum Placement
 {
+	None,
 	Top,
 	Bottom,
 	Start, // left
@@ -112,7 +113,7 @@ public enum GridCount
 	C7 = 7,
 	C8 = 8,
 	C9 = 9,
-	C10 = 10,
+	Cx = 10,
 }
 
 /// <summary>
@@ -129,7 +130,7 @@ public enum GridWidth
 	W7 = 7,
 	W8 = 8,
 	W9 = 9,
-	W10 = 10,
+	Wx = 10,
 
 	P33 = 33,
 	P66 = 66,
@@ -138,6 +139,8 @@ public enum GridWidth
 	P16 = 16,
 
 	Full = 10,
+	Half = 5,
+	Quarter = 25,
 
 	OneThree = 33,
 	TwoThree = 66,

@@ -1000,52 +1000,74 @@ body, .dzbody {
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  border-radius: .375rem;
-  transition: box-shadow 0.3s ease; }
+  border: 1px solid #838288;
+  transition: box-shadow 0.3s ease;
+  /*&m {
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }*/ }
   .ccd:hover {
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2); }
   .ccdi {
     width: 100%; }
-    .ccdit {
-      border-radius: .375rem .375rem 0 0; }
-    .ccdib {
-      border-radius: 0 0 .375rem .375rem; }
-    .ccdil {
-      border-radius: .375rem 0 0 .375rem; }
-    .ccdir {
-      border-radius: 0 .375rem .375rem 0; }
   .ccdh {
-    padding: .5rem .5rem;
+    padding: .5rem;
     margin-bottom: 0;
     background: #545459; }
-    .ccdh:first-child {
-      border-radius: .375rem .375rem 0 0; }
   .ccdf {
-    padding: .5rem .5rem;
+    padding: .5rem;
     background: #545459; }
-    .ccdf:last-child {
-      border-radius: 0 0 .375rem .375rem; }
   .ccdc {
     flex: 1 1 auto;
-    padding: .5rem .5rem; }
-  .ccdt {
-    margin-bottom: 1rem; }
-  .ccds {
-    margin-top: -.25rem;
-    margin-bottom: .5rem; }
-  .ccdm {
-    margin-top: 0;
-    margin-bottom: 1rem; }
-    .ccdm:last-child {
-      margin-bottom: 0; }
+    padding: .5rem; }
+    .ccdc > * {
+      margin-top: 0;
+      margin-bottom: 1rem; }
+      .ccdc > *:last-child {
+        margin-bottom: 0; }
+  .ccdtm {
+    margin-bottom: 1rem;
+    color: #fbfbfe; }
+  .ccdts {
+    margin-top: -.75rem;
+    margin-bottom: 1rem;
+    color: #4b4b4b; }
   .ccdo {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    padding: .5rem;
-    border-radius: .375rem; }
+    padding: .5rem; }
+  .ccd.bdr .ccdh {
+    border-bottom: 1px solid #838288; }
+  .ccd.bdr .ccdf {
+    border-top: 1px solid #838288; }
+
+.cstk {
+  padding-left: 0;
+  margin-bottom: 0; }
+  .cstk > * {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border-radius: 0;
+    border-bottom: 1px solid #838288; }
+    .cstk > *:last-child {
+      border-bottom: 0; }
+  .cstk.nmd {
+    counter-reset: cscs; }
+    .cstk.nmd > *::before {
+      content: counters(cscs,".") ". ";
+      counter-increment: cscs; }
+  .cstk.bdr {
+    border: 1px solid #838288; }
 
 [tooltip] {
   position: relative; }
