@@ -961,7 +961,6 @@ body, .dzbody {
 .cnvb {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
   padding: .25rem .5rem;
   background: var(--cnv-bg); }
@@ -1002,7 +1001,6 @@ body, .dzbody {
     white-space: nowrap; }
   .cnvbn {
     display: flex;
-    flex: 1 auto;
     flex-direction: row; }
   .cnvbm, .cnvbb {
     display: block;
@@ -1032,69 +1030,57 @@ body, .dzbody {
     width: 100%; }
 
 @media (max-width: 600px) {
-  .cnvb6 .cnvbt {
-    display: block; }
-  .cnvb6 .cnvbn {
-    display: none; }
-    .cnvb6 .cnvbn.rsp {
-      display: block;
-      flex-basis: 100%; }
-      .cnvb6 .cnvbn.rsp .cdrpc {
-        position: relative;
-        width: 100%; }
-    .cnvb6 .cnvbn.rspe {
-      align-items: center;
-      display: flex;
-      flex-basis: 100%;
-      flex-direction: column; } }
+  .cnvb6 {
+    justify-content: space-between; }
+    .cnvb6 .cnvbt {
+      display: block; }
+    .cnvb6 .cnvbn {
+      display: none; }
+      .cnvb6 .cnvbn.rsp {
+        display: block;
+        flex-basis: 100%; }
+        .cnvb6 .cnvbn.rsp .cdrpc {
+          position: relative;
+          width: 100%; } }
 @media (max-width: 900px) {
-  .cnvb9 .cnvbt {
-    display: block; }
-  .cnvb9 .cnvbn {
-    display: none; }
-    .cnvb9 .cnvbn.rsp {
-      display: block;
-      flex-basis: 100%; }
-      .cnvb9 .cnvbn.rsp .cdrpc {
-        position: relative;
-        width: 100%; }
-    .cnvb9 .cnvbn.rspe {
-      align-items: center;
-      display: flex;
-      flex-basis: 100%;
-      flex-direction: column; } }
+  .cnvb9 {
+    justify-content: space-between; }
+    .cnvb9 .cnvbt {
+      display: block; }
+    .cnvb9 .cnvbn {
+      display: none; }
+      .cnvb9 .cnvbn.rsp {
+        display: block;
+        flex-basis: 100%; }
+        .cnvb9 .cnvbn.rsp .cdrpc {
+          position: relative;
+          width: 100%; } }
 @media (max-width: 1200px) {
-  .cnvb12 .cnvbt {
-    display: block; }
-  .cnvb12 .cnvbn {
-    display: none; }
-    .cnvb12 .cnvbn.rsp {
-      display: block;
-      flex-basis: 100%; }
-      .cnvb12 .cnvbn.rsp .cdrpc {
-        position: relative;
-        width: 100%; }
-    .cnvb12 .cnvbn.rspe {
-      align-items: center;
-      display: flex;
-      flex-basis: 100%;
-      flex-direction: column; } }
+  .cnvb12 {
+    justify-content: space-between; }
+    .cnvb12 .cnvbt {
+      display: block; }
+    .cnvb12 .cnvbn {
+      display: none; }
+      .cnvb12 .cnvbn.rsp {
+        display: block;
+        flex-basis: 100%; }
+        .cnvb12 .cnvbn.rsp .cdrpc {
+          position: relative;
+          width: 100%; } }
 @media (max-width: 1500px) {
-  .cnvb15 .cnvbt {
-    display: block; }
-  .cnvb15 .cnvbn {
-    display: none; }
-    .cnvb15 .cnvbn.rsp {
-      display: block;
-      flex-basis: 100%; }
-      .cnvb15 .cnvbn.rsp .cdrpc {
-        position: relative;
-        width: 100%; }
-    .cnvb15 .cnvbn.rspe {
-      align-items: center;
-      display: flex;
-      flex-basis: 100%;
-      flex-direction: column; } }
+  .cnvb15 {
+    justify-content: space-between; }
+    .cnvb15 .cnvbt {
+      display: block; }
+    .cnvb15 .cnvbn {
+      display: none; }
+      .cnvb15 .cnvbn.rsp {
+        display: block;
+        flex-basis: 100%; }
+        .cnvb15 .cnvbn.rsp .cdrpc {
+          position: relative;
+          width: 100%; } }
 .vcg {
   --ccd-border: var(--cc-border);
   --ccd-cc-title: var(--cc);

@@ -16,11 +16,20 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, ICompo
 
 	//
 	private bool _visible;
+	private bool _toggled;
 
 	/// <inheritdoc />
 	protected override void OnParametersSet()
 	{
 		LogIf.ArgumentRequired(Logger, Response, nameof(Response));
+
+		_toggled = false;
+	}
+
+	/// <inheritdoc />
+	protected override void OnAfterRender(bool firstRender)
+	{
+		_toggled = false;
 	}
 
 	/// <inheritdoc />
@@ -148,25 +157,31 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, ICompo
 		 */
 
 		// 토글 먼저
-		builder.OpenElement(0, "button");
-		builder.AddAttribute(1, "class", "cnvbt");
-		builder.AddAttribute(2, "type", "button");
-		builder.AddAttribute(3, "aria-expanded", _visible.ToHtml());
-		builder.AddAttribute(4, "aria-label", "Navbar toggle");
-		builder.AddAttribute(5, "onclick", HandleButtonOnClick);
-		builder.AddEventStopPropagationAttribute(6, "onclick", true);
-		// 토글 프래그먼트를 추가한다면... 넣고 지금은 그냥 기본 사양으로
+		if (!_toggled)
+		{
+			builder.OpenElement(0, "button");
+			builder.AddAttribute(1, "class", "cnvbt");
+			builder.AddAttribute(2, "type", "button");
+			builder.AddAttribute(3, "aria-expanded", _visible.ToHtml());
+			builder.AddAttribute(4, "aria-label", "Navbar toggle");
+			builder.AddAttribute(5, "onclick", HandleButtonOnClick);
+			builder.AddEventStopPropagationAttribute(6, "onclick", true);
+			// 토글 프래그먼트를 추가한다면... 넣고 지금은 그냥 기본 사양으로
 
-		// 토글 아이콘
-		builder.OpenElement(7, "span"); // span, 아이콘
-		builder.AddAttribute(8, "class", _visible ? "ic-x" : "ic-m");
-		builder.CloseElement();
+			// 토글 아이콘
+			builder.OpenElement(7, "span"); // span, 아이콘
+			builder.AddAttribute(8, "class", _visible ? "ic-x" : "ic-m");
+			builder.CloseElement();
 
-		builder.CloseElement(); // button, 토글
+			builder.CloseElement(); // button, 토글
+
+			_toggled = true;
+		}
 
 		// 메뉴
 		builder.OpenElement(10, "nav"); // nav, 메뉴
 		builder.AddAttribute(11, "class", Cssc.Class("cnvbn", _visible.IfTrue("rsp"), menu.Class));
+		builder.AddMultipleAttributes(12, menu.UserAttrs);
 
 		// 렌더러는 의미 없음
 		builder.OpenComponent<CascadingValue<NavBar>>(13);
