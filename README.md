@@ -36,3 +36,4 @@
     + GLine
     + GBlock
   - Card (← Lead / Menu / Tail)
+  - Stacks

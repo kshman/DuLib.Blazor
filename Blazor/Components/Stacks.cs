@@ -3,7 +3,7 @@
 /// <summary>
 /// 스택 리스트
 /// </summary>
-public abstract class Stacks : ComponentProp/*, IComponentAgent*/
+public class Stacks : ComponentProp/*, IComponentAgent*/
 {
 	[Parameter] public RenderFragment? ChildContent { get; set; }
 	[Parameter] public bool Border { get; set; }
