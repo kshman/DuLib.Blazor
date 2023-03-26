@@ -1,0 +1,29 @@
+﻿@import "_variable";
+
+// 루트
+:root {
+  // 색깔
+  --bg: #{$bg};
+  --cc: #{$cc};
+  --cc-inv: #{$cc-inv};
+  --cc-border: #{$cc-border};
+  --cc-hover: #{$cc-hover};
+  --cc-focus: #{$cc-focus};
+  --cc-active: #{$cc-active};
+  --cc-accent: #{$cc-accent};
+  --cc-panel: #{$cc-dark};
+  --cc-normal: #{$cc-semi-dark};
+}
+
+// 희게
+[data-theme=light] {
+  --bg: #{$cc-light};
+  --cc: #{$cc-dark};
+  --cc-inv: #{$cc-black};
+  --cc-border: #dee2d6;
+  --cc-hover: #b8b8bf;
+  //--cc-focus: #{$cc-focus};
+  --cc-active: #d0d0d9;
+  --cc-panel: #{$cc-light};
+  --cc-normal: #{$cc-semi-light};
+}

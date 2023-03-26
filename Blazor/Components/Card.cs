@@ -28,7 +28,7 @@ public class Card : ComponentProp, IComponentRenderer/*, IComponentAgent*/
 	{
 		// 대신 그려주는거 쓰자
 		Renderer.CascadingTag(builder, this, "div",
-			Cssc.Class("ccd", Border.IfTrue("bdr")),
+			Cssc.Class("vcg ccd", Border.IfTrue("bdr")),
 			ChildContent, UserAttrs);
 	}
 

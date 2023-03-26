@@ -3,6 +3,8 @@
 
 // 툴팁
 [tooltip] {
+  --tooltip-cc: #{$cc-white};
+  --tooltip-bg: #ff6a00;
   position: relative;
   //
   &:after, &:before {
@@ -24,12 +26,12 @@
     content: attr(tooltip);
     display: inline-block;
     width: auto;
-    background: #{$digital-bg};
+    background: var(--tooltip-bg);
     border: 0;
     border-radius: .2rem;
     font-size: .8rem;
     line-height: 1;
-    color: #{$cc-white};
+    color: var(--tooltip-cc);
     text-align: center;
     letter-spacing: inherit;
     white-space: nowrap;
@@ -44,7 +46,7 @@
     margin-top: 0;
     border-width: 0;
     border-style: solid;
-    border-color: transparent transparent #{$digital-bg};
+    border-color: transparent transparent var(--tooltip-bg);
   }
   //
   &:hover:after, &:hover:before {

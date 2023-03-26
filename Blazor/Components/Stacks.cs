@@ -14,7 +14,7 @@ public class Stacks : ComponentProp/*, IComponentAgent*/
 	{
 		// 대신 그려주는거 쓰자
 		Renderer.CascadingTag(builder, this, "div",
-			Cssc.Class("cstk", Border.IfTrue("bdr"), Numbered.IfTrue("nmd")),
+			Cssc.Class("vcg cstk", Border.IfTrue("bdr"), Numbered.IfTrue("nmd")),
 			ChildContent, UserAttrs);
 	}
 

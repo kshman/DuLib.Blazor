@@ -58,6 +58,34 @@ $space-spacing: .5rem;
   }
 }
 
+// 색깔 light mixin
+@mixin variant-color-light($name, $cc, $bg, $hover, $active, $border: transparent) {
+  [data-theme="light"] .vs#{$name} {
+    background: $bg;
+    border: 1px solid $border;
+    color: $cc;
+    @content;
+    // 호버
+    &:hover, &:focus {
+      background: $hover;
+    }
+    // 액티브
+    &:active, &.active {
+      background: $active;
+    }
+  }
+  // 낮은색
+  [data-theme="light"] .vd#{$name} {
+    background: $bg;
+    color: $cc;
+  }
+  // 높은색
+  [data-theme="light"] .vu#{$name} {
+    background: $active;
+    color: $cc;
+  }
+}
+
 // 아웃라인 mixin
 @mixin variant-outline($name, $cc, $bg, $hcc, $hbg, $acc, $abg) {
   .vs#{$name} {
@@ -87,15 +115,6 @@ $space-spacing: .5rem;
     background: transparent;
     border: 1px solid $abg;
     color: $acc;
-  }
-}
-
-// 배경 / 글자(선택)
-@mixin mi-bgcc($bg, $cc: 0) {
-  background: $bg;
-
-  @if ($cc != 0) {
-    color: $cc;
   }
 }
 

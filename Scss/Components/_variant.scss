@@ -2,45 +2,23 @@
 @import "../_mixin.scss";
 
 // 보통
-@include variant-color(nrm, $normal-cc, $normal-bg, $normal-hover, $normal-active);
+@include variant-color(nrm, var(--cc), var(--cc-normal), var(--cc-hover), var(--cc-active));
 
 // 화사하기
-@include variant-color(spn, $splend-cc, $splend-bg, $splend-hover, $splend-active);
+@include variant-color(spn, $cc, #16424e, #126072, #16768c);
 
 // 심플
-@include variant-color(sme, $simple-cc, $simple-bg, $simple-hover, $simple-active);
+@include variant-color(sme, var(--cc), transparent, transparent, var(--cc-active));
 
 // 아웃라인
-@include variant-outline(oue, $cc, $normal-bg, $cc, $normal-hover, $cc-accent, $normal-active);
+@include variant-outline(oue, var(--cc), var(--cc-normal), var(--cc), var(--cc-hover), var(--cc-accent), var(--cc-active));
 
 // 프라이머리
-@include variant-color(pri, $primary-cc, $primary-bg, $primary-hover, $primary-active);
+@include variant-color(pri, $cc, #023b8f, #012e7f, #0360b9);
 
 // 디지틀
-@include variant-color(dgt, $digital-cc, $digital-bg, $digital-hover, $digital-active);
+@include variant-color(dgt, $cc, #ff6a00, #CA3E12, #FF4644);
 
-
-// 뱃지
-.cbdg {
-  display: inline-block;
-  padding: #{$bdg-padding};
-  border-radius: #{$bdg-border-radius};
-  font-size: #{$bdg-font-size};
-  font-weight: #{$bdg-font-weight};
-  line-height: 1;
-  white-space: nowrap;
-  vertical-align: baseline;
-  // 빈거
-  &:empty {
-    display: none;
-  }
-  // 동글
-  &.dgrm {
-    border-radius: #{$bdg-dgrm-radius};
-  }
-  // 눌러 안 뺏지
-  .cbtn & {
-    position: relative;
-    top: -1px;
-  }
-}
+// 라이트 테마
+@include variant-color-light(spn, $cc, #0b7b6a, #0c8473, #0d9382);
+@include variant-color-light(pri, $cc, #0360b9, #023b8f, #012e7f);

@@ -38,7 +38,7 @@ public class Badge : ComponentBlock
 		 */
 
 		builder.OpenElement(0, "div");
-		builder.AddAttribute(1, "class", GetCssClass("cbdg", Round.IfTrue("dgrm")));
+		builder.AddAttribute(1, "class", GetCssClass("vnulo cbdg", Round.IfTrue("dgrm")));
 		builder.AddAttribute(2, "style", _style);
 		builder.AddMultipleAttributes(3, UserAttrs);
 		builder.AddContent(4, ChildContent);

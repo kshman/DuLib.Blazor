@@ -2,6 +2,11 @@
  * DuLib.Blazor cascading style sheet, by ksh 2023
  */
 
+//
+@import "_variable";
+@import "_mixin";
+@import "_root";
+
 // 확장
 @import "Extends/_extend";
 @import "Extends/_refine";
@@ -12,7 +17,7 @@
 @import "Components/_variant";
 @import "Components/_container";
 @import "Components/_grid";
-@import "Components/_btn";
+@import "Components/_nulo";
 @import "Components/_tabs";
 @import "Components/_nav";
 @import "Components/_cardlist";

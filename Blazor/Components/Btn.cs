@@ -176,6 +176,7 @@ public abstract class Nulo : ComponentProp
 				additional);
 #else
 		return Cssc.Class(
+			"vnulo",
 			Pseudo.IfTrue("usp"),
 			defVariant
 				? (Variant ?? Settings.Variant).ToCss()

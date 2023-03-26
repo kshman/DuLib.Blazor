@@ -1,5 +1,17 @@
-﻿@import "../_variable.scss";
-@import "../_mixin.scss";
+﻿//
+.vcg {
+  //  카드
+  --ccd-border: var(--cc-border);
+  --ccd-cc-title: var(--cc);
+  --ccd-cc-subtitle: var(--cc-border);
+  --ccd-cc-lead: var(--cc);
+  --ccd-cc-tail: var(--cc);
+  --ccd-bg-lead: var(--cc-hover);
+  --ccd-bg-tail: var(--cc-hover);
+  --ccd-shadow: rgba(#fff, .2);
+  // 스택
+  --cstk-border: var(--cc-border);
+}
 
 //  카드
 .ccd {
@@ -7,11 +19,11 @@
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  border: 1px solid #{$card-border};
+  border: 1px solid var(--ccd-border);
   transition: transition(.3s, ease, box-shadow);
   // 호버
   &:hover {
-    box-shadow: 0 4px 8px 0 #{$card-cc-shadow};
+    box-shadow: 0 4px 8px 0 var(--ccd-shadow);
   }
   // 이미지
   &i {
@@ -21,12 +33,14 @@
   &h {
     padding: .5rem;
     margin-bottom: 0;
-    background: #{$card-bg-lead};
+    color: var(--ccd-cc-lead);
+    background: var(--ccd-bg-lead);
   }
   // 푸터
   &f {
     padding: .5rem;
-    background: #{$card-bg-tail};
+    color: var(--ccd-cc-tail);
+    background: var(--ccd-bg-tail);
   }
   // 콘텐트
   &c {
@@ -45,23 +59,23 @@
   // 타이틀
   &tm {
     margin-bottom: 1rem;
-    color: #{$card-cc-title};
+    color: var(--ccd-cc-title);
   }
   // 서브 타이틀
   &ts {
     margin-top: -.75rem;
     margin-bottom: 1rem;
-    color: #{$card-cc-subtitle};
+    color: var(--ccd-cc-subtitle);
   }
   // 아이템
-  /*&m {
-    margin-top: 0;
-    margin-bottom: 1rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }*/
+  //&m {
+  //  margin-top: 0;
+  //  margin-bottom: 1rem;
+  //
+  //  &:last-child {
+  //    margin-bottom: 0;
+  //  }
+  //}
   // 오버레이
   &o {
     position: absolute;
@@ -75,11 +89,11 @@
   &.bdr {
     // 헤더
     & .ccdh {
-      border-bottom: 1px solid #{$card-border};
+      border-bottom: 1px solid var(--ccd-border);
     }
     // 푸터
     & .ccdf {
-      border-top: 1px solid #{$card-border};
+      border-top: 1px solid var(--ccd-border);
     }
   }
 }
@@ -96,10 +110,10 @@
     margin-bottom: 0;
     display: block;
     width: 100%;
-    padding:.5rem;
+    padding: .5rem;
     text-align: left;
     border-radius: 0;
-    border-bottom: 1px solid #{$stack-border};
+    border-bottom: 1px solid var(--cstk-border);
     // 마지막꺼 보더 안 넣음
     &:last-child {
       border-bottom: 0;
@@ -116,6 +130,6 @@
   }
   // 모서리
   &.bdr {
-    border: 1px solid #{$stack-border};
+    border: 1px solid var(--cstk-border);
   }
 }

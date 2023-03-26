@@ -35,7 +35,7 @@ public class PvTabs : ComponentContainer<Subset>
 
 		// 탭 컨테이너
 		builder.OpenElement(10, "div");
-		builder.AddAttribute(11, "class", Cssc.Class("cpvt", $"ld{count}", Border.IfTrue("bdr")));
+		builder.AddAttribute(11, "class", Cssc.Class("vtab cpvt", $"ld{count}", Border.IfTrue("bdr")));
 
 		// 탭 눌러
 		for (var i = 0; i < count; i++)

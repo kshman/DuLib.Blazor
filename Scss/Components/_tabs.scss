@@ -1,6 +1,15 @@
 ﻿@import "../_variable.scss";
 @import "../_mixin.scss";
 
+$ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="16" height="16" viewBox="0 0 8 8"%3E%3Cpath fill="%236ea8fe" d="M1.5 1L0 2.5l4 4l4-4L6.5 1L4 3.5L1.5 1z"%2F%3E%3C%2Fsvg%3E');
+
+.vtab {
+  --ctab-bdr: var(--cc-border);
+  --cacd-bdr: var(--cc-border);
+  --cacd-ic-after: #{$ic-after};
+  --cpvt-bdr: var(--cc-border);
+}
+
 // 폴드탭 (일명 아코디언)
 .cacd {
   // 아이템
@@ -19,7 +28,7 @@
     cursor: pointer;
     // 애프터 (화살표)
     &::after {
-      @include mi-icon(#{$accd-ic-after}, right) {
+      @include mi-icon(var(--cacd-ic-after), right) {
         margin-left: auto;
         transition: transition(.15s, ease-in-out, transform);
       }
@@ -42,7 +51,7 @@
   // 모서리
   &.bdr {
     .cacdi {
-      border: 1px solid #{$accd-border};
+      border: 1px solid var(--cacd-bdr);
       // 첫번째 제외 항목
       &:not(:first-of-type) {
         border-top: 0;
@@ -135,7 +144,7 @@
   &.bdr {
     // 버튼 모서리
     .cpvtlb {
-      border: 1px solid #{$tab-border};
+      border: 1px solid var(--cpvt-bdr);
       // 첫번째가 아니면 왼쪽 없앰
       &:not(:first-of-type) {
         border-left: 0;
@@ -143,7 +152,7 @@
     }
     // 패널 모서리
     .cpvtp {
-      border: 1px solid #{$tab-border};
+      border: 1px solid var(--cpvt-bdr);
     }
   }
 }
@@ -178,7 +187,7 @@
   &.bdr {
     // 버튼 모서리
     .ctabb {
-      border: 1px solid #{$tab-border};
+      border: 1px solid var(--ctab-bdr);
       // 첫번째가 아니면 왼쪽 없앰
       &:not(:first-of-type) {
         border-left: 0;
@@ -186,7 +195,7 @@
     }
     // 패널 모서리
     .ctabp {
-      border: 1px solid #{$tab-border};
+      border: 1px solid var(--ctab-bdr);
     }
   }
 }

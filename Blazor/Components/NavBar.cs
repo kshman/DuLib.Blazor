@@ -43,6 +43,7 @@ public class NavBar : ComponentProp, IComponentAgent, IComponentResponse, ICompo
 		 */
 
 		var css = Cssc.Class(
+			"vnv",
 			Variant?.ToCss(Lead ?? VarLead.Down),
 			"cnvb",
 			Response?.ToCssNavBar(),
