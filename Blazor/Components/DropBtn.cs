@@ -92,7 +92,6 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 		{
 			builder.OpenElement(20, "nav");
 			builder.AddAttribute(21, "class", Cssc.Class(
-				"vnulo",
 				"cdrpc",
 				Border.IfTrue("bdr"),
 				Right.IfTrue("rgt"),
