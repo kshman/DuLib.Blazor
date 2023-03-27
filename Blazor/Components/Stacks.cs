@@ -14,7 +14,7 @@ public class Stacks : ComponentProp/*, IComponentAgent*/
 	{
 		// 대신 그려주는거 쓰자
 		Renderer.CascadingTag(builder, this, "div",
-			Cssc.Class("vcg cstk", Border.IfTrue("bdr"), Numbered.IfTrue("nmd")),
+			Cssc.Class("cstk", Border.IfTrue("bdr"), Numbered.IfTrue("nmd")),
 			ChildContent, UserAttrs);
 	}
 
@@ -23,12 +23,12 @@ public class Stacks : ComponentProp/*, IComponentAgent*/
 	bool IComponentAgent.SelfClose => false;
 
 	/// <inheritdoc />
-	string? IComponentAgent.GetRoleClass(ComponentRole role) => role switch
+	string? IComponentAgent.GetRoleClass(ComponentRole role, string? baseClass) => role switch
 	{
 		ComponentRole.Block or
 		ComponentRole.Text or
-		ComponentRole.Image or
-		ComponentRole.Link => "cstkm",
+		ComponentRole.Image => "cstkm",
+		ComponentRole.Link => Cssc.Class(baseClass, "cstkm"),
 		_ => null,
 	};
 	#endregion*/

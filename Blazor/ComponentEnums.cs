@@ -16,9 +16,10 @@ public enum ComponentRole
 	Badge,
 
 	// 콘텐트 
+	Menu,
 	Lead,
 	Tail,
-	Menu,
+	Toggle,
 }
 
 
@@ -33,6 +34,7 @@ public enum Variant
 	Outline,
 	Primary,
 	Digital,
+	Dark,
 }
 
 
@@ -58,19 +60,6 @@ public enum Responsive
 	W12,
 	W15,
 	Full,
-}
-
-/// <summary>
-/// 리스폰시브가 너무 길어서 축약판. <br/>
-/// Red Mage가 아님 Responsive Dimension임
-/// </summary>
-public enum Rdm
-{
-	None,
-	W6,
-	W9,
-	W12,
-	W15,
 }
 
 /// <summary>

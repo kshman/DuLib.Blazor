@@ -1,48 +1,46 @@
-﻿@import "../_variable.scss";
-@import "../_mixin.scss";
+﻿@import "../_mixin.scss";
 
-$ic-m: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="22" height="22" viewBox="0 0 8 8"%3E%3Cpath fill="%23fcfcfc" d="M0 1v1h8V1H0zm0 2.97v1h8v-1H0zm0 3v1h8v-1H0z"%2F%3E%3C%2Fsvg%3E');
-$ic-x: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="22" height="22" viewBox="0 0 8 8"%3E%3Cpath fill="%23fcfcfc" d="M1.41 0L0 1.41l.72.72L2.5 3.94L.72 5.72L0 6.41l1.41 1.44l.72-.72l1.81-1.81l1.78 1.81l.69.72l1.44-1.44l-.72-.69l-1.81-1.78l1.81-1.81l.72-.72L6.41 0l-.69.72L3.94 2.5L2.13.72L1.41 0z"%2F%3E%3C%2Fsvg%3E');
-
-// 나브 색깔 고쳐야함
-.vnv {
-  --cnv-cc-hover: #{$cc-semi-light};
-  --cnv-cc-active: #{$cc};
-  --cnv-cc-disabled: #{$cc-dark};
-  --cnv-cc-tgl: #{$cc-white};
-  --cnv-cc-brd: #{$cc-white};
-  --cnv-cc-lst: #{$cc};
-  --cnv-bg: transparent;
-  --cnv-bg-hover: inherit;
-  --cnv-bg-active: #{$cc-accent};
-  --cnv-border: #{$cc-border};
-  --cnv-shd-hover: rgba(#fff, .1);
-  --cnv-ic-m: #{$ic-m};
-  --cnv-ic-x: #{$ic-x};
+// 나브
+.cnv {
+  // 공통
+  --nv-cc: var(--cc-cc);
+  --nv-bg: var(--cc-bg);
+  --nv-hov-cc: #{$cc-semi-light};
+  --nv-hov-bg: var(--cc-hov);
+  --nv-atv-cc: #{$cc-light};
+  --nv-atv-bg: #{$cc-accent};
+  // 나브바
+  --nv-tgl-cc: var(--vt-cc);
+  --nv-tgl-bg: var(--vt-bg);
+  --nv-hov-shadow: rgba(255,255,255,.1);
+  --nv-ic-m: #{$ic-menu};
+  --nv-ic-x: #{$ic-close};
 }
+
 
 // 나브 버튼. 버튼인데 나브 쪽이라 여기 있음
 .cnvnr {
   // 속성
-  color: var(--cc);
   display: block;
   padding: .5rem 1rem;
+  color: var(--nv-cc);
+  background: var(--nv-bg);
   text-decoration: none;
-  transition: transition(.15s, ease-in-out, color, background-color);
+  transition: transition-ease(.15s, color, background-color);
   // 호버
   &:hover,
   &:focus {
-    color: var(--cnv-cc-hover);
-    background: var(--cnv-bg-hover);
+    color: var(--nv-hov-cc);
+    background: var(--nv-hov-bg);
   }
   // 액티브
   &.active {
-    color: var(--cnv-cc-active);
-    background: var(--cnv-bg-active);
+    color: var(--nv-atv-cc);
+    background: var(--nv-atv-bg);
   }
   // 끔
   &.disabled {
-    color: var(--cnv-cc-disabled);
+    color: var(--cc-dsd);
     cursor: default;
     pointer-events: none;
   }
@@ -56,32 +54,31 @@ $ic-x: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsv
   flex-wrap: wrap;
   align-items: center;
   padding: .25rem .5rem;
-  background: var(--cnv-bg);
   // 토글 버튼
   &t {
     display: none;
-    padding: .25rem .2rem;
-    transition: transition(.15s, ease-in-out, box-shadow);
-    background: transparent;
+    padding: .2rem .15rem;
+    transition: transition-ease(.15s, box-shadow);
     border: 1px solid transparent;
     border-radius: .375rem;
-    font-size: 1.25rem;
+    font-size: 1rem;
     line-height: 1;
-    color: var(--cnv-cc-tgl);
+    color: var(--nv-tgl-cc);
+    background: var(--nv-tgl-bg);
     // 호버
     &:hover {
       box-shadow: 0 0 0 .2rem;
     }
     // 토글 아이콘 - 메뉴
     & .ic-m {
-      @include mi-icon(var(--cnv-ic-m), $size: 1.5rem) {
+      @include mi-icon(var(--nv-ic-m), $size: 1.5rem) {
         display: inline-block;
         vertical-align: middle;
       }
     }
     // 토글 아이콘 - 닫기
     & .ic-x {
-      @include mi-icon(var(--cnv-ic-x), $size: 1.5rem) {
+      @include mi-icon(var(--nv-ic-x), $size: 1.5rem) {
         display: inline-block;
         vertical-align: middle;
       }
@@ -91,9 +88,10 @@ $ic-x: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsv
   &d {
     display: flex;
     padding: .25rem .5rem .25rem 0;
+    color: var(--vt-cc);
+    background: var(--vt-bg);
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--cnv-cc-brd);
     text-decoration: none; // a용;
     align-items: center;
     white-space: nowrap;
@@ -110,11 +108,12 @@ $ic-x: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsv
     //position: static;
     margin: 0 .1rem;
     padding: .5rem 1rem;
-    color: var(--cnv-cc-lst);
-    background: var(--cnv-bg);
+    color: var(--vt-cc);
+    background: var(--vt-bg);
     // 끔
     &.disabled {
-      color: var(--cnv-cc-disabled);
+      // 이거 색깔 고쳐야함
+      color: #{$cc-dark};
       cursor: default;
       pointer-events: none;
     }
@@ -123,14 +122,15 @@ $ic-x: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsv
   &b {
     border-radius: 4px;
     text-decoration: none;
-    transition: transition(.15s, ease-in-out, color, background-color, box-shadow);
+    transition: transition-ease(.15s, color, background-color, box-shadow);
     // 호버 (포커스는 엄다)
     &:hover {
-      box-shadow: inset 0 0 0 99rem var(--cnv-shd-hover);
+      box-shadow: inset 0 0 0 99rem var(--nv-hov-shadow);
     }
     // 액티브
     &:active, &.active {
-      background: var(--cnv-bg-active);
+      color: var(--nv-atv-cc);
+      background: var(--nv-atv-bg);
     }
   }
   // 드랍 -> 안에 있는 버튼이 cnvbb를 받기 때문에 직접 건드리지 않아도 된다

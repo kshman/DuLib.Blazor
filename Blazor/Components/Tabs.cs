@@ -45,7 +45,7 @@ public class Tabs : ComponentContainer<Subset>
 
 		// 탭 컨테이너
 		builder.OpenElement(10, "div");
-		builder.AddAttribute(11, "class", Cssc.Class("vtab ctab", Border.IfTrue("bdr")));
+		builder.AddAttribute(11, "class", Cssc.Class("ctab", Border.IfTrue("bdr")));
 
 		// 탭 리스트
 		builder.OpenElement(20, "div");

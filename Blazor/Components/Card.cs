@@ -28,7 +28,7 @@ public class Card : ComponentProp, IComponentRenderer/*, IComponentAgent*/
 	{
 		// 대신 그려주는거 쓰자
 		Renderer.CascadingTag(builder, this, "div",
-			Cssc.Class("vcg ccd", Border.IfTrue("bdr")),
+			Cssc.Class("ccrd", Border.IfTrue("bdr")),
 			ChildContent, UserAttrs);
 	}
 
@@ -43,7 +43,7 @@ public class Card : ComponentProp, IComponentRenderer/*, IComponentAgent*/
 			ComponentRole.Block or
 				ComponentRole.Text or
 				ComponentRole.Image or
-				ComponentRole.Link => "ccdm",
+				ComponentRole.Link => "ccrdm",
 			_ => null
 		};
 	#endregion*/
@@ -64,7 +64,7 @@ public class Card : ComponentProp, IComponentRenderer/*, IComponentAgent*/
 	{
 		// 대신 해줘
 		Renderer.Tag(builder, "div",
-			Cssc.Class("ccdh", component.Class),
+			Cssc.Class("ccrdh", component.Class),
 			component.ChildContent,
 			component.UserAttrs);
 		return true;
@@ -75,7 +75,7 @@ public class Card : ComponentProp, IComponentRenderer/*, IComponentAgent*/
 	{
 		// 대신 해줘
 		Renderer.Tag(builder, "div",
-			Cssc.Class("ccdf", component.Class),
+			Cssc.Class("ccrdf", component.Class),
 			component.ChildContent,
 			component.UserAttrs);
 		return true;
@@ -87,27 +87,27 @@ public class Card : ComponentProp, IComponentRenderer/*, IComponentAgent*/
 		if (_place is ImagePlace.Top or ImagePlace.Start or ImagePlace.Overlay)
 		{
 			builder.OpenElement(0, "img");
-			builder.AddAttribute(1, "class", "ccdi");
+			builder.AddAttribute(1, "class", "ccrdi");
 			builder.AddAttribute(2, "src", Image);
 			builder.AddAttribute(3, "alt", Text);
 			builder.CloseElement();
 		}
 
 		builder.OpenElement(10, "div");
-		builder.AddAttribute(11, "class", _place is ImagePlace.Overlay ? "ccdo" : "ccdc");
+		builder.AddAttribute(11, "class", _place is ImagePlace.Overlay ? "ccrdo" : "ccrdc");
 		builder.AddMultipleAttributes(12, component.UserAttrs);
 
 		if (Title.TestHave(true))
 		{
 			builder.OpenElement(13, "h5");
-			builder.AddAttribute(14, "class", "ccdtm");
+			builder.AddAttribute(14, "class", "ccrdtm");
 			builder.AddContent(15, Title);
 			builder.CloseElement();
 
 			if (SubTitle.TestHave(true))
 			{
 				builder.OpenElement(16, "h6");
-				builder.AddAttribute(17, "class", "ccdts");
+				builder.AddAttribute(17, "class", "ccrdts");
 				builder.AddContent(18, SubTitle);
 				builder.CloseElement();
 			}
@@ -119,7 +119,7 @@ public class Card : ComponentProp, IComponentRenderer/*, IComponentAgent*/
 		if (_place is ImagePlace.Bottom or ImagePlace.End)
 		{
 			builder.OpenElement(20, "img");
-			builder.AddAttribute(21, "class", "ccdi");
+			builder.AddAttribute(21, "class", "ccrdi");
 			builder.AddAttribute(22, "src", Image);
 			builder.AddAttribute(23, "alt", Text);
 			builder.CloseElement();

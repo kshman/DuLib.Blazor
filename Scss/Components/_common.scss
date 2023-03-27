@@ -5,3 +5,76 @@
   width: auto;
 }
 
+
+// 뱃지
+.cbdg {
+  //
+  --bdg-rad: .375rem;
+  --bdg-fsz: .7rem;
+  --bdg-fwgt: 500;
+  --bdg-pg: .3rem .65rem;
+  --bdg-dgrm: 50rem;
+  // 속성
+  display: inline-block;
+  padding: var(--bdg-pg);
+  border-radius: var(--bdg-rad);
+  font-size: var(--bdg-fsz);
+  font-weight: var(--bdg-fwgt);
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+  // 빈거
+  &:empty {
+    display: none;
+  }
+  // 동글
+  &.dgrm {
+    border-radius: var(--bdg-dgrm);
+  }
+  // 눌러 안 뺏지
+  .cbtn & {
+    position: relative;
+    top: -1px;
+  }
+}
+
+
+// 스택
+.cstk {
+  //
+  --stk-bdr: var(--cc-bdr);
+  // 속성
+  //display: flex;
+  //flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  // 아이템
+  & > * {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    width: 100%;
+    padding: .5rem;
+    text-align: left;
+    text-decoration: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--stk-bdr) !important; // 임포턴트 안쓸 방법 엄나
+    // 마지막꺼 보더 안 넣음
+    &:last-child {
+      border-bottom: 0 !important;
+    }
+  }
+  // 번호
+  &.nmd {
+    counter-reset: cscs;
+    // 붙이기
+    & > *::before {
+      content: counters(cscs, ".") ". ";
+      counter-increment: cscs;
+    }
+  }
+  // 모서리
+  &.bdr {
+    border: 1px solid var(--stk-bdr);
+  }
+}

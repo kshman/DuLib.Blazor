@@ -1,141 +1,54 @@
-﻿//@import "_variable.scss";
-//@import "_mixin.scss";
+﻿// 리스트 만들기
+@mixin value-from-dic($name, $lead, $dic) {
+  @each $k, $v in $dic {
+    #{$name}#{$k} {
+      #{$lead}: #{$v};
+    }
+  }
+}
+
+// rem 만들기 (패딩, 마진)
+@mixin rem-h-1($name, $lead) {
+  #{$name}h {
+    #{$lead}: .5rem;
+  }
+
+  #{$name}#{1} {
+    #{$lead}: 1rem;
+  }
+}
+
+@mixin rem-h-1-tbse($name, $lead) {
+  @include rem-h-1($name, $lead);
+  $tbse: t,b,s,e;
+  //
+  @each $t in $tbse {
+    $n: #{$name}#{$t};
+    @include rem-h-1($n, $lead);
+  }
+}
 
 // 저스티파이
-.sjfc {
-  &s {
-    justify-content: start;
-  }
-
-  &e {
-    justify-content: end;
-  }
-
-  &c {
-    justify-content: center;
-  }
-
-  &eb {
-    justify-content: space-between;
-  }
-
-  &ea {
-    justify-content: space-around;
-  }
-
-  &ee {
-    justify-content: space-evenly;
-  }
-}
+$justifies: (s: start, e:end, c:center, eb:space-between, ea:space-around, ee:space-evenly);
+@include value-from-dic(".sjc", "justify-content", $justifies);
 
 // 패딩
-.sp {
-  // .5
-  &h {
-    padding: .5rem;
-  }
-  // 1
-  &1 {
-    padding: 1rem;
-  }
-  // 왼쪽
-  &l {
-    // .5
-    &h {
-      padding-left: .5rem;
-    }
-    // 1
-    &1 {
-      padding-left: 1rem;
-    }
-  }
-  // 오른쪽
-  &r {
-    // .5
-    &h {
-      padding-right: .5rem;
-    }
-    // 1
-    &1 {
-      padding-right: 1rem;
-    }
-  }
-  // 위
-  &t {
-    // .5
-    &h {
-      padding-top: .5rem;
-    }
-    // 1
-    &1 {
-      padding-bottom: 1rem;
-    }
-  }
-  // 아래
-  &b {
-    // .5
-    &h {
-      padding-bottom: .5rem;
-    }
-    // 1
-    &1 {
-      padding-bottom: 1rem;
-    }
-  }
-}
+//@include rem-h-1-tbse(".sp", "padding");
 
 // 마진
-.sm {
-  // .5
-  &h {
-    margin: .5rem;
-  }
-  // 1
-  &1 {
-    margin: 1rem;
-  }
-  // 왼쪽
-  &l {
-    // .5
-    &h {
-      margin-left: .5rem;
-    }
-    // 1
-    &1 {
-      margin-left: 1rem;
-    }
-  }
-  // 오른쪽
-  &r {
-    // .5
-    &h {
-      margin-right: .5rem;
-    }
-    // 1
-    &1 {
-      margin-right: 1rem;
-    }
-  }
-  // 위
-  &t {
-    // .5
-    &h {
-      margin-top: .5rem;
-    }
-    // 1
-    &1 {
-      margin-bottom: 1rem;
-    }
-  }
-  // 아래
-  &b {
-    // .5
-    &h {
-      margin-bottom: .5rem;
-    }
-    // 1
-    &1 {
-      margin-bottom: 1rem;
-    }
-  }
+//@include rem-h-1-tbse(".sm", "margin");
+.smta {
+  margin-top: auto;
+}
+
+.smba {
+  margin-bottom: auto;
+}
+
+.smsa {
+  margin-left: auto;
+}
+
+.smea {
+  margin-right: auto;
 }

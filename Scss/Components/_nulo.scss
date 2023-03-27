@@ -1,59 +1,9 @@
-﻿// 눌러
-.vnulo {
-  // 뱃지
-  --cbdg-rad: .375rem;
-  --cbdg-fsz: .75rem;
-  --cbdg-fwgt: 700;
-  --cbdg-pg: .3rem .65rem;
-  --cbdg-dgrm: 50rem;
-  // 버튼
-  --cbtn-mn: .3rem 0;
-  --cbtn-pg: .5rem .75rem;
-  --cbtn-rad: .375rem;
-  // 드랍
-  --cdrp-bdr: var(--cc-border);
-  --cdrp-bg: var(--cc-panel);
-  --cdrp-cc: var(--cc);
-  --cdrp-hover: var(--cc-hover);
-  --cdrp-active: var(--cc-active);
-  --cdrp-pg: .5rem 1rem;
-  --cdrp-shd: rgba(0,0,0,.3);
-}
-
-// 사용자 정의
-.usp {
-  --usp-cbtn-hover: rgba(51,51,51,.2);
-  --usp-cbtn-active: rgba(255,255,255,.1);
-}
-
-// 뱃지
-.cbdg {
-  display: inline-block;
-  padding: var(--cbdg-pg);
-  border-radius: var(--cbdg-rad);
-  font-size: var(--cbdg-fsz);
-  font-weight: var(--cbdg-fwgt);
-  line-height: 1;
-  white-space: nowrap;
-  vertical-align: baseline;
-  // 빈거
-  &:empty {
-    display: none;
-  }
-  // 동글
-  &.dgrm {
-    border-radius: var(--cbdg-dgrm);
-  }
-  // 눌러 안 뺏지
-  .cbtn & {
-    position: relative;
-    top: -1px;
-  }
-}
-
-
-// 버튼
+﻿// 버튼
 .cbtn {
+  //
+  --btn-mn: .3rem 0;
+  --btn-pg: .5rem .75rem;
+  --btn-rad: .375rem;
   // 속성
   box-shadow: none;
   outline: none;
@@ -62,10 +12,10 @@
   overflow: visible;
   width: auto;
   height: auto;
-  margin: var(--cbtn-mn);
-  padding: var(--cbtn-pg);
-  transition: transition(.15s, ease-out, color, background-color, border-color, box-shadow);
-  border-radius: var(--cbtn-rad);
+  margin: var(--btn-mn);
+  padding: var(--btn-pg);
+  transition: transition-ease(.15s, color, background-color, border-color, box-shadow);
+  border-radius: var(--btn-rad);
   text-align: center;
   text-decoration: none;
   text-transform: none;
@@ -74,21 +24,31 @@
 }
 
 .usp.cbtn {
+  --usp-btn-hov: rgba(51,51,51,.2);
+  --usp-btn-atv: rgba(255,255,255,.1);
   // 호버&포커스
   &:focus,
   &:hover {
-    box-shadow: inset 0 0 0 99rem var(--usp-cbtn-hover);
+    box-shadow: inset 0 0 0 99rem var(--usp-btn-hov);
   }
   // 액티브
   &:active,
   &.active {
-    box-shadow: inset 0 0 0 99rem var(--usp-cbtn-active);
+    box-shadow: inset 0 0 0 99rem var(--usp-btn-atv);
   }
 }
 
 
 // 드랍다운 - 누름은 cbtn을 쓰므로 여기서 처리 안함
+// 바리언트에 panel을 추가하고 바리언트에 맞춰 그리도록 변경해야함
 .cdrp {
+  --drp-pg: .5rem 1rem;
+  --drp-cc: var(--cc-cc);
+  --drp-bg: var(--cc-pnl);
+  --drp-bdr: var(--cc-bdr);
+  --drp-shd: var(--cc-shd);
+  --drp-hov: var(--cc-hov);
+  --drp-atv: var(--cc-atv);
   //
   display: inline-block;
   position: relative;
@@ -98,10 +58,10 @@
   }
   // 드랍 콘텐트
   &c {
-    background: var(--cdrp-bg);
-    color: var(--cdrp-cc);
+    color: var(--drp-cc);
+    background: var(--drp-bg);
     border: 1px solid transparent;
-    box-shadow: 0 .5rem 1rem 0 var(--cdrp-shd);
+    box-shadow: 0 .5rem 1rem 0 var(--drp-shd);
     display: none;
     margin: 0;
     min-width: 10rem;
@@ -111,7 +71,7 @@
     z-index: 1;
     // 모서리
     &.bdr {
-      border-color: var(--cdrp-bdr);
+      border-color: var(--drp-bdr);
     }
     // 오른쪽 정렬
     &.rgt {
@@ -122,14 +82,14 @@
   // 아이템
   &m {
     display: block;
-    padding: var(--cdrp-pg);
+    padding: var(--drp-pg);
     white-space: nowrap;
   }
   // 가로줄
   &d {
     display: block;
     border: 0;
-    border-top: 1px solid var(--cdrp-bdr);
+    border-top: 1px solid var(--drp-bdr);
     height: 0;
     padding: 0;
     margin: .1rem 0;
@@ -139,23 +99,22 @@
   // 버튼
   &b {
     display: block;
-    padding: var(--cdrp-pg);
-    transition: transition(.15s, ease-in-out, background-color);
-    background: inherit; // 안하면 나브바 색깔 이상해짐;
+    padding: var(--drp-pg);
     color: inherit; // 안하면 나브바 색깔 이상해짐;
-    //text-align: inherit;
+    background: inherit; // 안하면 나브바 색깔 이상해짐;
     text-decoration: none; // 안하면 나브바에서 밑줄 나옴;
     white-space: nowrap;
+    transition: transition-ease(.15s, background-color);
     // 호버 & 포커스
     &:hover,
     &:focus {
-      background: var(--cdrp-hover);
+      background: var(--drp-hov);
       text-decoration: none;
     }
     // 액티브
     &:active,
     &.active {
-      background: var(--cdrp-active);
+      background: var(--drp-atv);
     }
   }
 }

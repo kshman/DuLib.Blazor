@@ -63,7 +63,7 @@ public class FoldTabs : ComponentContainer<Subset>
 
 		// 컨테이너
 		builder.OpenElement(10, "div");
-		builder.AddAttribute(11, "class", Cssc.Class("vtab cacd", Border.IfTrue("bdr")));
+		builder.AddAttribute(11, "class", Cssc.Class("cacd", Border.IfTrue("bdr")));
 		builder.AddMultipleAttributes(12, UserAttrs);
 
 		// 아이템

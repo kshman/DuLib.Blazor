@@ -176,12 +176,11 @@ public abstract class Nulo : ComponentProp
 				additional);
 #else
 		return Cssc.Class(
-			"vnulo",
 			Pseudo.IfTrue("usp"),
 			defVariant
 				? (Variant ?? Settings.Variant).ToCss()
 				: Variant?.ToCss(),
-			AgentHandler?.GetRoleClass(TagRole) ?? baseClass,
+			AgentHandler?.GetRoleClass(TagRole, baseClass) ?? baseClass,
 			param1, param2, Class);
 #endif
 	}

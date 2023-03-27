@@ -70,7 +70,7 @@ public abstract class ComponentBlock : ComponentProp
 	{
 		return Cssc.Class(
 			Variant?.ToCss(Lead ?? VarLead.Down),
-			AgentHandler?.GetRoleClass(TagRole) ?? tagClass,
+			AgentHandler?.GetRoleClass(TagRole, tagClass) ?? tagClass,
 			param1, param2, Class);
 	}
 

@@ -5,9 +5,10 @@
 //     Paragraph
 //   Divider
 //   Pix
-//   Content - Menu
+//   Content
 //     Lead
 //     Tail
+//     Menu
 // (ContainerEntry)
 //   Subset
 namespace Du.Blazor.Components;
@@ -127,7 +128,7 @@ public class Pix : ComponentBlock
 			return;
 
 		var css = Cssc.Class(
-			AgentHandler?.GetRoleClass(TagRole),
+			AgentHandler?.GetRoleClass(TagRole, null),
 			AutoSize.IfTrue("cpxa"),
 			Class);
 
@@ -157,6 +158,7 @@ public class Content : ComponentBlock
 {
 	/// <summary>자식 콘텐트</summary>
 	[Parameter] public RenderFragment? ChildContent { get; set; }
+	[Parameter] public Placement? Trailing { get; set; }
 
 	//
 	[Inject] protected ILogger<Content> Logger { get; set; } = default!;
@@ -220,6 +222,43 @@ public class Brand : Lead
 /// </summary>
 public class Menu : Content
 {
+}
+
+
+/// <summary>
+/// 토글
+/// </summary>
+public class Toggle : Content
+{
+	[CascadingParameter] public IComponentToggle? ToggleHandler { get; set; }
+
+	public Toggle()
+		: base(ComponentRole.Toggle)
+	{ }
+
+	/// <inheritdoc />
+	protected override void OnInitialized()
+	{
+		ToggleHandler?.SetToggle(this);
+	}
+
+	//
+	internal void Invalidate()
+	{
+		StateHasChanged();
+	}
+
+	//
+	internal async Task InternalHandleOnClick(MouseEventArgs e)
+	{
+		if (ToggleHandler is not null)
+		{
+			await ToggleHandler.OnToggleAsync(this);
+			StateHasChanged();
+		}
+
+		// 여기 사용자 onclick 넣고 StateHasChanged는 플래그로 만들어서 맨 아래 실행되게 해야함
+	}
 }
 
 

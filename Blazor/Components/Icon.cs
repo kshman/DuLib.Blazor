@@ -29,7 +29,7 @@ public class Icon : ComponentProp
 		else
 		{
 			// 내장 아이콘 https://icon-sets.iconify.design/oi/bolt/
-			_icon = "dzi dzi-bolt";
+			_icon = "dzi dzib";
 		}
 	}
 

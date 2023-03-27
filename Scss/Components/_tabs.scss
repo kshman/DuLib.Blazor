@@ -1,36 +1,30 @@
 ﻿@import "../_variable.scss";
 @import "../_mixin.scss";
 
-$ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="16" height="16" viewBox="0 0 8 8"%3E%3Cpath fill="%236ea8fe" d="M1.5 1L0 2.5l4 4l4-4L6.5 1L4 3.5L1.5 1z"%2F%3E%3C%2Fsvg%3E');
-
-.vtab {
-  --ctab-bdr: var(--cc-border);
-  --cacd-bdr: var(--cc-border);
-  --cacd-ic-after: #{$ic-after};
-  --cpvt-bdr: var(--cc-border);
-}
-
-// 폴드탭 (일명 아코디언)
+// 폴드탭 (아코디언)
 .cacd {
+  //
+  --acd-bdr: var(--cc-bdr);
+  --acd-ic-after: #{$ic-after-arrow};
   // 아이템
   &i {
-    //background: inherit;
     //color: inherit;
+    //background: inherit;
   }
-  // 눌러
+  // 눌러, 모양은 바리언트로
   &b {
     outline: none;
     user-select: none;
     width: 100%;
     padding: .75rem .5rem;
-    transition: transition(.15s, ease-in-out, color, background-color, box-shadow);
+    transition: transition-ease(.15s, color, background-color, box-shadow);
     text-align: left;
     cursor: pointer;
     // 애프터 (화살표)
     &::after {
-      @include mi-icon(var(--cacd-ic-after), right) {
+      @include mi-icon(var(--acd-ic-after), right) {
         margin-left: auto;
-        transition: transition(.15s, ease-in-out, transform);
+        transition: transition-ease(.15s, transform);
       }
     }
     // 애프터 뒤집기
@@ -51,7 +45,7 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
   // 모서리
   &.bdr {
     .cacdi {
-      border: 1px solid var(--cacd-bdr);
+      border: 1px solid var(--acd-bdr);
       // 첫번째 제외 항목
       &:not(:first-of-type) {
         border-top: 0;
@@ -63,18 +57,21 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
 
 // 피벗탭
 .cpvt {
+  //
+  --pvt-bdr: var(--cc-bdr);
+  // 속성
   position: relative;
   overflow: hidden;
   // 라디오
   &ir {
     display: none;
   }
-  // 라벨
+  // 라벨 -> 버튼, 모양은 바리언트로
   &lb {
     width: auto;
     outline: none;
     padding: .5rem 1rem;
-    transition: transition(.15s, ease-in-out, all);
+    transition: transition-ease-in-out(.15s, all);
     cursor: pointer;
     user-select: none;
   }
@@ -87,7 +84,7 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
     padding: 0;
     margin: -1px 0 0 0;
     border-spacing: 0;
-    transition: transition(.2s, ease, all);
+    transition: transition-ease(.2s, all);
     //
     &.i1 {
       margin-left: 100%;
@@ -144,7 +141,7 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
   &.bdr {
     // 버튼 모서리
     .cpvtlb {
-      border: 1px solid var(--cpvt-bdr);
+      border: 1px solid var(--pvt-bdr);
       // 첫번째가 아니면 왼쪽 없앰
       &:not(:first-of-type) {
         border-left: 0;
@@ -152,7 +149,7 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
     }
     // 패널 모서리
     .cpvtp {
-      border: 1px solid var(--cpvt-bdr);
+      border: 1px solid var(--pvt-bdr);
     }
   }
 }
@@ -160,16 +157,18 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
 
 // 탭
 .ctab {
+  //
+  --tab-bdr: var(--cc-bdr);
   // 목록
   &l {
     overflow: hidden;
   }
-  // 눌러
+  // 눌러, 모양은 바리언트로
   &b {
     float: left;
     outline: none;
     padding: .5rem 1rem;
-    transition: transition(.15s, ease-in-out, all);
+    transition: transition-ease-in-out(.15s, all);
     cursor: pointer;
     user-select: none;
   }
@@ -187,7 +186,7 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
   &.bdr {
     // 버튼 모서리
     .ctabb {
-      border: 1px solid var(--ctab-bdr);
+      border: 1px solid var(--tab-bdr);
       // 첫번째가 아니면 왼쪽 없앰
       &:not(:first-of-type) {
         border-left: 0;
@@ -195,7 +194,7 @@ $ic-after: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%
     }
     // 패널 모서리
     .ctabp {
-      border: 1px solid var(--ctab-bdr);
+      border: 1px solid var(--tab-bdr);
     }
   }
 }

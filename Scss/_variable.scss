@@ -6,8 +6,6 @@ $monospace: Consolas, monospace;
 $font-size: 14px;
 $font-weight: 400;
 $line-height: 1.5;
-$bg: #1c1b22;
-$cc: #fbfbfe;
 
 // 반응 크기
 $wrsps: 6, 9, 12, 15;
@@ -21,15 +19,22 @@ $cc-dark: #212529;
 $cc-semi-dark: #2b2a33;
 
 // 기능별 색깔
-$cc-inv: $cc-white;
+$cc-cc: #fbfbfe;
+$cc-bg: #1c1b22;
+$cc-binv: $cc-white;
 $cc-border: #838288;
 $cc-hover: #3f3f43;
 $cc-focus: transparent;
 $cc-active: #545459;
 $cc-accent: #16768c;
+
+// 기타 색깔
 $cc-ex-1: #a9f27d;
 $cc-ex-2: #00ddff;
 
-// 기본 아이콘
+// 아이콘
 $ic-warning: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="14" height="14" viewBox="0 0 8 8"%3E%3Cpath fill="currentColor" d="M3.09 0c-.06 0-.1.04-.13.09L.02 6.9c-.02.05-.03.13-.03.19v.81c0 .05.04.09.09.09h6.81c.05 0 .09-.04.09-.09v-.81c0-.05-.01-.14-.03-.19L4.01.09A.142.142 0 0 0 3.88 0h-.81zM3 3h1v2H3V3zm0 3h1v1H3V6z"%2F%3E%3C%2Fsvg%3E');
 $ic-bolt: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="14" height="14" viewBox="0 0 8 8"%3E%3Cpath fill="currentColor" d="M4 0L1 5h2v3l3-5H4V0z"%2F%3E%3C%2Fsvg%3E');
+$ic-menu: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="22" height="22" viewBox="0 0 8 8"%3E%3Cpath fill="%23fcfcfc" d="M0 1v1h8V1H0zm0 2.97v1h8v-1H0zm0 3v1h8v-1H0z"%2F%3E%3C%2Fsvg%3E');
+$ic-close: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="22" height="22" viewBox="0 0 8 8"%3E%3Cpath fill="%23fcfcfc" d="M1.41 0L0 1.41l.72.72L2.5 3.94L.72 5.72L0 6.41l1.41 1.44l.72-.72l1.81-1.81l1.78 1.81l.69.72l1.44-1.44l-.72-.69l-1.81-1.78l1.81-1.81l.72-.72L6.41 0l-.69.72L3.94 2.5L2.13.72L1.41 0z"%2F%3E%3C%2Fsvg%3E');
+$ic-after-arrow: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="16" height="16" viewBox="0 0 8 8"%3E%3Cpath fill="%236ea8fe" d="M1.5 1L0 2.5l4 4l4-4L6.5 1L4 3.5L1.5 1z"%2F%3E%3C%2Fsvg%3E');

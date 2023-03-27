@@ -12,15 +12,15 @@
 @import "Extends/_refine";
 @import "Extends/_effect";
 
-// 컴포넌트
-@import "Components/_common";
+// 컴포넌트... 순서 중요
 @import "Components/_variant";
 @import "Components/_container";
 @import "Components/_grid";
 @import "Components/_nulo";
 @import "Components/_tabs";
 @import "Components/_nav";
-@import "Components/_cardlist";
+@import "Components/_card";
+@import "Components/_common";
 
 // 어트리뷰트
-@import "Attributes/_tooltip";
+//@import "Attributes/_tooltip";

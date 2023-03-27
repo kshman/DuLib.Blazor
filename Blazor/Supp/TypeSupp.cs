@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Du.Blazor.Components;
 
 namespace Du.Blazor.Supp;
 
@@ -26,30 +25,30 @@ internal static class TypeSupp
 	internal static bool ShouldAwaitTask(this Task task) =>
 		task.Status is not TaskStatus.RanToCompletion and not TaskStatus.Canceled;
 
-	private static string ToCssDesc(this Variant v) => v switch
-	{
-		Variant.Normal => "nrm",
-		Variant.Splendid => "spn",
-		Variant.Simple => "sme",
-		Variant.Outline => "oue",
-		Variant.Primary => "pri",
-		Variant.Digital => "dgt",
-		_ => LogIf.ArgumentOutOfRange<string>(v, nameof(v))
-	};
-
-	internal static string ToCss(this Variant v, VarLead lead = VarLead.Set)
+	internal static string ToCss(this Variant variant, VarLead lead = VarLead.Set)
 	{
 		// s = 전체 세트
 		// d = 낮은색 (default)
-		// u = 밝은색 (active)
+		// w = 밝은색 (active)
 		var l = lead switch
 		{
-			VarLead.Set => 's',
-			VarLead.Down => 'd',
-			VarLead.Up => 'u',
-			_ => LogIf.ArgumentOutOfRange<char>(lead, nameof(lead))
+			VarLead.Set => "vk",
+			VarLead.Down => "vd",
+			VarLead.Up => "vw",
+			_ => LogIf.ArgumentOutOfRange<string>(lead, nameof(lead))
 		};
-		return $"v{l}{v.ToCssDesc()}";
+		var v = variant switch
+		{
+			Variant.Normal => null,
+			Variant.Splendid => "vssp",
+			Variant.Simple => "vsse",
+			Variant.Outline => "vsoe",
+			Variant.Primary => "vspr",
+			Variant.Digital => "vsdt",
+			Variant.Dark => "vsdk",
+			_ => LogIf.ArgumentOutOfRange<string>(variant, nameof(variant))
+		};
+		return v == null ? l : $"{l} {v}";
 	}
 
 	internal static string ToCss(this Responsive e) => e switch
@@ -63,24 +62,36 @@ internal static class TypeSupp
 		_ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
 	};
 
-    internal static string ToCssNavBar(this Responsive e) => e switch
-    {
-        Responsive.W6 => "cnvb6",
-        Responsive.W9 => "cnvb9",
-        Responsive.W12 => "cnvb12",
+	internal static string ToCssNavBar(this Responsive e) => e switch
+	{
+		Responsive.W6 => "cnvb6",
+		Responsive.W9 => "cnvb9",
+		Responsive.W12 => "cnvb12",
 		Responsive.W15 => "cnvb15",
-        _ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
-    };
+		_ => LogIf.ArgumentOutOfRange<string>(e, nameof(e))
+	};
 
 	internal static string ToCss(this Justify j) => j switch
 	{
-		Justify.Start => "sjfcs",
-		Justify.End => "sjfce",
-		Justify.Center => "sjfcc",
-		Justify.SpaceBetween => "sjfceb",
-		Justify.SpaceAround => "sjfcea",
-		Justify.SpaceEvenly => "sjfcee",
+		Justify.Start => "sjcs",
+		Justify.End => "sjce",
+		Justify.Center => "sjcc",
+		Justify.SpaceBetween => "sjceb",
+		Justify.SpaceAround => "sjcea",
+		Justify.SpaceEvenly => "sjcee",
 		_ => LogIf.ArgumentOutOfRange<string>(j, nameof(j))
+	};
+
+	internal static string? ToCssMarginAuto(this Placement? p) => p switch
+	{
+		null => null,
+		Placement.None => null,
+		Placement.Top => "smta",
+		Placement.Bottom => "smba",
+		Placement.Start => "smsa",
+		Placement.End => "smea",
+		Placement.Overlay => null,
+		_ => LogIf.ArgumentOutOfRange<string>(p, nameof(p))
 	};
 }
 
