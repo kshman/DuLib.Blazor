@@ -59,6 +59,25 @@ public interface IComponentResponse
 
 
 /// <summary>
+/// 토글을 처리한다
+/// </summary>
+public interface IComponentToggle
+{
+	/// <summary>
+	/// 토글 처리
+	/// </summary>
+	/// <param name="component"></param>
+	/// <returns></returns>
+	Task OnToggleAsync(ComponentProp component);
+	/// <summary>
+	/// 토글 설정
+	/// </summary>
+	/// <param name="component"></param>
+	void SetToggle(ComponentProp component);
+}
+
+
+/// <summary>
 /// 컴포넌트 에이전트
 /// </summary>
 public interface IComponentAgent
@@ -67,12 +86,14 @@ public interface IComponentAgent
 	/// 닫아야하는 액션을 직접 하면 참
 	/// </summary>
 	bool SelfClose { get; }
+
 	/// <summary>
 	/// 역할에 따른 클래스를 얻음
 	/// </summary>
 	/// <param name="role"></param>
+	/// <param name="baseClass"></param>
 	/// <returns></returns>
-    string? GetRoleClass(ComponentRole role);
+	string? GetRoleClass(ComponentRole role, string? baseClass);
 }
 
 

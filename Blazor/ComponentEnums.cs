@@ -16,9 +16,10 @@ public enum ComponentRole
 	Badge,
 
 	// 콘텐트 
+	Menu,
 	Lead,
 	Tail,
-	Menu,
+	Toggle,
 }
 
 
@@ -33,6 +34,7 @@ public enum Variant
 	Outline,
 	Primary,
 	Digital,
+	Dark,
 }
 
 
@@ -61,19 +63,6 @@ public enum Responsive
 }
 
 /// <summary>
-/// 리스폰시브가 너무 길어서 축약판. <br/>
-/// Red Mage가 아님 Responsive Dimension임
-/// </summary>
-public enum Rdm
-{
-	None,
-	W6,
-	W9,
-	W12,
-	W15,
-}
-
-/// <summary>
 /// 저스티파이
 /// </summary>
 public enum Justify
@@ -84,4 +73,70 @@ public enum Justify
 	SpaceBetween,
 	SpaceAround,
 	SpaceEvenly,
+}
+
+/// <summary>
+/// 놓는 위치
+/// </summary>
+public enum Placement
+{
+	None,
+	Top,
+	Bottom,
+	Start, // left
+	End, // right
+	Overlay,
+}
+
+/// <summary>
+/// 그리드 갯수
+/// </summary>
+public enum GridCount
+{
+	C1 = 1,
+	C2 = 2,
+	C3 = 3,
+	C4 = 4,
+	C5 = 5,
+	C6 = 6,
+	C7 = 7,
+	C8 = 8,
+	C9 = 9,
+	Cx = 10,
+}
+
+/// <summary>
+/// 그리드 너비
+/// </summary>
+public enum GridWidth
+{
+	W1 = 1,
+	W2 = 2,
+	W3 = 3,
+	W4 = 4,
+	W5 = 5,
+	W6 = 6,
+	W7 = 7,
+	W8 = 8,
+	W9 = 9,
+	Wx = 10,
+
+	P33 = 33,
+	P66 = 66,
+	P25 = 25,
+	P75 = 75,
+	P16 = 16,
+
+	Full = 10,
+	Half = 5,
+	Quarter = 25,
+
+	OneThree = 33,
+	TwoThree = 66,
+
+	OneFour = 25,
+	TwoFour = 50,
+	ThreeFour = 75,
+
+	OneSix = 16,
 }

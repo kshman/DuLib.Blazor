@@ -19,84 +19,26 @@ $space-spacing: .5rem;
   @return calc(#{ $space-spacing } * #{ $space });
 }
 
-// 트랜지션
-@function transition($duration, $animation, $names...) {
+// 트랜지션 ease(기본값)
+@function transition-ease($duration, $names...) {
   $v: ();
 
   @each $n in $names {
-    $v: append($v, ($n $duration $animation), $separator: comma);
+    $v: append($v, ($n $duration), $separator: comma);
   }
 
   @return $v;
 }
 
-// 색깔 mixin
-@mixin variant-color($name, $cc, $bg, $hover, $active, $border: transparent) {
-  .vs#{$name} {
-    background: $bg;
-    border: 1px solid $border;
-    color: $cc;
-    @content;
-    // 호버
-    &:hover, &:focus {
-      background: $hover;
-    }
-    // 액티브
-    &:active, &.active {
-      background: $active;
-    }
-  }
-  // 낮은색
-  .vd#{$name} {
-    background: $bg;
-    color: $cc;
-  }
-  // 높은색
-  .vu#{$name} {
-    background: $active;
-    color: $cc;
-  }
-}
+// 트랜지션 ease-in-out
+@function transition-ease-in-out($duration, $names...) {
+  $v: ();
 
-// 아웃라인 mixin
-@mixin variant-outline($name, $cc, $bg, $hcc, $hbg, $acc, $abg) {
-  .vs#{$name} {
-    background: transparent;
-    border: 1px solid $bg;
-    color: $cc;
-    @content;
-    // 호버
-    &:hover, &:focus {
-      border-color: $hbg;
-      color: $hcc;
-    }
-    // 액티브
-    &:active, &.active {
-      border-color: $abg;
-      color: $acc;
-    }
+  @each $n in $names {
+    $v: append($v, ($n $duration ease-in-out), $separator: comma);
   }
-  // 낮은색
-  .vd#{$name} {
-    background: transparent;
-    border: 1px solid $bg;
-    color: $cc;
-  }
-  // 높은색
-  .vu#{$name} {
-    background: transparent;
-    border: 1px solid $abg;
-    color: $acc;
-  }
-}
 
-// 배경 / 글자(선택)
-@mixin mi-bgcc($bg, $cc: 0) {
-  background: $bg;
-
-  @if ($cc != 0) {
-    color: $cc;
-  }
+  @return $v;
 }
 
 // 믹스 아이콘

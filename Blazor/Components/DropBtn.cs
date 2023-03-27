@@ -175,7 +175,7 @@ public class DropBtn : Nulo, IComponentResponse, IComponentAgent
 	bool IComponentAgent.SelfClose => false;
 
     /// <inheritdoc />
-    string? IComponentAgent.GetRoleClass(ComponentRole role) => role switch
+    string? IComponentAgent.GetRoleClass(ComponentRole role, string? baseClass) => role switch
     {
         ComponentRole.Block or
             ComponentRole.Text or

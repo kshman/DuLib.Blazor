@@ -1,0 +1,96 @@
+﻿@import "../_mixin.scss";
+
+//  카드
+.ccrd {
+  //
+  --crd-bdr: var(--cc-bdr);
+  --crd-tit-cc: var(--cc-cc);
+  --crd-sub-cc: var(--cc-bdr);
+  --crd-lead-cc: var(--cc-cc);
+  --crd-lead-bg: var(--cc-hov);
+  --crd-tail-cc: var(--cc-cc);
+  --crd-tail-bg: var(--cc-hov);
+  --crd-hov-shd: var(--cc-shd);
+  //
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  border: 1px solid var(--crd-bdr);
+  transition: transition-ease(.3s, box-shadow);
+  // 호버
+  &:hover {
+    box-shadow: 0 4px 8px 0 var(--crd-hov-shd);
+  }
+  // 이미지
+  &i {
+    width: 100%;
+  }
+  // 헤더
+  &h {
+    padding: .5rem;
+    margin-bottom: 0;
+    color: var(--crd-lead-cc);
+    background: var(--crd-lead-bg);
+  }
+  // 푸터
+  &f {
+    padding: .5rem;
+    color: var(--crd-tail-cc);
+    background: var(--crd-tail-bg);
+  }
+  // 콘텐트
+  &c {
+    flex: 1 1 auto;
+    padding: .5rem;
+    // 아이템
+    & > * {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      // 마지막꺼는 없앰
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  // 타이틀
+  &tm {
+    margin-bottom: 1rem;
+    color: var(--crd-tit-cc);
+  }
+  // 서브 타이틀
+  &ts {
+    margin-top: -.75rem;
+    margin-bottom: 1rem;
+    color: var(--crd-sub-cc);
+  }
+  // 아이템
+  //&m {
+  //  margin-top: 0;
+  //  margin-bottom: 1rem;
+  //
+  //  &:last-child {
+  //    margin-bottom: 0;
+  //  }
+  //}
+  // 오버레이
+  &o {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: .5rem;
+  }
+  // 모서리
+  &.bdr {
+    // 헤더
+    & .ccdh {
+      border-bottom: 1px solid var(--crd-bdr);
+    }
+    // 푸터
+    & .ccdf {
+      border-top: 1px solid var(--crd-bdr);
+    }
+  }
+}

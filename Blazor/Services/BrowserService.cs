@@ -26,7 +26,7 @@ public class BrowserService : IBrowserService, IAsyncDisposable
 	private async Task PrepareModuleAsync()
 	{
 		_md ??= await _js.InvokeAsync<IJSObjectReference>("import",
-			"./_content/DuLib.Blazor/module_bs");
+			"./_content/DuLib.Blazor/module_bs.js");
 	}
 
 	//

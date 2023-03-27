@@ -55,4 +55,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Content Remove="Blazor\Supp\Dummy.razor" />
+    <None Include="Blazor\Supp\Dummy.razor" />
+  </ItemGroup>
+
 </Project>

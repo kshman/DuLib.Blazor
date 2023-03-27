@@ -34,7 +34,7 @@ public class NavBtn : Nulo, IDisposable
 	//
 	protected override void BuildRenderTree(RenderTreeBuilder builder)
 	{
-		var css = GetNuloCssClass("cnvnr", false, _isActive.IfTrue("active"));
+		var css = GetNuloCssClass("cnv cnvnr", false, _isActive.IfTrue("active"));
 
 		builder.OpenElement(0, "a");
 		builder.AddAttribute(1, "class", css);

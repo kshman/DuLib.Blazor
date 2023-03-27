@@ -1,29 +1,54 @@
-﻿//@import "_variable.scss";
-//@import "_mixin.scss";
+﻿// 리스트 만들기
+@mixin value-from-dic($name, $lead, $dic) {
+  @each $k, $v in $dic {
+    #{$name}#{$k} {
+      #{$lead}: #{$v};
+    }
+  }
+}
+
+// rem 만들기 (패딩, 마진)
+@mixin rem-h-1($name, $lead) {
+  #{$name}h {
+    #{$lead}: .5rem;
+  }
+
+  #{$name}#{1} {
+    #{$lead}: 1rem;
+  }
+}
+
+@mixin rem-h-1-tbse($name, $lead) {
+  @include rem-h-1($name, $lead);
+  $tbse: t,b,s,e;
+  //
+  @each $t in $tbse {
+    $n: #{$name}#{$t};
+    @include rem-h-1($n, $lead);
+  }
+}
 
 // 저스티파이
-.sjfc {
-  &s {
-    justify-content: start;
-  }
+$justifies: (s: start, e:end, c:center, eb:space-between, ea:space-around, ee:space-evenly);
+@include value-from-dic(".sjc", "justify-content", $justifies);
 
-  &e {
-    justify-content: end;
-  }
+// 패딩
+//@include rem-h-1-tbse(".sp", "padding");
 
-  &c {
-    justify-content: center
-  }
+// 마진
+//@include rem-h-1-tbse(".sm", "margin");
+.smta {
+  margin-top: auto;
+}
 
-  &eb {
-    justify-content: space-between;
-  }
+.smba {
+  margin-bottom: auto;
+}
 
-  &ea {
-    justify-content: space-around;
-  }
+.smsa {
+  margin-left: auto;
+}
 
-  &ee {
-    justify-content: space-evenly;
-  }
+.smea {
+  margin-right: auto;
 }
